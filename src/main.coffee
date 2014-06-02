@@ -16,5 +16,4 @@ warn                      = TRM.get_logger 'warn',      badge
 help                      = TRM.get_logger 'help',      badge
 echo                      = TRM.echo.bind TRM
 #...........................................................................................................
-ƒ                         = require 'flowmatic'
 BNP                       = require 'coffeenode-bitsnpieces'

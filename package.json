@@ -1,7 +1,7 @@
 {
   "name": "jseq",
   "version": "0.0.1",
-  "description": "tests suite for testing shallow & deep, strict equality as provided by various libraries",
+  "description": "test suite for testing shallow & deep, strict equality as provided by various libraries",
   "main": "lib/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/loveencounterflow/jseq",
   "dependencies": {
+    "coffee-script": "^1.7.1",
     "coffeenode-bitsnpieces": "0.0.23"
   }
 }
