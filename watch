@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
+
+./node_modules/coffee-script/bin/coffee --watch --output ./lib --compile ./src
+
+

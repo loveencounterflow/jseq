@@ -1,0 +1,26 @@
+{
+  "name": "jseq",
+  "version": "0.0.1",
+  "description": "tests suite for testing shallow & deep, strict equality as provided by various libraries",
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loveencounterflow/jseq.git"
+  },
+  "keywords": [
+    "deep",
+    "equality"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loveencounterflow/jseq/issues"
+  },
+  "homepage": "https://github.com/loveencounterflow/jseq",
+  "dependencies": {
+    "coffeenode-bitsnpieces": "0.0.23"
+  }
+}

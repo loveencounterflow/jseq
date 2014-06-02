@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
+
+
+./node_modules/coffee-script/bin/coffee -o lib -c src && \
+doctoc README.md && \
+# coffeedoc -o doc src && \
+git add --all && \
+git commit -m "autocommit"
+git push -u origin master
+echo
