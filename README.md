@@ -107,7 +107,7 @@ quality
 ### Concept of Type
 
 
-⟨*type*, *value*⟩
+⟪*type*, *value*⟫
 
 NaN
 
