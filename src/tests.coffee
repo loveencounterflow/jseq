@@ -29,7 +29,6 @@ module.exports = ( eq, ne ) ->
   R[ "number eqs number of same value"                        ] = -> eq 123.45678, 123.45678
   R[ "number pod eqs primitive number of same value"          ] = -> eq 5, new Number 5
   R[ "string pod eqs primitive string of same value"          ] = -> eq 'helo', new String 'helo'
-  R[ "+0 should eq -0"                                        ] = -> eq +0, -0
   R[ "regex lit's w same pattern, flags are eq"               ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
 
   #---------------------------------------------------------------------------------------------------------
@@ -42,6 +41,7 @@ module.exports = ( eq, ne ) ->
   R[ "list w an integer doesn't eq one w rpr n"               ] = -> ne [ 3 ], [ '3' ]
   R[ "regex lit's w diff. patterns, same flags aren't eq"     ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
   R[ "regex lit's w same patterns, diff. flags aren't eq"     ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
+  R[ "+0 should ne -0"                                        ] = -> ne +0, -0
 
   #=========================================================================================================
   ### 2. complex tests ###
