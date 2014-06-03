@@ -3,13 +3,26 @@
 - [jsEq](#jseq)
 	- [Test Module Setup](#test-module-setup)
 		- [Concept of Type](#concept-of-type)
+	- [Bonus Points](#bonus-points)
+	- [Benchmarks](#benchmarks)
+	- [Motivation](#motivation)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 
 # jsEq
 
-A test suite for testing shallow & deep, strict equality as provided by various libraries
+There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
+program in JavaScript on a daily base, and those are sane (deep) equality testing, sane deep copying, and
+sane type checking.
+
+jsEq attempts to answer the first of these questions—how to do sane testing for deep
+equality in JavaScript (specifically in NodeJS)—by providing an easy to use test bed that compares a number
+of libraries that purport to deliver solutions for deep equality.
+
+
+
+Here is a sample output of jsEq running `node jseq/lib/main.js`:
 
 ![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2016.48.01.png)
 
@@ -23,6 +36,7 @@ with `ne` aginst a pair of values. Tests that run multiple subtests should retur
 where `n` is the subtest count and `errors` is a list with a meaningful message for each failed subtest.
 
 ```coffeescript
+#-----------------------------------------------------------------------------------------------------------
 module.exports = ( eq, ne ) ->
   R = {}
 
@@ -56,20 +70,31 @@ module.exports = ( eq, ne ) ->
 
   #---------------------------------------------------------------------------------------------------------
   ### joshwilsdon's test (https://github.com/joyent/node/issues/7161) ###
-  R[ "all values in joshwilsdon's list shouldnt equal any other" ] = ->
+  R[ "joshwilsdon" ] = ->
+    # d1 = [ NaN, undefined, null, ]
+    # d2 = [ NaN, undefined, null, ]
     d1 = [ NaN, undefined, null, true, false, Infinity, 0, 1, "a", "b", {a: 1}, {a: "a"},
       [{a: 1}], [{a: true}], {a: 1, b: 2}, [1, 2], [1, 2, 3], {a: "1"}, {a: "1", b: "2"} ]
     d2 = [ NaN, undefined, null, true, false, Infinity, 0, 1, "a", "b", {a: 1}, {a: "a"},
       [{a: 1}], [{a: true}], {a: 1, b: 2}, [1, 2], [1, 2, 3], {a: "1"}, {a: "1", b: "2"} ]
     errors = []
     for v1, idx1 in d1
-      for v2, idx2 in d2[ idx1 ... d2.length ]
+      for idx2 in [ idx1 ... d2.length ]
+        v2 = d2[ idx2 ]
         if idx1 == idx2
-          errors.push "eq #{rpr d1}, #{rpr d2} failed" unless eq v1, v2
+          # debug 'eq', idx1, idx2, ( eq v1, v2 ), [ v1, v2 ]
+          unless eq v1, v2
+            errors.push "eq #{rpr v1}, #{rpr v2}"
         else
-          errors.push "eq #{rpr d1}, #{rpr d2} failed" unless ne v1, v2
+          # debug 'ne', idx1, idx2, ( ne v1, v2 ), [ v1, v2 ]
+          unless ne v1, v2
+            errors.push "ne #{rpr v1}, #{rpr v2}"
     #.......................................................................................................
     return [ d1.length, errors, ]
+
+
+  #---------------------------------------------------------------------------------------------------------
+  return R
 ```
 
 
@@ -87,5 +112,16 @@ NaN
 
 POD key ordering
 
+## Bonus Points
 
+* allow to configure whether `eq NaN, NaN` should hold
+* allow to configure whether object key ordering should be honored
+* allow to test arbitrary number of arguments for pairwise equality
 
+## Benchmarks
+
+To be done.
+
+## Motivation
+
+https://github.com/joyent/node/issues/7161

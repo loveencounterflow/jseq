@@ -27,6 +27,7 @@
     "coffeenode-text": "^0.1.5",
     "coffeenode-trm": "^0.1.15",
     "coffeenode-types": "^0.1.1",
-    "equals": "^0.3.6"
+    "equals": "^0.3.6",
+    "underscore": "^1.6.0"
   }
 }
