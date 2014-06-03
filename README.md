@@ -223,7 +223,7 @@ practical reasons. Another solution would be to state that our theory is only ap
 have only a single numerical type, so it may be valid for JavaScript, but certainly not Java or Python.
 
 A third way, and i believe the right one, is to assert that **what Python does with its `1 == 1.0 == 1 + 0j ==
-Decimal( 1 )` comparison is really *not* doing *equality*, but *equivalence* testing for the well-known,
+Decimal( 1 )` comparison is really *not* doing equality, but equivalence testing for the well-known,
 well-documented, exceptional case of comparing numerical values for arithmetic purposes**. And, in fact,
 it so turns out that in Python you can overload the behavior of the `==` operator by defining a specical
 method `__eq__` on a class, and if you so want it, you can make Python say yes to `x == y` even though
@@ -236,20 +236,25 @@ class X:
     self.foo = foo
 
   def __eq__( self, other ):
-    return self.foo % other.foo == 0
+    return ( self is not other ) and self.foo % other.foo == 0
 
 x = X( 12 )
 y = X( 6 )
 z = X( 7 )
 
-print( x == y )
-print( x == z )
-print( y == z )
+print( x == x ) # False
+print( x == y ) # True
+print( x == z ) # False
+print( y == z ) # False
 ```
 
-This example is more proof to the above assertion. If Python's `==` operator had been intended to comply
-with our strict version of equality, there would have been little need to encourage overloading the `==`
-operator, as the answer to that question can be given without implementing any class-specific methods.
+This example is more evidence in favor of the above assertion. If Python's `==` operator had been intended
+to comply with our strict version of equality, there would have been little need to encourage overloading
+the `==` operator, as the answer to that question can be given without implementing any class-specific
+methods, from an abstract point of view. It is not immediately clear what use could be made of an object
+that satisfies `x != x`, but the fact that Python has no qualms in allowing the programmer such utterly
+subversive code corroborates that what we deal with here is open-minded equivalence rather than principled
+equality.
 
 For these two reasons—that Python's treatment of equality, while great for providing correct deep equal
 tests even with nested, circular objects, is leaning towards arithmetic and custom-tailored equivalence
