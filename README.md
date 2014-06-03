@@ -190,9 +190,9 @@ In other words, positive zero is preferred over negative zero when adding 'oppos
 An important axiom in computing is that two values `x` and `y` can only ever be equal when they both have
 the same type; conversely, when two values are equal, they must be of equal type, too.
 
-More formally, let us **L** denote the language under inspection, and be **M** the meta-language to discuss and
+More formally, let **L** denote the language under inspection, and be **M** the meta-language to discuss and
 / or to implement **L**. Then, saying that `eq x, y` results in `true` implies that
-`eq (type-of x ), (type-of y )` is also `true`.
+`eq ( type-of x ), ( type-of y )` is also `true`.
 
 We can capture that by saying that in **M**, all values `x` of **L** are represented by a tuple ⟨*t*, *v*⟩
 where *t* is the type of `x` and *v* is its value—'without' its type, which impossible in theory but
