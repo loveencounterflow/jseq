@@ -148,46 +148,32 @@ all strings).
 #### Positive and Negative Zero
 
 ```coffeescript
-signed = ( x ) ->
-  if x is 0
-    return if is_negative_zero x then '-0' else '+0'
+signed_rpr = ( x ) ->
+  return ( if is_negative_zero x then '-0' else '+0' ) if x is 0
   return Number.prototype.toString.call x
 
 is_negative_zero = ( x ) -> x is 0 and 1 / x < 0
 
-infinity = ->
-  info +0 == -0           # true
-  info +1 / +0            # Infinity
-  info +1 / -0            # -Infinity
-  info 1 / +0 * 7         # Infinity
-  info 1 / -0 * 7         # -Infinity
-  info +0     < 0         # false
-  info -0     < 0         # false
-  info +0 * 7 < 0         # false
-  info -0 * 7 < 0         # false
-  info Infinity * 0       # NaN
-  info Infinity / +0      # Infinity
-  info Infinity / -0      # -Infinity
-  info signed +0 ** +1    # +0
-  info signed -0 ** +1    # -0
-  info signed +0 ** -1    # Infinity
-  info signed -0 ** -1    # -Infinity
-infinity()
+test_signed_zero = ->
+  info +0 == -0               # true
+  info +1 / +0                # Infinity
+  info +1 / -0                # -Infinity
+  info 1 / +0 * 7             # Infinity
+  info 1 / -0 * 7             # -Infinity
+  info +0     < 0             # false
+  info -0     < 0             # false
+  info +0 * 7 < 0             # false
+  info -0 * 7 < 0             # false
+  info Infinity * 0           # NaN
+  info Infinity / +0          # Infinity
+  info Infinity / -0          # -Infinity
+  info signed_rpr +0 ** +1    # +0
+  info signed_rpr -0 ** +1    # -0
+  info signed_rpr +0 ** -1    # Infinity
+  info signed_rpr -0 ** -1    # -Infinity
+
+test_signed_zero()
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 According to the
