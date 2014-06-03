@@ -1,6 +1,6 @@
 {
   "name": "jseq",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "test suite for testing shallow & deep, strict equality as provided by various libraries",
   "main": "lib/main.js",
   "scripts": {
