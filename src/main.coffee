@@ -20,8 +20,10 @@ echo                      = TRM.echo.bind TRM
 #...........................................................................................................
 @tests                    = require './tests'
 BNP                       = require 'coffeenode-bitsnpieces'
+TEXT                      = require 'coffeenode-text'
 ### TAINT should use customized fork ###
 TYPES                     = require 'coffeenode-types'
+Table                     = require 'cli-table'
 #...........................................................................................................
 ### implementations of deep equality tests: ###
 assert                    = require 'assert'
@@ -30,7 +32,17 @@ assert                    = require 'assert'
 #-----------------------------------------------------------------------------------------------------------
 @implementations =
   #.........................................................................................................
-  'NodeJS assert':
+  "native ==":
+    #.......................................................................................................
+    eq: ( a, b ) -> `a == b`
+    ne: ( a, b ) -> `a != b`
+  #.........................................................................................................
+  "native ===":
+    #.......................................................................................................
+    eq: ( a, b ) -> `a === b`
+    ne: ( a, b ) -> `a !== b`
+  #.........................................................................................................
+  "NodeJS assert":
     #.......................................................................................................
     eq: ( a, b ) ->
       try
@@ -45,6 +57,11 @@ assert                    = require 'assert'
       catch error
         return false
       return true
+  #.........................................................................................................
+  "CoffeeNode Bits'N'Pieces":
+    #.......................................................................................................
+    eq: ( a, b ) -> BNP.equals a, b
+    ne: ( a, b ) -> not BNP.equals a, b
 
 #-----------------------------------------------------------------------------------------------------------
 @new_counter = ( name ) ->
@@ -59,23 +76,24 @@ assert                    = require 'assert'
   implementation_count  = 0
   test_count            = 0
   fail_count            = 0
-  counters              = {}
+  counters              = []
   #.........................................................................................................
   for implementation_name, implementation of @implementations
     implementation_count += 1
     info implementation_name
-    counter = counters[ implementation_name ] = @new_counter implementation_name
+    counter = @new_counter implementation_name
+    counters.push counter
     #.......................................................................................................
     for test_name, test of @tests implementation.eq, implementation.ne
       continue if test_name[ 0 ] is '_'
-      test_count         += 1
-      counter[ 'tests' ] += 1
       title       = "#{implementation_name} / #{test_name}"
       result      = test.call @test
       #.....................................................................................................
       switch result_type = TYPES.type_of result
         #...................................................................................................
         when 'boolean'
+          test_count         += 1
+          counter[ 'tests' ] += 1
           if result
             praise title
           else
@@ -93,7 +111,8 @@ assert                    = require 'assert'
             throw new Error "#{title}: expected an integer greater than zero, got #{sub_count}"
           unless ( errors_type = TYPES.type_of sub_errors ) is 'list'
             throw new Error "#{title}: expected a list, got a #{errors_type}"
-          test_count += sub_count
+          test_count         += sub_count
+          counter[ 'tests' ] += sub_count
           if sub_errors.length is 0
             praise title
           else
@@ -120,7 +139,32 @@ assert                    = require 'assert'
   praise  "of which #{pass_count} tests passed,"
   warn    "and #{fail_count} tests failed."
   whisper '-------------------------------------------------------------'
-  whisper counters
+  #.........................................................................................................
+  counters.sort ( a, b ) ->
+    return +1 if a[ 'fails' ] > b[ 'fails' ]
+    return -1 if a[ 'fails' ] < b[ 'fails' ]
+    return  0
+  #.........................................................................................................
+  options =
+    head: [ 'rank', 'implementation', 'tests', 'passes', '%', 'fails', '%' ]
+    chars: 'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''
+  table = new Table options
+  width = 8
+  for counter, idx in counters
+    { name, tests, fails }  = counter
+    passes                  = tests - fails
+    passes_percentage       = "#{( passes / tests * 100 ).toFixed 1} %"
+    fails_percentage        = "#{(  fails / tests * 100 ).toFixed 1} %"
+    table.push [
+      TRM.grey  idx + 1
+      TRM.gold  name
+      TRM.blue  tests
+      TRM.green TEXT.flush_right passes,            width
+      TRM.green TEXT.flush_right passes_percentage, width
+      TRM.red   TEXT.flush_right fails,             width
+      TRM.red   TEXT.flush_right fails_percentage,  width
+      ]
+  console.log table.toString()
   #.........................................................................................................
   return null
 

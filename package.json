@@ -21,8 +21,11 @@
   },
   "homepage": "https://github.com/loveencounterflow/jseq",
   "dependencies": {
+    "cli-table": "^0.3.0",
     "coffee-script": "^1.7.1",
     "coffeenode-bitsnpieces": "0.0.23",
-    "coffeenode-types": "^0.1.1"
+    "coffeenode-text": "^0.1.5",
+    "coffeenode-types": "^0.1.1",
+    "equals": "^0.3.6"
   }
 }
