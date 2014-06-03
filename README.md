@@ -147,6 +147,49 @@ all strings).
 
 #### Positive and Negative Zero
 
+```coffeescript
+signed = ( x ) ->
+  if x is 0
+    return if is_negative_zero x then '-0' else '+0'
+  return Number.prototype.toString.call x
+
+is_negative_zero = ( x ) -> x is 0 and 1 / x < 0
+
+infinity = ->
+  info +0 == -0           # true
+  info +1 / +0            # Infinity
+  info +1 / -0            # -Infinity
+  info 1 / +0 * 7         # Infinity
+  info 1 / -0 * 7         # -Infinity
+  info +0     < 0         # false
+  info -0     < 0         # false
+  info +0 * 7 < 0         # false
+  info -0 * 7 < 0         # false
+  info Infinity * 0       # NaN
+  info Infinity / +0      # Infinity
+  info Infinity / -0      # -Infinity
+  info signed +0 ** +1    # +0
+  info signed -0 ** +1    # -0
+  info signed +0 ** -1    # Infinity
+  info signed -0 ** -1    # -Infinity
+infinity()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 According to the
 [*ECMAScript® Language Specification*, section 11.6.3, “Applying the Additive Operators to Numbers”](http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.3),
 the existence of positive and negative (but no unsigned) zeroes causes logical problems (emphasis mine):
