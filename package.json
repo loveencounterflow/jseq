@@ -22,6 +22,7 @@
   "homepage": "https://github.com/loveencounterflow/jseq",
   "dependencies": {
     "coffee-script": "^1.7.1",
-    "coffeenode-bitsnpieces": "0.0.23"
+    "coffeenode-bitsnpieces": "0.0.23",
+    "coffeenode-types": "^0.1.1"
   }
 }
