@@ -160,9 +160,9 @@ Table                     = require 'cli-table'
     row = [ test_name ]
     for imp_key in imp_keys
       if success_by_imp_key[ imp_key ]
-        row.push TRM.green '✔'
+        row.push TRM.grey '▢'
       else
-        row.push TRM.red '✘'
+        row.push TRM.red '▨'
     table_2.push row
   #.........................................................................................................
   log '\n\n' + table_1.toString()
