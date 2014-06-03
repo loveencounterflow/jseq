@@ -2,14 +2,14 @@
 
 - [jsEq](#jseq)
 	- [Test Module Setup](#test-module-setup)
-	- [Comparing Numerical and Quasi-Numerical Values](#comparing-numerical-and-quasi-numerical-values)
-	- [Not-A-Number](#not-a-number)
-	- [Infinity](#infinity)
+	- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
 	- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
 	- [Equality of Sub-Types](#equality-of-sub-types)
 	- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
 	- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
-	- [Positive and Negative Zero](#positive-and-negative-zero)
+	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
+	- [Not-A-Number](#not-a-number)
+	- [Infinity](#infinity)
 	- [POD key ordering](#pod-key-ordering)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -126,7 +126,7 @@ module.exports = ( eq, ne ) ->
 ```
 
 
-equality, identity, and equivalence
+## Equality, Identity, and Equivalence
 
 equality and identity are extensional, formal qualities; equivalence is an intentional, informal
 quality
@@ -142,12 +142,6 @@ Further, it can be said that JavaScript's `===` 'strict equals operator' never t
 all, but rather *object identity*, with the understanding that all the primitive types have one single
 identity per value (something that e.g. seems to hold in Python e.g. for all integers, but not necessarily
 all strings).
-
-## Comparing Numerical and Quasi-Numerical Values
-
-## Not-A-Number
-
-## Infinity
 
 ## First Axiom: Value Equality Entails Type Equality
 
@@ -286,7 +280,7 @@ The second axiom helps us to see very clearly that Python's concept of equality 
 very simple program `def f ( x ): print( type( x ) )` that will behave differently for each of `1`, `1.0`,
 `1 + 0j`, `Decimal( 1 )`. As for JavaScript, the next section will discuss a relevant case.
 
-## Positive and Negative Zero
+## Infinity, Positive and Negative Zero
 
 ```coffeescript
 signed_rpr = ( x ) ->
@@ -327,6 +321,11 @@ the existence of positive and negative (but no unsigned) zeroes causes logical p
 In other words, positive zero is preferred over negative zero when adding 'opposite' zeroes.
 
 Since we have earlier seen that
+
+## Not-A-Number
+
+## Infinity
+
 
 ## POD key ordering
 
