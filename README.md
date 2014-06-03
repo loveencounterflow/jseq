@@ -2,6 +2,7 @@
 
 - [jsEq](#jseq)
 	- [Test Module Setup](#test-module-setup)
+		- [Comparing Numerical and Quasi-Numerical Values](#comparing-numerical-and-quasi-numerical-values)
 		- [Concept of Type](#concept-of-type)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -13,8 +14,8 @@
 # jsEq
 
 There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
-program in JavaScript on a daily base, and those are sane (deep) equality testing, sane deep copying, and
-sane type checking.
+program in JavaScript on a daily base, and those are sane **(deep) equality testing**, sane **deep
+copying**, and sane **type checking**.
 
 jsEq attempts to answer the first of these questions—how to do sane testing for deep equality in JavaScript
 (specifically in NodeJS)—by providing an easy to use test bed that compares a number of libraries that
@@ -26,8 +27,11 @@ Here is a sample output of jsEq running `node jseq/lib/main.js`:
 ![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2021.04.49.png)
 
 The `lodash` and `underscore` results are probably identical because `lodash` strives to be a 'better
-`underscore`' (funny to see how they fail on `eq +0, -0`; i guess `underscore` made it a point to
-distinguish between the two since 'JS fails to'. No idea what that distinction could be useful for).
+`underscore`'.
+
+> Funny to see how they fail on `eq +0, -0`; i guess `underscore` made it a point to distinguish between the
+> two since 'JS fails to'. No idea what that distinction could be useful for; see below for a discussion of
+> comparing numerical and quasi-numerical values.
 
 The `jkroso equals` and `CoffeeNode Bits'N'Pieces` results are identical since the former is really the
 implementation of the latter; based on the results shown i'll try and combine different techniques /
@@ -131,6 +135,17 @@ Further, it can be said that JavaScript's `===` 'strict equals operator' never t
 all, but rather *object identity*, with the understanding that all the primitive types have one single
 identity per value (something that e.g. seems to hold in Python e.g. for all integers, but not necessarily
 all strings).
+
+### Comparing Numerical and Quasi-Numerical Values
+
+According to the
+[*ECMAScript® Language Specification*, section 11.6.3, “Applying the Additive Operators to Numbers”](http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.3),
+the existence of positive and negative (but no unsigned) zeroes causes logical problems (emphasis mine):
+
+> The sum of two negative zeros is -0. The sum of **two positive zeros**, or of **two zeros of opposite sign**,
+> is **+0.**
+
+In other words, positive zero is preferred over negative zero when adding 'opposite' zeroes.
 
 ### Concept of Type
 
