@@ -25,6 +25,7 @@
     "coffee-script": "^1.7.1",
     "coffeenode-bitsnpieces": "0.0.23",
     "coffeenode-text": "^0.1.5",
+    "coffeenode-trm": "^0.1.15",
     "coffeenode-types": "^0.1.1",
     "equals": "^0.3.6"
   }
