@@ -177,6 +177,7 @@ I hope this short discussion will have eliminated almost any remaining doubt whe
 types can ever be equal. However, there are two questions i assume the astute reader will be inclined
 to ask. These are: what about sub-typed values? and what about numbers?
 
+
 ## Equality of Sub-Types
 
 As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of how
@@ -184,15 +185,17 @@ it is derived. That an instance of a given type shares methods or data fields wi
 change the fact that somewhere it must have—explicitly or implicitly, accessible from **L** or only from
 **M**—a data field where its type is noted, and if the contents of that field do not equal the equivalent
 field of the other instance, they cannot be equal if our above considerations make any sense. True, some
-instances of some subtypes may stand in for instances of their super-type in some setups, but that is the
-same as saying that a nail can often do the work of a screw—in other words, this is about *fitness for a
-purpose* a.k.a. *equivalence*, not about equality as understood here. Also, that a nail can often do the
-work of a screw does crucially not hinge on a screw being conceptualized as 'a nail with a screw thread' or
-a nail as 'a screw with a zero-depth thread'.
+instances of some sub-types may stand in for some instances of their super-type in some setups, but that is
+the same as saying that a nail can often do the work of a screw—in other words, this consideration is about
+*fitness for a purpose* a.k.a. *equivalence*, not about equality as understood here. Also, that a nail can
+often do the work of a screw does crucially not hinge on a screw being conceptualized as 'a nail with a
+screw thread' or a nail as 'a screw with a zero-depth thread'.
+
 
 ## Equality of Numerical Values in Python
 
-As for the second question, it is in theory somewhat harder, but fortunately, there is an easy solution.
+As for the second question, it is in theory somewhat harder than the first, but fortunately, there is an
+easy solution.
 
 JavaScript may be said to be simpler than many other languages, since it has only a single numerical
 type, which implements the well-known IEEE 754 floating point standard with all its peculiarities.
@@ -204,7 +207,7 @@ Python before version 3 had four types: `int`, `float`, `long`, `complex`; in ve
 `long` types have been unified. Moreover, Python users have to worry much less about numerical types than
 Java users, as Python tries very hard—and manages very well—to hide that fact; for most cases, numerical
 types are more of a largely hidden implementation detail than a language feature. This even extends to
-numerical types that are provided by the standard Library, like the arbitrary-precision class `Decimal`.
+numerical types that are provided by the Standard Library, like the arbitrary-precision `Decimal` class.
 
 In my experience, Python has the best thought-out numerical system of any programming language i had ever
 contact with, so my rule of thumb is that whatever Python does in the field of numbers is worthy of
