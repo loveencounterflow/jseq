@@ -41,8 +41,8 @@ The `lodash` and `underscore` results are probably identical because `lodash` st
 > [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 
 The `jkroso equals` and `CoffeeNode Bits'N'Pieces` results are identical since the former is really the
-implementation of the latter; based on the results shown i'll try and combine different techniques /
-libraries that manages to pass all tests.
+implementation of the latter; based on the results shown i'll try to devise a solution that combines
+different libraries and passes all tests.
 
 It has to be said that while—as it stands—jsEq will run no less than `12 * 212 == 2544` tests, most tests
 are between primitive values, which explains why bot JS `==` and `===` turn in with around 9 out of 10 tests
@@ -140,7 +140,7 @@ very common contexts (like `x.length`, which is undefined for numbers).
 
 Further, it can be said that JavaScript's `===` 'strict equals operator' never tested *value equality* at
 all, but rather *object identity*, with the understanding that all the primitive types have one single
-identity per value (something that e.g. seems to hold in Python e.g. for all integers, but not necessarily
+identity per value (something that e.g. seems to hold in Python for all integers, but not necessarily
 all strings).
 
 ## First Axiom: Value Equality Entails Type Equality
@@ -163,8 +163,8 @@ type, they can be said to be typeless.
 When we are comparing two values for equality in **L**, then, we are really comparing the two elements of
 two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values
 in **M**, and since we have reduced all values to integers, and since types are values, too, we have reduced
-the problem to comparing to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has a very
-obvious solution: the outcome can only be `true` if the two elements of each tuple are pairwise identical.
+the problem to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has an obvious solution:
+the result can only be `true` if the two elements of each tuple are pairwise identical.
 
 > The above is not so abstruse as it may sound; in Python, `id( value )` will give you an integer that
 > basically returns a number that represents a memory location, and in JavaScript, types are commonly
@@ -175,18 +175,20 @@ obvious solution: the outcome can only be `true` if the two elements of each tup
 
 I hope this short discussion will have eliminated almost any remaining doubt whether two values of different
 types can ever be equal. However, there are two questions i assume the astute reader will be inclined
-to ask. These are: what about sub-typed values? how about numbers?
+to ask. These are: what about sub-typed values? and what about numbers?
 
 ## Equality of Sub-Types
 
-As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of
-how it is derived. That an instance of a given type shares methods or data fields doesn't change the
-fact that somewhere it must have—explicitly or implicitly, accessible from **L** or only from **M**—a data
-field where its type is noted, and if the contents of that field do not equal the equivalent field of
-the other instance, they cannot be equal if our above considerations make any sense. True, some instances
-of some subtypes may stand in for instances of their super-type in some setups, but that is the same as
-saying that a nail can often do the work of a screw—in other words, this is about *fitness for a purpose*
-a.k.a. *equivalence*, not about equality as understood here.
+As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of how
+it is derived. That an instance of a given type shares methods or data fields with some other type doesn't
+change the fact that somewhere it must have—explicitly or implicitly, accessible from **L** or only from
+**M**—a data field where its type is noted, and if the contents of that field do not equal the equivalent
+field of the other instance, they cannot be equal if our above considerations make any sense. True, some
+instances of some subtypes may stand in for instances of their super-type in some setups, but that is the
+same as saying that a nail can often do the work of a screw—in other words, this is about *fitness for a
+purpose* a.k.a. *equivalence*, not about equality as understood here. Also, that a nail can often do the
+work of a screw does crucially not hinge on a screw being conceptualized as 'a nail with a screw thread' or
+a nail as 'a screw with a zero-depth thread'.
 
 ## Equality of Numerical Values in Python
 
