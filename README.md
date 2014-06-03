@@ -261,19 +261,20 @@ unadultered version of Axiom 1 that forbids cross-type equality even for numeric
 
 ## Second Axiom: Equality of Program Behavior
 
-The above treatment of numerical types has shown that Python prefers to consider `1 == 1.0` true because
-for most practical, arithmetic use cases, there will be no difference (in modern Pythons; older Pythons
-had `1 / 7 != 1.0 / 7.0`) between results whatever numerical type you used. But that, of course, is not
-quite right; the whole reason for a `Decimal` class is to make it so that arithmetic operations *do*
-turn out differently—say, with a hundred decimals printed out, or with precise monetary amounts (you never
-calculate prices using floating-point numbers in JavaScript, right?).
+The above treatment of numerical types has shown that Python prefers to consider `1 == 1.0` true because for
+most practical, arithmetic use cases, there will be no difference (in modern Pythons; older Pythons had `1 /
+7 != 1.0 / 7.0`) between results whatever numerical type you used. But that, of course, is not *quite*
+right; the whole reason for using `Decimal` instead of `Float` is to make it so that arithmetic operations
+*do* turn out differently—say, with a hundred decimals printed out, or with precise monetary amounts (you
+never calculate prices using floating-point numbers in JavaScript, right?).
 
 Now, the reason for programmers to write test suites is to ensure that a program behaves the expected way,
 and that it continues to return the expected values even when some part of it gets modified. It is clear
 that using some `BigNum` class in place of ordinary numbers *will* likely make the program change behavior,
 for the better or the worse, and in case you're writing an online shopping software, you *want* to catch all
 those changes, which is tantamount to say you do *not* want *any* kind of `eq ( new X 0 ), 0` tests to
-return `true`, even if `new X 0` is your new fool-proof way of saying 'zero dollars'.
+return `true`, even if `0.00` is your naive old and `new X 0.00` is your fool-proof new way of saying
+'zero dollars'.
 
 Thus our second axiom becomes:
 
