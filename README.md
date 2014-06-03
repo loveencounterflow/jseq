@@ -16,24 +16,40 @@ There are a couple of related, recurrent and, well, relatively 'deep' problems t
 program in JavaScript on a daily base, and those are sane (deep) equality testing, sane deep copying, and
 sane type checking.
 
-jsEq attempts to answer the first of these questions—how to do sane testing for deep
-equality in JavaScript (specifically in NodeJS)—by providing an easy to use test bed that compares a number
-of libraries that purport to deliver solutions for deep equality.
-
-
-
+jsEq attempts to answer the first of these questions—how to do sane testing for deep equality in JavaScript
+(specifically in NodeJS)—by providing an easy to use test bed that compares a number of libraries that
+purport to deliver solutions for deep equality. It turns out that there are surprising differences in detail
+between the libraries tested, as the screen shot below readily shows (don't take the `qunitjs` test
+seriously, those are currently broken due to the (to me at least) strange API of that library).
 Here is a sample output of jsEq running `node jseq/lib/main.js`:
 
 ![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2021.04.49.png)
 
+The `lodash` and `underscore` results are probably identical because `lodash` strives to be a 'better
+`underscore`' (funny to see how they fail on `eq +0, -0`; i guess `underscore` made it a point to
+distinguish between the two since 'JS fails to'. No idea what that distinction could be useful for).
+
+The `jkroso equals` and `CoffeeNode Bits'N'Pieces` results are identical since the former is really the
+implementation of the latter; based on the results shown i'll try and combine different techniques /
+libraries that manages to pass all tests.
+
+It has to be said that while—as it stands—jsEq will run no less than `12 * 212 == 2544` tests, most tests
+are between primitive values, which explains why bot JS `==` and `===` turn in with around 9 out of 10 tests
+passed.
+
 ## Test Module Setup
 
-Test cases are set up inside a function that accepts two functions `eq`, `ne` and returns an object with
-each function (whose name does not start with an `_` underscore) being a test case. Each test case will run
-either a single or multiple tests. Tests that run a single test simply return the result of applying the
-provided `eq` or `ne` to test for the current implementation's concept of equality with `eq` or inequality
-with `ne` aginst a pair of values. Tests that run multiple subtests should return a pair `[ n, errors, ]`
-where `n` is the subtest count and `errors` is a list with a meaningful message for each failed subtest.
+Test cases are set up in the `src/implementations.coffee` modules, inside a function that accepts two
+functions `eq`, `ne` and returns an object of test cases. Test case names are short descriptions of what
+they test for and are used to produce a legible output.
+
+Tests that run a single test should return the result of applying the provided `eq` or `ne` to test for the
+current implementation's concept of equality with `eq` or inequality with `ne` aginst a pair of values.
+
+Tests that run multiple subtests should return a pair `[ n, errors, ]` where `n` is the subtest count and
+`errors` is a list with a meaningful message for each failed subtest (the individual messages from such
+'mass testing facilities' are currently not shown, as they produce a *lot* of output, but that will probably
+be made a matter of configuration). Here's what `src/implementations.coffee` currently looks like:
 
 ```coffeescript
 #-----------------------------------------------------------------------------------------------------------

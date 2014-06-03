@@ -101,6 +101,7 @@ module.exports = ( eq, ne ) ->
           unless ne v1, v2
             errors.push "ne #{rpr v1}, #{rpr v2}"
     #.......................................................................................................
+    # whisper count
     return [ count, errors, ]
 
 
