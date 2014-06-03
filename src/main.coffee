@@ -153,16 +153,22 @@ Table                     = require 'cli-table'
   headers   = [ '', ]
   imp_keys  = ( counter[ 'key' ] for counter in counters )
   headers.push.apply headers, imp_keys
-  options[ 'head' ] = headers
+  options =
+    head: headers
+    chars: {
+      'top':     '', 'top-mid':    '', 'top-left':     '', 'top-right':    '',
+      'bottom':  '', 'bottom-mid': '', 'bottom-left':  '', 'bottom-right': '',
+      'left':    '', 'left-mid':   '', 'mid':          '', 'mid-mid':      '',
+      'right':   '', 'right-mid':  '', 'middle':       '' }
   table_2 = new Table options
   for test_name, success_by_imp_key of results_by_test_name
     test_name = test_name[ ... 50 ] + '⋯' if test_name.length > 50
     row = [ test_name ]
     for imp_key in imp_keys
       if success_by_imp_key[ imp_key ]
-        row.push TRM.grey '▢'
+        row.push TRM.green '◌'
       else
-        row.push TRM.red '▨'
+        row.push TRM.red '▼'
     table_2.push row
   #.........................................................................................................
   log '\n\n' + table_1.toString()
