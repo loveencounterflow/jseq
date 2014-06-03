@@ -24,7 +24,7 @@ of libraries that purport to deliver solutions for deep equality.
 
 Here is a sample output of jsEq running `node jseq/lib/main.js`:
 
-![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2016.48.01.png)
+![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2021.04.49.png)
 
 ## Test Module Setup
 
