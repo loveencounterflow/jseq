@@ -9,7 +9,6 @@
 	- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
 	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 	- [Not-A-Number](#not-a-number)
-	- [Infinity](#infinity)
 	- [POD key ordering](#pod-key-ordering)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -288,6 +287,13 @@ very simple program `def f ( x ): print( type( x ) )` that will behave different
 
 ## Infinity, Positive and Negative Zero
 
+One of the (*many*) surprises / gotchas / peculiarities that JavaScript has in store for the n00be
+programmer is the existence of *two zeroes*, one positive and one negative. What, i hear you say, and no
+sooner said than done have you typed `+0 === -0`, return, into the NodeJS REPL, to be rewarded with a
+satisfyingly reassuring `true` output. That should do it right, for haven't we all learned that when a `x
+=== y` test returns `true` it 'is True', and only when that fails do we have to do more checking? Sadly,
+this is belief is mistaken, as the below code demonstrates:
+
 ```coffeescript
 signed_rpr = ( x ) ->
   return ( if is_negative_zero x then '-0' else '+0' ) if x is 0
@@ -296,41 +302,52 @@ signed_rpr = ( x ) ->
 is_negative_zero = ( x ) -> x is 0 and 1 / x < 0
 
 test_signed_zero = ->
-  info +0 == -0               # true
-  info +1 / +0                # Infinity
-  info +1 / -0                # -Infinity
-  info 1 / +0 * 7             # Infinity
-  info 1 / -0 * 7             # -Infinity
-  info +0     < 0             # false
-  info -0     < 0             # false
-  info +0 * 7 < 0             # false
-  info -0 * 7 < 0             # false
-  info Infinity * 0           # NaN
-  info Infinity / +0          # Infinity
-  info Infinity / -0          # -Infinity
-  info signed_rpr +0 ** +1    # +0
-  info signed_rpr -0 ** +1    # -0
-  info signed_rpr +0 ** -1    # Infinity
-  info signed_rpr -0 ** -1    # -Infinity
+  log +0 == -0               # true
+  log +1 / +0                # Infinity
+  log +1 / -0                # -Infinity
+  log 1 / +0 * 7             # Infinity
+  log 1 / -0 * 7             # -Infinity
+  log +0     < 0             # false
+  log -0     < 0             # false
+  log +0 * 7 < 0             # false
+  log -0 * 7 < 0             # false
+  log Infinity * 0           # NaN
+  log Infinity / +0          # Infinity
+  log Infinity / -0          # -Infinity
+  log signed_rpr +0 ** +1    # +0
+  log signed_rpr -0 ** +1    # -0
+  log signed_rpr +0 ** -1    # Infinity
+  log signed_rpr -0 ** -1    # -Infinity
 
 test_signed_zero()
 ```
 
+When i first became aware of there being a `+0` and a `-0` in JS, i immediately wrote a test case: `R[ "+0
+should eq -0" ] = -> eq +0, -0`. I then proceeded adding libraries to jsEq and felt satisfied that the work
+that went into delivering pretty detailed test reports was not for naught as more and more small differences
+between the libraries popped up: this library misses that test case, the next passes the other test, and so
+on. I sorted the results, and seeing that `underscore` got the highscore (pun intended), it surprised me to
+find it insisted on claiming `+0` and `-0` should differ. Ultimately, this led me to the discovery of the
+second Axiom, and with that in my hands, it became clear that `underscore` is right and my test case is
+wrong: **Since there are known programs that behave differently with positive and negative zero, these two
+values must not be considered equal**.
 
-According to the
-[*ECMAScript® Language Specification*, section 11.6.3, “Applying the Additive Operators to Numbers”](http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.3),
-the existence of positive and negative (but no unsigned) zeroes causes logical problems (emphasis mine):
-
-> The sum of two negative zeros is -0. The sum of **two positive zeros**, or of **two zeros of opposite sign**,
-> is **+0.**
-
-In other words, positive zero is preferred over negative zero when adding 'opposite' zeroes.
-
-Since we have earlier seen that
 
 ## Not-A-Number
 
-## Infinity
+Yet another one of that rich collection of JavaScript easter eggs (and, like `+0` vs `-0`, one that is
+mandated by IEEE 754), is the existence of a `NaN` (read: Not A Number) value. In my opinion, this value
+shouldn't exist at all. JS does consistently the right thing when it throws an exception on `undefined.x`
+(unable to access property of `undefined`) and on `d.f = 42; d.f 'helo'` (not a function), and, as
+consistently fails silently when you access undefined object properties and do numerical nonsense. In
+the latter case, it resorts to returning sometimes `Infinity`, and sometimes `NaN`, both of which make
+little sense in most cases.
+
+Now, 'infinity' can be a useful concept for some use cases, but there is hardly any use case for `NaN`
+(except of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that one,
+`NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!`).
+
+
 
 
 ## POD key ordering
