@@ -256,11 +256,8 @@ that satisfies `x != x`, but the fact that Python has no qualms in allowing the 
 subversive code corroborates that what we deal with here is open-minded equivalence rather than principled
 equality.
 
-For these two reasons—that Python's treatment of equality, while great for providing correct deep equal
-tests even with nested, circular objects, is leaning towards arithmetic and custom-tailored equivalence
-rather than towards strictness. Since thery is, anyways, only a single numerical type in JavaScript,
-i believe we should stick with the unadultered version of Axiom 1 that forbids cross-type equality
-even for numerical types.
+Since there is, anyways, only a single numerical type in JavaScript, i believe we should stick with the
+unadultered version of Axiom 1 that forbids cross-type equality even for numerical types.
 
 ## Second Axiom: Equality of Program Behavior
 
