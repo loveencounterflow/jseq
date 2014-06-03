@@ -11,6 +11,7 @@
 
 A test suite for testing shallow & deep, strict equality as provided by various libraries
 
+![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2016.48.01.png)
 
 ## Test Module Setup
 
