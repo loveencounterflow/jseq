@@ -50,20 +50,26 @@ assert                    = require 'assert'
 @new_counter = ( name ) ->
   R =
     'name':     name
+    'tests':    0
+    'fails':    0
+  return R
 
 #-----------------------------------------------------------------------------------------------------------
 @main = ->
   implementation_count  = 0
   test_count            = 0
   fail_count            = 0
+  counters              = {}
   #.........................................................................................................
   for implementation_name, implementation of @implementations
     implementation_count += 1
     info implementation_name
+    counter = counters[ implementation_name ] = @new_counter implementation_name
     #.......................................................................................................
     for test_name, test of @tests implementation.eq, implementation.ne
       continue if test_name[ 0 ] is '_'
-      test_count += 1
+      test_count         += 1
+      counter[ 'tests' ] += 1
       title       = "#{implementation_name} / #{test_name}"
       result      = test.call @test
       #.....................................................................................................
@@ -71,10 +77,10 @@ assert                    = require 'assert'
         #...................................................................................................
         when 'boolean'
           if result
-            # pass_count += 1
             praise title
           else
-            fail_count += 1
+            fail_count         += 1
+            counter[ 'fails' ] += 1
             warn title
         #...................................................................................................
         when 'list'
@@ -92,7 +98,8 @@ assert                    = require 'assert'
             praise title
           else
             for sub_error in sub_errors
-              fail_count += 1
+              fail_count         += 1
+              counter[ 'fails' ] += 1
               warn "#{title} / #{sub_error}"
         #...................................................................................................
         else
@@ -113,6 +120,7 @@ assert                    = require 'assert'
   praise  "of which #{pass_count} tests passed,"
   warn    "and #{fail_count} tests failed."
   whisper '-------------------------------------------------------------'
+  whisper counters
   #.........................................................................................................
   return null
 
