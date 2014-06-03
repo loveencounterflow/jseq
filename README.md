@@ -31,14 +31,14 @@ between the libraries tested, as the screen shot below readily shows (don't take
 seriously, those are currently broken due to the (to me at least) strange API of that library).
 Here is a sample output of jsEq running `node jseq/lib/main.js`:
 
-![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-03%20at%2021.04.49.png)
+![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-04%20at%2000.31.24.png)
 
 The `lodash` and `underscore` results are probably identical because `lodash` strives to be a 'better
 `underscore`'.
 
-> Funny to see how they fail on `eq +0, -0`; i guess `underscore` made it a point to distinguish between the
-> two since 'JS fails to'. At first it may be hard to see what that could be useful for, but see below for
-> [a discussion of comparing numerical and quasi-numerical values](https://github.com/loveencounterflow/jseq#comparing-numerical-and-quasi-numerical-values).
+> At first it may be hard to see what `ne +0, -0` could be useful for as in JavaScript, `+0 == -0` holds,
+> but see below for
+> [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 
 The `jkroso equals` and `CoffeeNode Bits'N'Pieces` results are identical since the former is really the
 implementation of the latter; based on the results shown i'll try and combine different techniques /
