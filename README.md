@@ -187,8 +187,33 @@ In other words, positive zero is preferred over negative zero when adding 'oppos
 
 ### Concept of Type
 
+An important axiom in computing is that two values `x` and `y` can only ever be equal when they both have
+the same type; conversely, when two values are equal, they must be of equal type, too.
 
-⟨*type*, *value*⟩
+More formally, let us **L** denote the language under inspection, and be **M** the meta-language to discuss and
+/ or to implement **L**. Then, saying that `eq x, y` results in `true` implies that
+`eq (type-of x ), (type-of y )` is also `true`.
+
+We can capture that by saying that in **M**, all values `x` of **L** are represented by a tuple ⟨*t*, *v*⟩
+where *t* is the type of `x` and *v* is its value—'without' its type, which impossible in theory but
+possible in (theoretical) practice, since all values that can occur within a real-world program at any given
+point in time are  enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number. Since all
+*n* are of the  same type, they can be said to be typeless).
+
+When we are comparing two values for equality in **L**, then, we are really comparing the two elements of
+two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values,
+and since we have reduced all values to integers and types are values, too, we have reduced the problem
+to comparing to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has a very obvious
+solution.
+
+> The above is not so abstruse as it may sound; in Python, `id( value )` will give you an integer that
+> basically returns a number that represents a memory location, and in JavaScript, types are commonly
+> represented as texts. Therefore, finding the ID of a type entails searching through memory whether
+> a given string is already on record and where, and if not, to create such a record and return its memory
+> address. Further, i would assume that most of the time, maybe always when you do `'foo' === 'foo'` in
+> JavaScript, what you really do is comparing *IDs*, not strings of characters.
+
+
 
 NaN
 
