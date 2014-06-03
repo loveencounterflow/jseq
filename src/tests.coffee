@@ -22,36 +22,37 @@ module.exports = ( eq, ne ) ->
   #---------------------------------------------------------------------------------------------------------
   ### 1.1. positive ###
 
-  R[ "NaN eqs NaN"                                           ] = -> eq NaN, NaN
-  R[ "finite integer n eqs n"                                ] = -> eq 1234, 1234
-  R[ "emtpy array eqs empty array"                           ] = -> eq [], []
-  R[ "emtpy object eqs empty object"                         ] = -> eq {}, {}
-  R[ "number object eqs primitive number of same value"      ] = -> eq 5, new Number 5
-  R[ "string object eqs primitive string of same value"      ] = -> eq 'helo', new String 'helo'
-  R[ "+0 should eq -0"                                       ] = -> eq +0, -0
-  R[ "regex lit's w. same pattern, flags are eq"             ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
+  R[ "NaN eqs NaN"                                            ] = -> eq NaN, NaN
+  R[ "finite integer n eqs n"                                 ] = -> eq 1234, 1234
+  R[ "emtpy list eqs empty list"                              ] = -> eq [], []
+  R[ "emtpy pod eqs empty pod"                                ] = -> eq {}, {}
+  R[ "number eqs number of same value"                        ] = -> eq 123.45678, 123.45678
+  R[ "number pod eqs primitive number of same value"          ] = -> eq 5, new Number 5
+  R[ "string pod eqs primitive string of same value"          ] = -> eq 'helo', new String 'helo'
+  R[ "+0 should eq -0"                                        ] = -> eq +0, -0
+  R[ "regex lit's w same pattern, flags are eq"               ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
 
   #---------------------------------------------------------------------------------------------------------
   ### 1.2. negative ###
 
-  R[ "object doesn't eq array"                               ] = -> ne {}, []
-  R[ "object in a list doesn't eq array in array"            ] = -> ne [{}], [[]]
-  R[ "integer n doesn't eq rpr n"                            ] = -> ne 1234, '1234'
-  R[ "empty array doesn't eq false"                          ] = -> ne [], false
-  R[ "array with an integer doesn't eq one with rpr n"       ] = -> ne [ 3 ], [ '3' ]
-  R[ "regex lit's w. diff. patterns, same flags aren't eq"   ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
-  R[ "regex lit's w. same patterns, diff. flags aren't eq"   ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
+  R[ "pod doesn't eq list"                                    ] = -> ne {}, []
+  R[ "pod in a list doesn't eq list in list"                  ] = -> ne [{}], [[]]
+  R[ "integer n doesn't eq rpr n"                             ] = -> ne 1234, '1234'
+  R[ "empty list doesn't eq false"                            ] = -> ne [], false
+  R[ "list w an integer doesn't eq one w rpr n"               ] = -> ne [ 3 ], [ '3' ]
+  R[ "regex lit's w diff. patterns, same flags aren't eq"     ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
+  R[ "regex lit's w same patterns, diff. flags aren't eq"     ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
 
   #=========================================================================================================
   ### 2. complex tests ###
   #---------------------------------------------------------------------------------------------------------
-  R[ "array with named member eqs other array with same member" ] = ->
+  R[ "list w named member eqs other list w same member" ] = ->
     d = [ 'foo', null, 3, ]; d[ 'extra' ] = 42
     e = [ 'foo', null, 3, ]; e[ 'extra' ] = 42
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "array with named member doesn't eq array with same member, other value" ] = ->
+  R[ "list w named member doesn't eq list w same member, other value" ] = ->
     d = [ 'foo', null, 3, ]; d[ 'extra' ] = 42
     e = [ 'foo', null, 3, ]; e[ 'extra' ] = 108
     return ne d, e
@@ -69,13 +70,13 @@ module.exports = ( eq, ne ) ->
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "circular arrays with same layout and same values are eq (1)" ] = ->
+  R[ "circular arrays w same layout and same values are eq (1)" ] = ->
     d = [ 1, 2, 3, ]; d.push d
     e = [ 1, 2, 3, ]; e.push d
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "circular arrays with same layout and same values are eq (2)" ] = ->
+  R[ "circular arrays w same layout and same values are eq (2)" ] = ->
     d = [ 1, 2, 3, ]; d.push d
     e = [ 1, 2, 3, ]; e.push e
     return eq d, e

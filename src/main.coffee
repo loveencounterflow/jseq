@@ -18,7 +18,7 @@ praise                    = TRM.get_logger 'praise',    badge
 echo                      = TRM.echo.bind TRM
 #...........................................................................................................
 @tests                    = require './tests'
-@implementations          = require './implementations'
+@imps                     = require './implementations'
 BNP                       = require 'coffeenode-bitsnpieces'
 TEXT                      = require 'coffeenode-text'
 ### TAINT should use customized fork ###
@@ -27,8 +27,9 @@ Table                     = require 'cli-table'
 
 
 #-----------------------------------------------------------------------------------------------------------
-@new_counter = ( name ) ->
+@new_counter = ( key, name ) ->
   R =
+    'key':      key
     'name':     name
     'tests':    0
     'fails':    0
@@ -36,21 +37,35 @@ Table                     = require 'cli-table'
 
 #-----------------------------------------------------------------------------------------------------------
 @main = ->
-  implementation_count  = 0
+  imp_count  = 0
   test_count            = 0
   fail_count            = 0
-  counters              = []
+  counters              = {}
+  results_by_test_name  = {}
   #.........................................................................................................
-  for implementation_name, implementation of @implementations
-    implementation_count += 1
-    info implementation_name
-    counter = @new_counter implementation_name
-    counters.push counter
+  for imp_name, imp of @imps
+    imp_count += 1
+    info imp_name
+    [ imp_key
+      imp_name
+      illegal...              ] = imp_name.split /:\s+/
+    unless illegal.length is 0
+      throw new Error "unsyntactic implementation name: #{rpr imp_name}"
+    unless 0 < imp_key.length < 4
+      throw new Error "unsyntactic implementation name: #{rpr imp_name}"
+    unless imp_name.length > 1
+      throw new Error "unsyntactic implementation name: #{rpr imp_name}"
+    if counters[ imp_key ]?
+      throw new Error "duplicate implementation key: #{rpr imp_name}"
+    counter = @new_counter imp_key, imp_name
+    counters[ imp_key ] = counter
     #.......................................................................................................
-    for test_name, test of @tests implementation.eq, implementation.ne
+    for test_name, test of @tests imp.eq, imp.ne
       continue if test_name[ 0 ] is '_'
-      title       = "#{implementation_name} / #{test_name}"
-      result      = test.call @test
+      results_entry             = results_by_test_name[ test_name ]?= {}
+      results_entry[ imp_key ]  = true
+      title                     = "#{imp_name} / #{test_name}"
+      result                    = test.call @test
       #.....................................................................................................
       switch result_type = TYPES.type_of result
         #...................................................................................................
@@ -60,8 +75,9 @@ Table                     = require 'cli-table'
           if result
             praise title
           else
-            fail_count         += 1
-            counter[ 'fails' ] += 1
+            fail_count               += 1
+            counter[ 'fails' ]       += 1
+            results_entry[ imp_key ]  = false
             warn title
         #...................................................................................................
         when 'list'
@@ -79,6 +95,7 @@ Table                     = require 'cli-table'
           if sub_errors.length is 0
             praise title
           else
+            results_entry[ imp_key ] = false
             for sub_error in sub_errors
               fail_count         += 1
               counter[ 'fails' ] += 1
@@ -98,12 +115,13 @@ Table                     = require 'cli-table'
   # warn    "and #{fail_count} tests failed."
   pass_count = test_count - fail_count
   whisper '-------------------------------------------------------------'
-  info    "Tested #{implementation_count} implementations."
+  info    "Tested #{imp_count} imps."
   info    "Overall, #{test_count} tests were run"
   praise  "of which #{pass_count} tests passed,"
   warn    "and #{fail_count} tests failed."
   whisper '-------------------------------------------------------------'
   #.........................................................................................................
+  counters = ( counter for ignored, counter of counters )
   counters.sort ( a, b ) ->
     return +1 if a[ 'name' ][ 0 ] is '!'
     return -1 if b[ 'name' ][ 0 ] is '!'
@@ -112,17 +130,18 @@ Table                     = require 'cli-table'
     return  0
   #.........................................................................................................
   options =
-    head: [ 'rank', 'implementation', 'tests', 'passes', '%', 'fails', '%' ]
+    head: [ 'rank', 'key', 'implementation name', 'tests', 'passes', '%', 'fails', '%' ]
     chars: 'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''
-  table = new Table options
+  table_1 = new Table options
   width = 8
   for counter, idx in counters
-    { name, tests, fails }  = counter
-    passes                  = tests - fails
-    passes_percentage       = "#{( passes / tests * 100 ).toFixed 1} %"
-    fails_percentage        = "#{(  fails / tests * 100 ).toFixed 1} %"
-    table.push [
+    { key, name, tests, fails } = counter
+    passes                      = tests - fails
+    passes_percentage           = "#{( passes / tests * 100 ).toFixed 1} %"
+    fails_percentage            = "#{(  fails / tests * 100 ).toFixed 1} %"
+    table_1.push [
       TRM.grey  idx + 1
+      TRM.gold  key
       TRM.gold  name
       TRM.blue  tests
       TRM.green TEXT.flush_right passes,            width
@@ -130,9 +149,27 @@ Table                     = require 'cli-table'
       TRM.red   TEXT.flush_right fails,             width
       TRM.red   TEXT.flush_right fails_percentage,  width
       ]
-  console.log table.toString()
-  help "Figures for implementations marked with an ! exclamation mark"
+  #.........................................................................................................
+  headers   = [ '', ]
+  imp_keys  = ( counter[ 'key' ] for counter in counters )
+  headers.push.apply headers, imp_keys
+  options[ 'head' ] = headers
+  table_2 = new Table options
+  for test_name, success_by_imp_key of results_by_test_name
+    test_name = test_name[ ... 50 ] + '⋯' if test_name.length > 50
+    row = [ test_name ]
+    for imp_key in imp_keys
+      if success_by_imp_key[ imp_key ]
+        row.push TRM.green '✔'
+      else
+        row.push TRM.red '✘'
+    table_2.push row
+  #.........................................................................................................
+  log '\n\n' + table_1.toString()
+  help "Figures for imps marked with an `!` (exclamation mark)"
   help "should be treated with care as their test setup is probably not correct."
+  #.........................................................................................................
+  log '\n\n' + table_2.toString()
   #.........................................................................................................
   return null
 
