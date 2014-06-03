@@ -194,11 +194,11 @@ More formally, let **L** denote the language under inspection, and be **M** the 
 / or to implement **L**. Then, saying that `eq x, y` results in `true` implies that
 `eq ( type-of x ), ( type-of y )` is also `true`.
 
-We can capture that by saying that in **M**, all values `x` of **L** are represented by a tuple ⟨*t*, *v*⟩
-where *t* is the type of `x` and *v* is its value—'without' its type, which impossible in theory but
-possible in (theoretical) practice, since all values that can occur within a real-world program at any given
-point in time are  enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number. Since all
-*n* are of the  same type, they can be said to be typeless).
+We can capture that by saying that in **M**, all values `x` of **L** are represented by tuples ⟨*t*, *v*⟩
+where *t* is the type of `x` and *v* is its value—'without' its type, which is impossible in theory but
+possible in (theoretical) practice, since all unique values that may occur within a real-world program at
+any given point in time are enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number.
+Since all *n* are of the same type, they can be said to be typeless.
 
 When we are comparing two values for equality in **L**, then, we are really comparing the two elements of
 two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values,
