@@ -2,15 +2,15 @@
 
 - [jsEq](#jseq)
 	- [Test Module Setup](#test-module-setup)
-		- [Comparing Numerical and Quasi-Numerical Values](#comparing-numerical-and-quasi-numerical-values)
-			- [Not-A-Number](#not-a-number)
-			- [Infinity](#infinity)
-		- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
-			- [Equality of Sub-Types](#equality-of-sub-types)
-			- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
-			- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
-			- [Positive and Negative Zero](#positive-and-negative-zero)
-		- [POD key ordering](#pod-key-ordering)
+	- [Comparing Numerical and Quasi-Numerical Values](#comparing-numerical-and-quasi-numerical-values)
+	- [Not-A-Number](#not-a-number)
+	- [Infinity](#infinity)
+	- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
+	- [Equality of Sub-Types](#equality-of-sub-types)
+	- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
+	- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
+	- [Positive and Negative Zero](#positive-and-negative-zero)
+	- [POD key ordering](#pod-key-ordering)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Motivation](#motivation)
@@ -143,13 +143,13 @@ all, but rather *object identity*, with the understanding that all the primitive
 identity per value (something that e.g. seems to hold in Python e.g. for all integers, but not necessarily
 all strings).
 
-### Comparing Numerical and Quasi-Numerical Values
+## Comparing Numerical and Quasi-Numerical Values
 
-#### Not-A-Number
+## Not-A-Number
 
-#### Infinity
+## Infinity
 
-### First Axiom: Value Equality Entails Type Equality
+## First Axiom: Value Equality Entails Type Equality
 
 An important axiom in computing is that two values `x` and `y` can only ever be equal when they both have
 the same type; conversely, when two values are equal, they must be of equal type, too.
@@ -181,7 +181,7 @@ I hope this short discussion will have eliminated almost any remaining doubt whe
 types can ever be equal. However, there are two questions i assume the astute reader will be inclined
 to ask. These are: what about sub-typed values? how about numbers?
 
-#### Equality of Sub-Types
+## Equality of Sub-Types
 
 As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of
 how it is derived. That an instance of a given type shares methods or data fields doesn't change the
@@ -192,7 +192,7 @@ of some subtypes may stand in for instances of their super-type in some setups, 
 saying that a nail can often do the work of a screw—in other words, this is about *fitness for a purpose*
 a.k.a. *equivalence*, not about equality as understood here.
 
-#### Equality of Numerical Values in Python
+## Equality of Numerical Values in Python
 
 As for the second question, it is in theory somewhat harder, but fortunately, there is an easy solution.
 
@@ -258,10 +258,10 @@ subclassing, is ever considered when testing equality in our sense.
 
 This leads to a second axiom:
 
-#### Second Axiom: Equality of Program Behavior
+## Second Axiom: Equality of Program Behavior
 
 
-#### Positive and Negative Zero
+## Positive and Negative Zero
 
 ```coffeescript
 signed_rpr = ( x ) ->
@@ -303,7 +303,7 @@ In other words, positive zero is preferred over negative zero when adding 'oppos
 
 Since we have earlier seen that
 
-### POD key ordering
+## POD key ordering
 
 ## Bonus And Malus Points
 
