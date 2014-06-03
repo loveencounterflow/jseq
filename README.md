@@ -343,9 +343,32 @@ consistently fails silently when you access undefined object properties and do n
 the latter case, it resorts to returning sometimes `Infinity`, and sometimes `NaN`, both of which make
 little sense in most cases.
 
-Now, 'infinity' can be a useful concept for some use cases, but there is hardly any use case for `NaN`
-(except of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that one,
-`NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!`).
+Now, 'infinity' can be a useful concept for some use cases, but there is hardly any use case for `NaN`,
+except of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that one,
+
+```
+NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!
+```
+
+Worse, while `NaN` is short for *not* a number, `typeof NaN` returns... `'number'`! WAT!! And this is not
+the end to the weirdness: as mandated by the standard, **`NaN` does not equal itself**. Now try and tack
+attributes unto a `NaN`, and will silently fail to accept any named members. There's no constructor for this
+singleton value, so you can not produce a copy of it. You cannot delete it from the language; it is always
+there, a solitary value with an identity crisis. Throw it into an arithmetic expression and it will taint
+all output. The sheer existence of `NaN` in a language that knows how to throw and catch exceptions is an
+oxymoron, as all expressions that currently return it should relly throw an error instead.
+
+Having read a discussion on StackOverflow about the merits and demerits of `NaN != NaN`, i'm fully convinced
+that whatever i have said about Python's concept of numerical equality (which turned out to be equivalence)
+applies to `NaN != NaN` as well: it was stipulated because any of a large class of arithmetic expressions
+could have caused a given occurrence of `NaN`, and claiming that those results are 'equal' would be
+tantamount to claiming that `'wat' - 1` equals `Infinity * 0`, which is obviously wrong. Still, this is
+a pragmatic and purpose-oriented solution for defining equivalence, not a principled one to define strict
+equality.
+
+**I conclude that according to the First and Second Axioms, `eq NaN, NaN` must hold**, on the grounds
+that no program using `NaN` values from different sources can make a difference on the base of manipulating
+these values or passing them as arguments to the same functions.
 
 
 
