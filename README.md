@@ -33,7 +33,7 @@ The `lodash` and `underscore` results are probably identical because `lodash` st
 `underscore`'.
 
 > Funny to see how they fail on `eq +0, -0`; i guess `underscore` made it a point to distinguish between the
-> two since 'JS fails to'. No idea what that distinction could be useful for; see below for
+> two since 'JS fails to'. At first it may be hard to see what that could be useful for, but see below for
 > [a discussion of comparing numerical and quasi-numerical values](https://github.com/loveencounterflow/jseq#comparing-numerical-and-quasi-numerical-values).
 
 The `jkroso equals` and `CoffeeNode Bits'N'Pieces` results are identical since the former is really the
@@ -195,16 +195,16 @@ More formally, let **L** denote the language under inspection, and be **M** the 
 `eq ( type-of x ), ( type-of y )` is also `true`.
 
 We can capture that by saying that in **M**, all values `x` of **L** are represented by tuples ⟨*t*, *v*⟩
-where *t* is the type of `x` and *v* is its value—'without' its type, which is impossible in theory but
-possible in (theoretical) practice, since all unique values that may occur within a real-world program at
-any given point in time are enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number.
-Since all *n* are of the same type, they can be said to be typeless.
+where *t* is the type of `x` and *v* is its value—'without' its type, which may sound strange but is
+possible, since all unique values that may occur within a real-world program at any given point in time are
+enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number. Since all *n* are of the same
+type, they can be said to be typeless.
 
 When we are comparing two values for equality in **L**, then, we are really comparing the two elements of
-two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values,
-and since we have reduced all values to integers and types are values, too, we have reduced the problem
-to comparing to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has a very obvious
-solution.
+two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values
+in **M**, and since we have reduced all values to integers, and since types are values, too, we have reduced
+the problem to comparing to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has a very
+obvious solution: the outcome can only be `true` if the two elements of each tuple are pairwise identical.
 
 > The above is not so abstruse as it may sound; in Python, `id( value )` will give you an integer that
 > basically returns a number that represents a memory location, and in JavaScript, types are commonly
@@ -212,6 +212,19 @@ solution.
 > a given string is already on record and where, and if not, to create such a record and return its memory
 > address. Further, i would assume that most of the time, maybe always when you do `'foo' === 'foo'` in
 > JavaScript, what you really do is comparing *IDs*, not strings of characters.
+
+I hope this short discussion will have eliminated almost any remaining doubt that two values of different
+types can ever be equal. However, there are two questions i assume the astute reader will be inclined
+to ask. These are: what about sub-typed values? how about numbers?
+
+As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of
+how it is derived. That an instance of a given type shares methods or data fields doesn't change the
+fact that somewhere it must have—explicitly or implicitly, accessible from **L** or only from **M**—a data
+field where its type is noted, and if the contents of that field do not equal the equivalent field of
+the other instance, they cannot be equal if our above considerations make any sense. True, some instances
+of some subtypes may stand in for instances of their super-type in some setups, but that is the same as
+saying that a nail can often do the work of a screw—in other words, this is about *fitness for a purpose*
+a.k.a. *equivalence*, not about equality as understood here.
 
 
 
