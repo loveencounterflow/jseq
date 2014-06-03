@@ -3,6 +3,9 @@
 - [jsEq](#jseq)
 	- [Test Module Setup](#test-module-setup)
 		- [Comparing Numerical and Quasi-Numerical Values](#comparing-numerical-and-quasi-numerical-values)
+			- [Not-A-Number](#not-a-number)
+			- [Infinity](#infinity)
+			- [Positive and Negative Zero](#positive-and-negative-zero)
 		- [Concept of Type](#concept-of-type)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -30,8 +33,8 @@ The `lodash` and `underscore` results are probably identical because `lodash` st
 `underscore`'.
 
 > Funny to see how they fail on `eq +0, -0`; i guess `underscore` made it a point to distinguish between the
-> two since 'JS fails to'. No idea what that distinction could be useful for; see below for a discussion of
-> comparing numerical and quasi-numerical values.
+> two since 'JS fails to'. No idea what that distinction could be useful for; see below for
+> [a discussion of comparing numerical and quasi-numerical values](https://github.com/loveencounterflow/jseq#comparing-numerical-and-quasi-numerical-values).
 
 The `jkroso equals` and `CoffeeNode Bits'N'Pieces` results are identical since the former is really the
 implementation of the latter; based on the results shown i'll try and combine different techniques /
@@ -137,6 +140,12 @@ identity per value (something that e.g. seems to hold in Python e.g. for all int
 all strings).
 
 ### Comparing Numerical and Quasi-Numerical Values
+
+#### Not-A-Number
+
+#### Infinity
+
+#### Positive and Negative Zero
 
 According to the
 [*ECMAScript® Language Specification*, section 11.6.3, “Applying the Additive Operators to Numbers”](http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.3),
