@@ -36,20 +36,23 @@ module.exports = ( eq, ne ) ->
   R[ "empty array doesn't equal false"                          ] = -> ne [], false
   R[ "array with an integer doesnt equal one with rpr n"        ] = -> ne [ 3 ], [ '3' ]
 
-  #---------------------------------------------------------------------------------------------------------
+  #=========================================================================================================
   ### 2. complex tests ###
-  R[ "circular arrays with same layout and same values are equal" ] = ->
-    d = [ 1, 2, 3, ]
-    d.push d
-    e = [ 1, 2, 3, ]
-    e.push d
-    eq d, e
+  #---------------------------------------------------------------------------------------------------------
+  R[ "circular arrays with same layout and same values are equal (1)" ] = ->
+    d = [ 1, 2, 3, ]; d.push d
+    e = [ 1, 2, 3, ]; e.push d
+    return eq d, e
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "circular arrays with same layout and same values are equal (2)" ] = ->
+    d = [ 1, 2, 3, ]; d.push d
+    e = [ 1, 2, 3, ]; e.push e
+    return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
   ### joshwilsdon's test (https://github.com/joyent/node/issues/7161) ###
   R[ "joshwilsdon" ] = ->
-    # d1 = [ NaN, undefined, null, ]
-    # d2 = [ NaN, undefined, null, ]
     d1 = [ NaN, undefined, null, true, false, Infinity, 0, 1, "a", "b", {a: 1}, {a: "a"},
       [{a: 1}], [{a: true}], {a: 1, b: 2}, [1, 2], [1, 2, 3], {a: "1"}, {a: "1", b: "2"} ]
     d2 = [ NaN, undefined, null, true, false, Infinity, 0, 1, "a", "b", {a: 1}, {a: "a"},
@@ -59,11 +62,9 @@ module.exports = ( eq, ne ) ->
       for idx2 in [ idx1 ... d2.length ]
         v2 = d2[ idx2 ]
         if idx1 == idx2
-          # debug 'eq', idx1, idx2, ( eq v1, v2 ), [ v1, v2 ]
           unless eq v1, v2
             errors.push "eq #{rpr v1}, #{rpr v2}"
         else
-          # debug 'ne', idx1, idx2, ( ne v1, v2 ), [ v1, v2 ]
           unless ne v1, v2
             errors.push "ne #{rpr v1}, #{rpr v2}"
     #.......................................................................................................
