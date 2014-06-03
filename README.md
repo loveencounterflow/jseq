@@ -5,8 +5,12 @@
 		- [Comparing Numerical and Quasi-Numerical Values](#comparing-numerical-and-quasi-numerical-values)
 			- [Not-A-Number](#not-a-number)
 			- [Infinity](#infinity)
+		- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
+			- [Equality of Sub-Types](#equality-of-sub-types)
+			- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
+			- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
 			- [Positive and Negative Zero](#positive-and-negative-zero)
-		- [Concept of Type](#concept-of-type)
+		- [POD key ordering](#pod-key-ordering)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Motivation](#motivation)
@@ -145,47 +149,7 @@ all strings).
 
 #### Infinity
 
-#### Positive and Negative Zero
-
-```coffeescript
-signed_rpr = ( x ) ->
-  return ( if is_negative_zero x then '-0' else '+0' ) if x is 0
-  return Number.prototype.toString.call x
-
-is_negative_zero = ( x ) -> x is 0 and 1 / x < 0
-
-test_signed_zero = ->
-  info +0 == -0               # true
-  info +1 / +0                # Infinity
-  info +1 / -0                # -Infinity
-  info 1 / +0 * 7             # Infinity
-  info 1 / -0 * 7             # -Infinity
-  info +0     < 0             # false
-  info -0     < 0             # false
-  info +0 * 7 < 0             # false
-  info -0 * 7 < 0             # false
-  info Infinity * 0           # NaN
-  info Infinity / +0          # Infinity
-  info Infinity / -0          # -Infinity
-  info signed_rpr +0 ** +1    # +0
-  info signed_rpr -0 ** +1    # -0
-  info signed_rpr +0 ** -1    # Infinity
-  info signed_rpr -0 ** -1    # -Infinity
-
-test_signed_zero()
-```
-
-
-According to the
-[*ECMAScript® Language Specification*, section 11.6.3, “Applying the Additive Operators to Numbers”](http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.3),
-the existence of positive and negative (but no unsigned) zeroes causes logical problems (emphasis mine):
-
-> The sum of two negative zeros is -0. The sum of **two positive zeros**, or of **two zeros of opposite sign**,
-> is **+0.**
-
-In other words, positive zero is preferred over negative zero when adding 'opposite' zeroes.
-
-### Concept of Type
+### First Axiom: Value Equality Entails Type Equality
 
 An important axiom in computing is that two values `x` and `y` can only ever be equal when they both have
 the same type; conversely, when two values are equal, they must be of equal type, too.
@@ -213,9 +177,11 @@ obvious solution: the outcome can only be `true` if the two elements of each tup
 > address. Further, i would assume that most of the time, maybe always when you do `'foo' === 'foo'` in
 > JavaScript, what you really do is comparing *IDs*, not strings of characters.
 
-I hope this short discussion will have eliminated almost any remaining doubt that two values of different
+I hope this short discussion will have eliminated almost any remaining doubt whether two values of different
 types can ever be equal. However, there are two questions i assume the astute reader will be inclined
 to ask. These are: what about sub-typed values? how about numbers?
+
+#### Equality of Sub-Types
 
 As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of
 how it is derived. That an instance of a given type shares methods or data fields doesn't change the
@@ -225,6 +191,8 @@ the other instance, they cannot be equal if our above considerations make any se
 of some subtypes may stand in for instances of their super-type in some setups, but that is the same as
 saying that a nail can often do the work of a screw—in other words, this is about *fitness for a purpose*
 a.k.a. *equivalence*, not about equality as understood here.
+
+#### Equality of Numerical Values in Python
 
 As for the second question, it is in theory somewhat harder, but fortunately, there is an easy solution.
 
@@ -278,12 +246,64 @@ print( x == z )
 print( y == z )
 ```
 
+This example is more proof to the above assertion. If Python's `==` operator had been intended to comply
+with our strict version of equality, there would have been little need to encourage overloading the `==`
+operator, as the answer to that question can be given without implementing any class-specific methods.
 
-This is a clear example
+For these two reasons—that Python's treatment of equality, while great for providing correct deep equal
+tests even with nested, circular objects, is leaning towards arithmetic and custom-tailored equivalence
+rather than towards strictness, and that anyways there's only a single numerical type in JavaScript,
+i believe we should stick with the unadultered axiom that entails that no subclassing, not even numerical
+subclassing, is ever considered when testing equality in our sense.
 
-NaN
+This leads to a second axiom:
 
-POD key ordering
+#### Second Axiom: Equality of Program Behavior
+
+
+#### Positive and Negative Zero
+
+```coffeescript
+signed_rpr = ( x ) ->
+  return ( if is_negative_zero x then '-0' else '+0' ) if x is 0
+  return Number.prototype.toString.call x
+
+is_negative_zero = ( x ) -> x is 0 and 1 / x < 0
+
+test_signed_zero = ->
+  info +0 == -0               # true
+  info +1 / +0                # Infinity
+  info +1 / -0                # -Infinity
+  info 1 / +0 * 7             # Infinity
+  info 1 / -0 * 7             # -Infinity
+  info +0     < 0             # false
+  info -0     < 0             # false
+  info +0 * 7 < 0             # false
+  info -0 * 7 < 0             # false
+  info Infinity * 0           # NaN
+  info Infinity / +0          # Infinity
+  info Infinity / -0          # -Infinity
+  info signed_rpr +0 ** +1    # +0
+  info signed_rpr -0 ** +1    # -0
+  info signed_rpr +0 ** -1    # Infinity
+  info signed_rpr -0 ** -1    # -Infinity
+
+test_signed_zero()
+```
+
+
+According to the
+[*ECMAScript® Language Specification*, section 11.6.3, “Applying the Additive Operators to Numbers”](http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.3),
+the existence of positive and negative (but no unsigned) zeroes causes logical problems (emphasis mine):
+
+> The sum of two negative zeros is -0. The sum of **two positive zeros**, or of **two zeros of opposite sign**,
+> is **+0.**
+
+In other words, positive zero is preferred over negative zero when adding 'opposite' zeroes.
+
+Since we have earlier seen that
+
+### POD key ordering
 
 ## Bonus And Malus Points
 
