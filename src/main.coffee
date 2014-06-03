@@ -2,7 +2,6 @@
 
 
 
-
 ############################################################################################################
 TRM                       = require 'coffeenode-trm'
 rpr                       = TRM.rpr.bind TRM
@@ -19,61 +18,13 @@ praise                    = TRM.get_logger 'praise',    badge
 echo                      = TRM.echo.bind TRM
 #...........................................................................................................
 @tests                    = require './tests'
+@implementations          = require './implementations'
 BNP                       = require 'coffeenode-bitsnpieces'
 TEXT                      = require 'coffeenode-text'
 ### TAINT should use customized fork ###
 TYPES                     = require 'coffeenode-types'
 Table                     = require 'cli-table'
-#...........................................................................................................
-### implementations of deep equality tests: ###
-ASSERT                    = require 'assert'
-LODASH                    = require 'lodash'
-UNDERSCORE                = require 'underscore'
 
-
-#-----------------------------------------------------------------------------------------------------------
-@implementations =
-  #.........................................................................................................
-  "native ==":
-    #.......................................................................................................
-    eq: ( a, b ) -> `a == b`
-    ne: ( a, b ) -> `a != b`
-  #.........................................................................................................
-  "native ===":
-    #.......................................................................................................
-    eq: ( a, b ) -> `a === b`
-    ne: ( a, b ) -> `a !== b`
-  #.........................................................................................................
-  "NodeJS assert":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ASSERT.deepEqual a, b
-      catch error
-        return false
-      return true
-    #.......................................................................................................
-    ne: ( a, b ) ->
-      try
-        ASSERT.notDeepEqual a, b
-      catch error
-        return false
-      return true
-  #.........................................................................................................
-  "underscore _.isEqual":
-    #.......................................................................................................
-    eq: ( a, b ) -> UNDERSCORE.isEqual a, b
-    ne: ( a, b ) -> not UNDERSCORE.isEqual a, b
-  #.........................................................................................................
-  "lodash _.isEqual":
-    #.......................................................................................................
-    eq: ( a, b ) -> UNDERSCORE.isEqual a, b
-    ne: ( a, b ) -> not UNDERSCORE.isEqual a, b
-  #.........................................................................................................
-  "CoffeeNode Bits'N'Pieces":
-    #.......................................................................................................
-    eq: ( a, b ) -> BNP.equals a, b
-    ne: ( a, b ) -> not BNP.equals a, b
 
 #-----------------------------------------------------------------------------------------------------------
 @new_counter = ( name ) ->
@@ -131,7 +82,8 @@ UNDERSCORE                = require 'underscore'
             for sub_error in sub_errors
               fail_count         += 1
               counter[ 'fails' ] += 1
-              warn "#{title} / #{sub_error}"
+              # warn "#{title} / #{sub_error}"
+            warn title
         #...................................................................................................
         else
           throw new Error "#{title}: expected a boolean or a list, got a #{result_type}"
@@ -153,6 +105,8 @@ UNDERSCORE                = require 'underscore'
   whisper '-------------------------------------------------------------'
   #.........................................................................................................
   counters.sort ( a, b ) ->
+    return +1 if a[ 'name' ][ 0 ] is '!'
+    return -1 if b[ 'name' ][ 0 ] is '!'
     return +1 if a[ 'fails' ] > b[ 'fails' ]
     return -1 if a[ 'fails' ] < b[ 'fails' ]
     return  0
@@ -177,6 +131,8 @@ UNDERSCORE                = require 'underscore'
       TRM.red   TEXT.flush_right fails_percentage,  width
       ]
   console.log table.toString()
+  help "Figures for implementations marked with an ! exclamation mark"
+  help "should be treated with care as their test setup is probably not correct."
   #.........................................................................................................
   return null
 

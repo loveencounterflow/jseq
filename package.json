@@ -27,7 +27,11 @@
     "coffeenode-text": "^0.1.5",
     "coffeenode-trm": "^0.1.15",
     "coffeenode-types": "^0.1.1",
+    "deep-equal": "^0.2.1",
+    "deeper": "^1.0.2",
     "equals": "^0.3.6",
+    "qunitjs": "^1.14.0",
+    "should": "^4.0.0",
     "underscore": "^1.6.0"
   }
 }

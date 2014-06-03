@@ -3,7 +3,7 @@
 - [jsEq](#jseq)
 	- [Test Module Setup](#test-module-setup)
 		- [Concept of Type](#concept-of-type)
-	- [Bonus Points](#bonus-points)
+	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Motivation](#motivation)
 
@@ -104,20 +104,33 @@ equality, identity, and equivalence
 equality and identity are extensional, formal qualities; equivalence is an intentional, informal
 quality
 
+It can be said that JavaScript's `==` 'non-strict equals operator' never tested *value equality* at all,
+rather, it tested *value equivalence*. Now we have seen that equivalence is a highly subjective concept that
+is suceptible to the conditions of specific use cases. As such, it is a bad idea to implement it in the
+language proper. The concept that `3 == '3'` (number three is equivalent to a string with the ASCII digit
+three, U+0033) does hold in some common contexts (like `console.log(3)`) and breaks down in some other, also
+very common contexts (like `x.length`, which is undefined for numbers).
+
+Further, it can be said that JavaScript's `===` 'strict equals operator' never tested *value equality* at
+all, but rather *object identity*, with the understanding that all the primitive types have one single
+identity per value (something that e.g. seems to hold in Python e.g. for all integers, but not necessarily
+all strings).
+
 ### Concept of Type
 
 
-⟪*type*, *value*⟫
+⟨*type*, *value*⟩
 
 NaN
 
 POD key ordering
 
-## Bonus Points
+## Bonus And Malus Points
 
-* allow to configure whether `eq NaN, NaN` should hold
-* allow to configure whether object key ordering should be honored
-* allow to test arbitrary number of arguments for pairwise equality
+* *+1*: if method allows to configure whether `eq NaN, NaN` should hold.
+* *+1*: if method allows to configure whether object key ordering should be honored.
+* *+1*: if method allows to test arbitrary number of arguments for pairwise equality.
+* *—1*: if (non-assertive) method throws an error on any comparison
 
 ## Benchmarks
 
