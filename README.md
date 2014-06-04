@@ -463,7 +463,7 @@ should eq -0" ] = -> eq +0, -0`. I then proceeded adding libraries to jsEq and f
 put into delivering pretty detailed test reports was not for naught as more and more small differences
 between the libraries popped up: this library misses that test case, the next passes the other test, and so
 on. I sorted the results, and seeing that `underscore` got the highscore (pun intended), it surprised me to
-see that it insisted on treating `+0` and `-0` as *not+ equal. Ultimately, this led to the discovery of the
+see that it insisted on treating `+0` and `-0` as *not* equal. Ultimately, this led to the discovery of the
 second Axiom, and with that in my hands, it became clear that `underscore` got this one right and my test
 case got it wrong: **Since there are known programs that behave differently with positive and negative zero,
 these two values must not be considered equal**.
