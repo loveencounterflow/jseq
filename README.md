@@ -52,14 +52,14 @@ passed.
 
 The present module has been implemented in [CoffeeScript](http://coffeescript.org), my favorite language
 these days. Most of the examples in the present ReadMe are in CoffeeScript, too, so whenever you see
-something like `f x, y` and you're not one of those people who dream in CoffeeScript, you'll have to
+a construct like `f x, y`, you'll have to
 mentally translate that into `f( x, y )`. What's more, CoffeeScript's `==` operator translates to
 JavaScript's `===`, while JS `==` has (rightly) no equivalent in CS. I agree that this can be somehwat
 confusing, especially in a text like this where different concepts of equality play a crucial role. I
-strived for clarity in this point by making sure that whenever an isolated `==` or `===` appears, it is
-also annotated from which language it has been taken.
+strive for clarity in this point by making sure that whenever an isolated `==` or `===` appears, it is
+annotated from which language it has been taken.
 
-> I for one would prefer to use `:` for assignment
+> I for one prefer to use `:` for assignment
 > (as it is already done inside object literals) and `=` for equality testing, which is one of the reasons
 > i started [Arabika](https://github.com/loveencounterflow/arabika/), an as yet incipient and experimental
 > language where i try out parametrized, modular grammars (so that if you like the language but can't live
@@ -67,7 +67,7 @@ also annotated from which language it has been taken.
 > own choice for that one).
 
 Incidentally, i'm writing lots of tests for Arabika, and one day i was struck
-by a false positive test: i has tested something like `[ 3 ]` against `[ '3' ]`, and the test passed.
+by a false positive test: a result à la `[ 3 ]` passed when compared to `[ '3' ]`.
 Research quickly showed that NodeJS' `assert.deepEqual` to be the culprit, so i chimed in to the
 [discussion on bug #7161](https://github.com/joyent/node/issues/7161). I felt i was not completely alone
 in my quest for sound equality testing in JavaScript, and the subject being too complex to grasp with
