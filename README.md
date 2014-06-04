@@ -594,6 +594,31 @@ discussion, we can give a quick answer: **a primitive value and an equivocal obj
 regarded as different.** It follows from our Second Axiom in conjunction with the fact that trying to attach
 a property to a primitive or an object will show a different outcome depending on the receiver.
 
+> One could also assert that the need for `ne 5, new Number 5` follow from the First Axiom, as `5` and
+> `new Number 5` are not of the same type. However, it is not quite as clear. After all, checking types
+> can be done in two ways: one way is to submit a given value to a series of tests—how does it behave when
+> passed to `Math.sin()`, what is the result of doing `x + ''`, and so on; the other way is to employ
+> JavaScript language constructs like the `typeof` statement (there's a number of these devices, and
+> usually a judiciously selected combination of several is needed to arrive at a sane result). Now let
+> us imagine that all `typeof`-like devices were not implemented in a language **K** that compiles to
+> JavaScript. Let it further be a known fact that no language construct of **K** results in an accidental
+> use of a `typeof`-like device in the targetted JavaScript; still, we realize, on perusing the generated
+> JS target code resulting from an input written in **K**, that in some cases, `5` appears in the target
+> code, and `new Number 5` in others. The question is then: can we make it so that a program written in
+> **K** behaces differently for two values `x`, `y` where one compiles to a primitive, the other to an
+> object? The answer will be 'yes' in case our probing method (as demonstrated below) can somehow be
+> expressed within **K**. Thus, even some more restricted dialects of JS, the equivalent of `ne 5, new Number 5`
+> should hold; otherwise, our equality testing would be flawed.
+>
+> The reason i'm going to these lengths here lies in the observation that JavaScript's type system is
+> rather deeply broken. It is for this reason that i've written the
+> [CoffeeNode Types](https://github.com/loveencounterflow/coffeenode-types)
+> package quite a while ago, and the present discussion is reason enough for me to work on a 2.0.0 release
+> for that module which will introduce some breaking changes. Long story short: in the absence of a
+> clear-cut typing system, using the First Axiom to decide on equality can only be done when type
+> difference is more than obvious: a number is not a text, a boolean is not 'null', period. But whether
+> or not both a primitive number and an objectified number are of the same type is a much harder question.
+
 In JavaScript, there are the primitive types `undefined`, `null`, `boolean`, `string` and `number`;
 `undefined` and `null` are singletons and do not have a constructor, there's only `Boolean`, `Number`
 and `String`. When you try to attach a property to a primitive value, JavaScript will either complain
