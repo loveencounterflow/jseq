@@ -447,17 +447,17 @@ prompted the suggestion to add `deepStrictEqual` (and, to keep the tune, `notDee
 to the API, which ups the tally to *eight*.
 
 The reader will not have failed to notice that i make do, in the present discussion and the implementation
-of the jsEq package, with a mere *two* API artifacts, `eq` and `ne`, a mere fourth of NodeJS' API. One gets
+of the jsEq package, with a mere *two* API items, `eq` and `ne`, a fourth of what NodeJS offers. One gets
 the impression the CommonJS folks who wrote
 [the unit testing specs](http://wiki.commonjs.org/wiki/Unit_Testing/1.0)
 must have started out, like, "wah equality, that's JS
 `==`", and then at some point realized "cool, there's JS `===`, let's add it, too". A little later someone
-pointed out that JS `[] === []` fails, and those folks went, like, "oh noes, we need `deepEqual`, let's
+may have pointed out that JS `[] === []` fails, and those folks went, like, "oh noes, we need `deepEqual`, let's
 add it already". Of course, since they started out with the broken JS `==` operator, they recycled that
 experience when implementing `deepEqual`, so now their `deepEqual` is as broken as their `equal`. But, hey,
 at least its **consistently broken**, and what's more, we have a standard! Yay!
 
-So now we have a widely-deployed standard that seriously claims that `assert.deepEqual [[]], [{}]` and
+So now we have a widely-deployed assertion framework which seriously claims that `assert.deepEqual [[]], [{}]` and
 `assert.deepEqual [ 3 ], [ '3' ]` should both hold and not throw exceptions like crazy. One wonders what
 the intended use cases for such tests are; i can't think of any.
 
@@ -475,9 +475,9 @@ i do not need to test them at all. Given that i'm unsure about the value of at l
 method—shallow equality for testing primitive values (Booleans, numbers, strings, ...) or deep equality
 for testing 'objects' (lists, dates, ...)—should i take? In the absence of more precise knowledge of my
 values, i cannot choose. So maybe i do some type checking (notoriously hard to get right in JS), or i
-play some `try ... catch` games to find out. It is obvious that if `shallow-equals [], 42`
+play some `try ... catch` games to find out. It is obvious that if `shallow_equals [], 42`
 should fail because one of the arguments is not a primitive value, i have to take the other method,
-`deep-equals [], 42`. If the first should have failed, the second should fail in the same way, so now i
+`deep_equals [], 42`. If the first should have failed, the second should fail in the same way, so now i
 know that the two values are not equal according to my library, since i have run out of methods. It is then
 easy enough to come up with a method `equals x, y` that does exactly that: try one way and, should that fail,
 try the other way, catch all the errors and reduce the output to `true` and `false`.
