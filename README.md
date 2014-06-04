@@ -207,8 +207,22 @@ or failure.
 
 ## Equality, Identity, and Equivalence
 
-equality and identity are extensional, formal qualities; equivalence is an intentional, informal
-quality
+There will be a lot of talk about equality and related topics in this text, so it behooves us to shortly
+not atrictly define, but at least clarify some pertinent terms. Fear not, this formal discussion will be
+short, and save for one more stretch of (rather shallow) theoretical discussion, this ReadMe will remain
+fairly pragmatic; it may even be said that it is a pronouncedly pragmatic text that aims to deliver
+arguments against an ill-conceived standard fraught with artificial rules that serve no practical
+purpose (readers who bear with me will not be left in doubt which standard i'm talking about).
+
+Three vocables will have to be used in any discussion of 'what equals what' in programming languages: these
+are **equality**, **identity**, and **equivalence**.
+
+First off, to me, **equality and identity are extensional, formal qualities, but equivalence is an
+intentional, informal quality**. With 'extensional' i mean 'inherent to the material qualities of a given
+value', while 'intentional' pertains to values only in so far as they are put to some specific use, with a
+certain functionality or result to be achieved. Put simply, the weight of a given nail is an extensional
+quality of that nail; that it is used, in a given case, to hang some framed picture onto the wall is an
+incidental property of it that arises from
 
 It can be said that JavaScript's `==` 'non-strict equals operator' never tested *value equality* at all,
 rather, it tested *value equivalence*. Now we have seen that equivalence is a highly subjective concept that
