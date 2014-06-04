@@ -512,7 +512,7 @@ these values or passing them as arguments to the same functions.
 
 A collateral result of these considerations is that while JavaScript's `===` so-called strict equality
 operator (which is really an object identity operator) functions quite well in most cases, it fails with
-`NaN`. Specifically, it violates a
+`NaN`. Specifically, it violates the
 
 **Fundamental Axiom**: value identity implies value equality. When a given test `f` purports to test for
 equality, but `f x, x` fails to yield `true` for any given `x`, then that test must be considered broken.
@@ -534,7 +534,7 @@ for name, value of obj
   log name, value
 ```
 
-gives `1 third`, `2 second, `4 first`, which reflects **the keys re-ordered by their numerical values, not
+gives `1 third`, `2 second`, `4 first`, which reflects **the keys re-ordered by their numerical values, not
 their order of insertion**. Confusingly, this behavior lingers on when we use `'4'`, `'2'`, `'1'` as
 keys, and magically vanishes as soon as we use keys that can not be interpreted as (32-bit) integers.
 
