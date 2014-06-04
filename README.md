@@ -378,10 +378,10 @@ these values or passing them as arguments to the same functions.
 
 ## Bonus And Malus Points
 
-* *+1*: if method allows to configure whether `eq NaN, NaN` should hold.
-* *+1*: if method allows to configure whether object key ordering should be honored.
-* *+1*: if method allows to test arbitrary number of arguments for pairwise equality.
-* *–1*: if (non-assertive) method throws an error on any comparison
+* **+1** if method allows to configure whether `eq NaN, NaN` should hold.
+* **+1** if method allows to configure whether object key ordering should be honored.
+* **+1** if method allows to test arbitrary number of arguments for pairwise equality.
+* **–1** if (non-assertive) method throws an error on any comparison
 
 ## Benchmarks
 
