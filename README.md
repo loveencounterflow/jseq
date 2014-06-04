@@ -296,6 +296,11 @@ an obvious solution: the result can only be `true` if the two elements of each t
 > a given string is already on record and where, and if not, to create such a record and return its memory
 > address. Further, i would assume that most of the time, maybe always when you do `'foo' === 'foo'` in
 > JavaScript, what you really do is comparing *IDs*, not strings of characters.
+>
+> To make it very clear: i am not proposing here that the shown implementation of **L** in **M** is actually
+> used in practical programming languages, or that it would be overall a good design at all; rather, it is
+> teaching device like BASIC (intended to be an easy language for beginners) and a thought-experiment like
+> Turing machines (intended to make a proof by way of reduction).
 
 I hope this short discussion will have eliminated almost any remaining doubt whether two values of different
 types can ever be equal. However, there are two questions i assume the astute reader will be inclined
