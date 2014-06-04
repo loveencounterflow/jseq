@@ -570,7 +570,7 @@ require it, either. Then again, there is [a strawman proposal](http://wiki.ecmas
 so there's a chance a future version of the language will indeed mandate preservation of object key insertion.
 Moreover, our Second Axiom makes it quite clear that, since otherwise identical
 programs can deliver different outputs for different order of key insertion, and people have come to rely on
-consistent ordering for many years, there is something to be said in infavor of solution (B).
+consistent ordering for many years, there is something to be said in in favor of solution (B).
 
 I guess that a good pragmatic solution is to go with crowd and use object property ordering
 where supported, but not make that factor count in equality tests: **two objects that only differ
