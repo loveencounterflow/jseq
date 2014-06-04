@@ -466,7 +466,7 @@ operator. `===` was added to JavaScript specifically to remedy the pitfalls of `
 not replace `==` was a perceived concern about backwards compatibility. Likewise, it escaped their attention
 that APIs do not get better just by adding more and more methods to them.
 
-I believe it can be made unequivocally clear that **separating deep and shallow equality does have no place
+I believe it can be made unequivocally clear that **separating deep and shallow equality has no place
 in an orderly API, especially not in an assertion framework**.
 
 The reasoning is simple: when i test for
@@ -475,16 +475,16 @@ i do not need to test them at all. Given that i'm unsure about the value of at l
 method—shallow equality for testing primitive values (Booleans, numbers, strings, ...) or deep equality
 for testing 'objects' (lists, dates, ...)—should i take? In the absence of more precise knowledge of my
 values, i cannot choose. So maybe i do some type checking (notoriously hard to get right in JS), or i
-play some `try ... catch` games to find out. It is obvious that if `shallow_equals [], 42`
-should fail because one of the arguments is not a primitive value, i have to take the other method,
-`deep_equals [], 42`. If the first should have failed, the second should fail in the same way, so now i
+play some `try ... catch` games to find out. It is clear that if `shallow_equals [], 42`
+should fail because one of the arguments is not a primitive value, i have to try the other method,
+`deep_equals [], 42`. Since the first failed, the second should fail in the same way, so now i
 know that the two values are not equal according to my library, since i have run out of methods. It is then
 easy enough to come up with a method `equals x, y` that does exactly that: try one way and, should that fail,
 try the other way, catch all the errors and reduce the output to `true` and `false`.
 
 There is no reason why the burden of implementing an all-embracing `equals` method should be put *on the
 user*; rather, it is a failure on part of the library authors to export anything *but* an `equals` method
-(and maybe a `not-equals` method, especially in the case of an assertion library), which is one more reason
+(and maybe a `not_equals` method, especially in the context of an assertion library), which is one more reason
 i consider NodeJS' `assert` broken: instead of two methods, it exports six (and maybe eight at some point in
 the future).
 
