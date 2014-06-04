@@ -474,7 +474,7 @@ these two values must not be considered equal**.
 Yet another one of that rich collection of JavaScript easter eggs (and, like `+0` vs `-0`, one that is
 mandated by IEEE 754), is the existence of a `NaN` (read: Not A Number) value. In my opinion, this value
 shouldn't exist at all. JS does consistently the right thing when it throws an exception on `undefined.x`
-(unable to access property of `undefined`) and on `d.f = 42; d.f 'helo'` (`d.f` is not a function), and, as
+(unable to access property of `undefined`) and on `f = 42; f 'helo'` (`f` is not a function), and, as
 consistently, fails silently when you access undefined object properties and do numerical nonsense. In
 the latter case, it resorts to returning sometimes `Infinity`, and sometimes `NaN`, both of which make
 little sense in most cases.
