@@ -1,6 +1,7 @@
 
 
 - [jsEq](#jseq)
+	- [Language Choice and Motivation](#language-choice-and-motivation)
 	- [Test Module Setup](#test-module-setup)
 	- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
 	- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
@@ -13,7 +14,6 @@
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
-	- [Motivation](#motivation)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -47,6 +47,33 @@ different libraries and passes all tests.
 It has to be said that while—as it stands—jsEq will run no less than `12 * 212 == 2544` tests, most tests
 are between primitive values, which explains why bot JS `==` and `===` turn in with around 9 out of 10 tests
 passed.
+
+## Language Choice and Motivation
+
+The present module has been implemented in [CoffeeScript](http://coffeescript.org), my favorite language
+these days. Most of the examples in the present ReadMe are in CoffeeScript, too, so whenever you see
+something like `f x, y` and you're not one of those people who dream in CoffeeScript, you'll have to
+mentally translate that into `f( x, y )`. What's more, CoffeeScript's `==` operator translates to
+JavaScript's `===`, while JS `==` has (rightly) no equivalent in CS. I agree that this can be somehwat
+confusing, especially in a text like this where different concepts of equality play a crucial role. I
+strived for clarity in this point by making sure that whenever an isolated `==` or `===` appears, it is
+also annotated from which language it has been taken.
+
+> I for one would prefer to use `:` for assignment
+> (as it is already done inside object literals) and `=` for equality testing, which is one of the reasons
+> i started [Arabika](https://github.com/loveencounterflow/arabika/), an as yet incipient and experimental
+> language where i try out parametrized, modular grammars (so that if you like the language but can't live
+> with my particular choice for the equals operator, you can instantiate your own grammar with your
+> own choice for that one).
+
+Incidentally, i'm writing lots of tests for Arabika, and one day i was struck
+by a false positive test: i has tested something like `[ 3 ]` against `[ '3' ]`, and the test passed.
+Research quickly showed that NodeJS' `assert.deepEqual` to be the culprit, so i chimed in to the
+[discussion on bug #7161](https://github.com/joyent/node/issues/7161). I felt i was not completely alone
+in my quest for sound equality testing in JavaScript, and the subject being too complex to grasp with
+haphazard, isolated ad-hoc tests issued via the NodeJS REPL, i came up with jsEq: it is not a new
+implementation of JS (deep) equality, but rather an extensible framework to test available software that
+purports to have an answer to the vexing problem whether two given values are or are not equal.
 
 ## Test Module Setup
 
@@ -507,8 +534,6 @@ exposed to the general public.
 
 ## Benchmarks
 
-To be done.
+A through comparison of equality-testing implementations whould also consider performance (and maybe memory
+consumption). This task has been left for a future day to be written.
 
-## Motivation
-
-https://github.com/joyent/node/issues/7161
