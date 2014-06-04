@@ -318,7 +318,9 @@ instances of some sub-types may stand in for some instances of their super-type 
 the same as saying that a nail can often do the work of a screw—in other words, this consideration is about
 *fitness for a purpose* a.k.a. *equivalence*, not about equality as understood here. Also, that a nail can
 often do the work of a screw does crucially not hinge on a screw being conceptualized as 'a nail with a
-screw thread' or a nail reified as 'a screw with a zero-depth thread'.
+screw thread' or a nail reified as 'a screw with a zero-depth thread'. In other words, just because, in some
+languages, both `print 3` and `print '3'` effect the appearance of a digit three in the output medium
+doesn't mean that `3` and `'3'` are 'the same'.
 
 
 ## Equality of Numerical Values in Python
