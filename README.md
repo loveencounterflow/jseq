@@ -605,7 +605,7 @@ a property to a primitive or an object will show a different outcome depending o
 > use of a `typeof`-like device in the targetted JavaScript; still, we realize, on perusing the generated
 > JS target code resulting from an input written in **K**, that in some cases, `5` appears in the target
 > code, and `new Number 5` in others. The question is then: can we make it so that a program written in
-> **K** behaces differently for two values `x`, `y` where one compiles to a primitive, the other to an
+> **K** behaves differently for two values `x`, `y`, where one compiles to a primitive, the other to an
 > object? The answer will be 'yes' in case our probing method (as demonstrated below) can somehow be
 > expressed within **K**. Thus, even some more restricted dialects of JS, the equivalent of `ne 5, new Number 5`
 > should hold; otherwise, our equality testing would be flawed.
