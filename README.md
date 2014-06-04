@@ -558,9 +558,9 @@ long-standing but non-standardized expected behavior are nothing short of asinin
 mandate that any ordering of properties be kept, but does that mean it's a good idea to not keep ordering
 when most people expect it, most JS engines keep it, and it can convincingly shown to be a very useful
 behavior? But this is idle talk as the Chrome folks will only swear by the millisecond gained in some
-synthetic test case (they are likewise quite indifferent towards the merits of a stable sort and in all
+synthetic test case. (They are likewise quite indifferent towards the merits of a stable sort and in all
 earnestly expect the general public to accept an algorithm that shows one behavior for short and another
-behavior for long lists, the threshold being set at an arbitrary limit of ten elements).
+behavior for long lists, the threshold being set at an arbitrary limit of ten elements.)
 
 It may then be asked whether our version of strict equality **(A)** should or **(B)** should not treat two
 objects as equal when their only difference lies in the ordering of properties. First off, there would
