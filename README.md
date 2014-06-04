@@ -257,10 +257,10 @@ much useless; more on that topic below.
 
 It can be said that JavaScript's `==` 'non-strict equals operator' never tested *value equality* at all,
 rather, it tested *value equivalence*. Now we have seen that equivalence is a highly subjective concept that
-is suceptible to the conditions of specific use cases. As such, it is a bad idea to implement it in the
+is susceptible to the conditions of specific use cases. As such, it is a bad idea to implement it in the
 language proper. The very concept that `3 == '3'` ('number three is equivalent to a string with the ASCII
-digit three, U+0033') does hold in some common contexts (like `console.log( x )`) breaks down in many other,
-also very common contexts (like `x.length`, which is undefined for numbers).
+digit three, U+0033') does hold in some common contexts (like `console.log( x )`), but it breaks down in
+many other, also very common contexts (like `x.length`, which is undefined for numbers).
 
 Further, it can be said that JavaScript's `===` 'strict equals operator' never tested *value equality* at
 all, but rather *object identity*, with the understanding that all the primitive values have one single
@@ -274,9 +274,9 @@ An important axiom in computing is that
 **Axiom 1** Two values `x` and `y` can only ever be equal when they both have the same type; conversely,
 when two values are equal, they must be of equal type, too.
 
-More formally, let **L** denote the language under inspection, and be **M** the meta-language to discuss and
-/ or to implement **L**. Then, saying that `eq x, y` results in `true` implies that
-`eq ( type-of x ), ( type-of y )` is also `true`.
+More formally, let **L** denote the language under inspection (JS or CS), and be **M** the meta-language to
+discuss and / or to implement **L**. Then, saying that `eq x, y` results in `true` implies that
+(in CS) `eq ( type_of x ), ( type_of y )` is also `true`.
 
 We can capture that by saying that in **M**, all values `x` of **L** are represented by tuples ⟨*t*, *v*⟩
 where *t* is the type of `x` and *v* is its value—'without' its type, which may sound strange but is
