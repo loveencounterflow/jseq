@@ -374,9 +374,9 @@ A collateral result of these considerations is that while JavaScript's `===` so-
 operator (which is really an object identity operator) functions quite well in most cases, it fails with
 `NaN`. Specifically, it violates a
 
-**Fundamental Axiom**: object (value) identity implies object (value) equality. Where a given test `f`
-purports to test for equality and fails, as `f x, x`, to yield `true` for any given `x`, then that test
-must be considered broken.
+**Fundamental Axiom**: object (value) identity implies object (value) equality. When a given test `f`
+purports to test for equality, but `f x, x` fails to yield `true` for any given `x`, then that test must be
+considered broken.
 
 
 ## Object Property Ordering
