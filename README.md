@@ -354,12 +354,12 @@ abstract type `number` instead of any subclass of numbers, this being an excepti
 practical reasons. Another solution would be to state that our theory is only applicable to languages which
 have only a single numerical type, so it may be valid for JavaScript, but certainly not Java or Python.
 
-A third way, and i believe the right one, is to assert that **what Python does with its `1 == 1.0 == 1 + 0j ==
-Decimal( 1 )` comparison is really *not* doing equality, but equivalence testing for the well-known,
-well-documented, exceptional case of comparing numerical values for arithmetic purposes**. And, in fact,
-it so turns out that in Python you can overload the behavior of the `==` operator by defining a specical
-method `__eq__` on a class, and if you so want it, you can make Python say yes to `x == y` even though
-`x.foo == y.foo` does *not* hold! It is in fact very simple:
+A third way, and i believe the right one, is to assert that **what Python does with its `1 == 1.0 == 1 + 0j
+== Decimal( 1 )` comparison is really *not* doing equality, but rather equivalence testing, tailored to the
+specific use-case of comparing numerical values for arithmetic purposes**. And, in fact, it so turns out
+that in Python you can overload the behavior of the `==` operator by defining a special method `__eq__` on
+a class, and if you so want it, you can make Python say yes to `x == y` even though `x.foo == y.foo` does
+*not* hold! It is in fact very simple:
 
 ```python
 class X:
