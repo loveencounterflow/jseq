@@ -692,7 +692,7 @@ in an orderly API, especially not in an assertion framework**.
 
 The reasoning is simple: when i test for
 equality, i want to test two (or more) values `x`, `y`. If i knew for sure that `x` and `y` are equal,
-i do not need to test them at all. Given that i'm unsure about the value of at least one of `x`, `y`, which
+there wasn't a need to test them. Given that i'm unsure about the value of at least one of `x`, `y`, which
 method—shallow equality for testing primitive values (Booleans, numbers, strings, ...) or deep equality
 for testing 'objects' (lists, dates, ...)—should i take? In the absence of more precise knowledge of my
 values, i cannot choose. So maybe i do some type checking (notoriously hard to get right in JS), or i
