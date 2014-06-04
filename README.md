@@ -572,9 +572,9 @@ Moreover, our Second Axiom makes it quite clear that, since otherwise identical
 programs can deliver different outputs for different order of key insertion, and people have come to rely on
 consistent ordering for many years, there is something to be said in infavor of solution (B).
 
-Personally, i'm undecided at this moment; i guess that a good pragmatic solution would be that if there's
-a straightforward way to implement (B)—objects that differ only on key ordering should test not equal–then
-our implementation should offer this as an opt-in feature.
+I guess that a good pragmatic solution is to go with crowd and use object property ordering
+where supported, but not make that factor count in equality tests: **(A) two objects that only differ
+in the order of key insertion shall be regarded equal**.
 
 ## Primitive Values vs Objects
 
