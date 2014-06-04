@@ -309,24 +309,24 @@ to ask. These are: **what about sub-typed values?** and, **what about numbers?**
 
 ## Equality of Sub-Types
 
-As for the first question, i think we can safely give it short shrift. A type is a type, irregardless of how
-it is derived. That an instance of a given type shares methods or data fields with some other type doesn't
-change the fact that somewhere it must have—explicitly or implicitly, accessible from **L** or only from
-**M**—a data field where its type is noted, and if the contents of that field do not equal the equivalent
-field of the other instance, they cannot be equal if our above considerations make any sense. True, some
-instances of some sub-types may stand in for some instances of their super-type in some setups, but that is
-the same as saying that a nail can often do the work of a screw—in other words, this consideration is about
-*fitness for a purpose* a.k.a. *equivalence*, not about equality as understood here. Also, that a nail can
-often do the work of a screw does crucially not hinge on a screw being conceptualized as 'a nail with a
-screw thread' or a nail reified as 'a screw with a zero-depth thread'. In other words, just because, in some
-languages, both `print 3` and `print '3'` effect the appearance of a digit three in the output medium
-doesn't mean that `3` and `'3'` are 'the same'.
+As for the first question—**what about sub-typed values?**—i think we can safely give it short shrift. A
+type is a type, irregardless of how it is derived. That an instance of a given type shares methods or data
+fields with some other type doesn't change the fact that somewhere it must have—explicitly or implicitly,
+accessible from **L** or only from **M**—a data field where its type is noted, and if the contents of that
+field do not equal the equivalent field of the other instance, they cannot be equal if our above
+considerations make any sense. True, some instances of some sub-types may stand in for some instances of
+their super-type in some setups, but that is the same as saying that a nail can often do the work of a
+screw—in other words, this consideration is about *fitness for a purpose* a.k.a. *equivalence*, not about
+equality as understood here. Also, that a nail can often do the work of a screw does crucially not hinge on
+a screw being conceptualized as 'a nail with a screw thread' or a nail reified as 'a screw with a zero-depth
+thread'. In other words, just because, in some languages, both `print 3` and `print '3'` effect the
+appearance of a digit three in the output medium doesn't mean that `3` and `'3'` are 'the same'.
 
 
 ## Equality of Numerical Values in Python
 
-As for the second question, it is in theory somewhat harder than the first, but fortunately, there is an
-easy solution.
+As for the second question—**what about numbers?**—it is in theory somewhat harder than the first, but,
+fortunately, there is an easy solution.
 
 JavaScript may be said to be simpler than many other languages, since it has only a single numerical
 type, which implements the well-known IEEE 754 floating point standard with all its peculiarities.
