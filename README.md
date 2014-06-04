@@ -487,7 +487,7 @@ user*; rather, it is a failure on part of the library authors to export anything
 (and maybe a `not_equals` method, especially in the context of an assertion library), which is one more reason
 **i consider NodeJS' `assert` broken: instead of two methods, it exports six (and maybe eight at some point in
 the future)**. This is also revealed by the jsEq tests: for instance, `assert.deepEqual 1234, 1234`
-and `assert.notDeepEqual` as such work correctly, obviating any need for both `assert.equal` and
+and `assert.notDeepEqual 1234, 1235` as such work correctly, obviating any need for both `assert.equal` and
 `assert.notEqual` if there ever was one. Their presence is an implementation detail that happened to get
 exposed to the general public.
 
