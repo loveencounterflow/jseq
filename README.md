@@ -332,7 +332,7 @@ fortunately, there is an easy solution.
 JavaScript may be said to be simpler than many other languages, since it has only a single numerical
 type, which implements the well-known IEEE 754 floating point standard with all its peculiarities.
 
-Many languages do have more than a single numerical type: For instance, Java has no less than six—`byte`,
+Many languages do have more than a single numerical type. For instance, Java has no less than six: `byte`,
 `short`, `int`, `long`, `float`, `double`, which users do have to deal consciously with.
 
 Python before version 3 had four types: `int`, `float`, `long`, `complex`; in version 3, the `int` and
@@ -341,13 +341,13 @@ Java users, as Python tries very hard—and manages very well—to hide that fac
 types are more of a largely hidden implementation detail than a language feature. This even extends to
 numerical types that are provided by the Standard Library, like the arbitrary-precision `Decimal` class.
 
-In my experience, Python has the best thought-out numerical system of any programming language i had ever
-contact with, so my rule of thumb is that whatever Python does in the field of numbers is worthy of
-emulation.
+Python has the best thought-out numerical system of any programming language i had ever contact with, so my
+rule of thumb is that whatever Python does in the field of numbers is worthy of emulation.
 
 It turns out that in Python, numbers of different types do compare equal when the signs and magnitudes of
-their real and complex parts are equal; therefore, `1 == 1.0 == 1 + 0j == Decimal( 1 )`. This would be in
-conflict with our theory, so either Python gets it wrong or the theory is incorrect.
+their real and complex parts are equal; therefore, `1 == 1.0 == 1 + 0j == Decimal( 1 )` does hold. This
+would appear to be in conflict with our theory (since we're comparing values of four different types here),
+so either Python gets it wrong or the theory is incorrect.
 
 One way to resolve the conflict is to say that the *t* in the tuples ⟨*t*, *v*⟩ of **M** do simply record an
 abstract type `number` instead of any subclass of numbers, this being an exception that is made for
