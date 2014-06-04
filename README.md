@@ -9,7 +9,7 @@
 	- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
 	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 	- [Not-A-Number](#not-a-number)
-	- [POD key ordering](#pod-key-ordering)
+	- [Object Property Ordering](#object-property-ordering)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Motivation](#motivation)
@@ -371,9 +371,51 @@ that no program using `NaN` values from different sources can make a difference 
 these values or passing them as arguments to the same functions.
 
 
-## POD key ordering
+## Object Property Ordering
 
+Many people in the JS programming community are aware of the issues around ordering of object properties
+ever since Chrome (and, because of that, NodeJS) broke customary behavior with regard to the ordering
+of object properties. To wit, in NodeJS 0.10.28:
 
+```coffeescript
+obj = {}
+obj[ 4 ] = 'first'
+obj[ 2 ] = 'second'
+obj[ 1 ] = 'third'
+
+for name, value of obj
+  log name, value
+```
+
+gives `1 third`, `2 second, `4 first`, which reflects **the keys re-ordered by their numerical values, not
+their order of insertion**. Confusingly, this behavior lingers on when we use `'4'`, `'2'`, `'1'` as
+keys, and magically vanishes as soon as we use keys that can not be interpreted as (32-bit) integers.
+
+Now, on the one hand it is evident that the ECMA specs do state that objects are unordered collections
+of keys and values, but on the other hand, the agreement among browsers has, from the beginning, it would
+seem, been that **objects should preserve the order of inserted properties**. As a commenter
+[in a relevant thread on esdicuss.org](http://esdiscuss.org/topic/iteration-order-for-object#content-4)
+put it:
+
+> [Object property ordering] behavior was perfectly consistent across all browsers until Chrome 6. I think
+> it's more appropriate to say that Chrome is not interoperable with thousands of sites than to define
+> interoperable behavior based on a minority browser's very very recent break from a de-facto standard that
+> stood for 15 years.
+
+The real problem here lies with the Chrome folks. It is not the only occasion that they completely and
+stubbornly shut up when anyone is so impertinent as to criticize their specific readings of their Holy Book.
+They surely deserve praise for the general exactness of their work and the swiftness of JavaScript running
+inside of V8, but their insistence on even the most marginal of performance gains at the expense of
+long-standing but non-standardized expected behavior are nothing short of asinine. Sure, the Specs do not
+mandate that any ordering of properties be kept, but does that mean it's a good idea to not keep ordering
+when most people expect it, most JS engines keep it, and it can convincingly shown to be a very useful
+behavior? But this is idle talk as the Chrome folks will only swear by the millisecond gained in some
+synthetic test case (they are likewise quite indifferent towards the merits of a stable sort and in all
+earnestly expect the general public to accept an algorithm that shows one behavior for short and another
+behavior for long lists, the threshold being set at an arbitrary limit of ten elements).
+
+It may then be asked whether our version of strict equality should or should not treat two objects as equal
+when their only difference lies in the ordering of properties.
 
 
 ## Bonus And Malus Points
@@ -381,7 +423,7 @@ these values or passing them as arguments to the same functions.
 * **+1** if method allows to configure whether `eq NaN, NaN` should hold.
 * **+1** if method allows to configure whether object key ordering should be honored.
 * **+1** if method allows to test arbitrary number of arguments for pairwise equality.
-* **–1** if (non-assertive) method throws an error on any comparison
+* **–1** if a (non-assertive) method throws an error on any comparison.
 
 ## Benchmarks
 

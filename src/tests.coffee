@@ -22,26 +22,29 @@ module.exports = ( eq, ne ) ->
   #---------------------------------------------------------------------------------------------------------
   ### 1.1. positive ###
 
-  R[ "NaN eqs NaN"                                            ] = -> eq NaN, NaN
-  R[ "finite integer n eqs n"                                 ] = -> eq 1234, 1234
-  R[ "emtpy list eqs empty list"                              ] = -> eq [], []
-  R[ "emtpy pod eqs empty pod"                                ] = -> eq {}, {}
-  R[ "number eqs number of same value"                        ] = -> eq 123.45678, 123.45678
-  R[ "number pod eqs primitive number of same value"          ] = -> eq 5, new Number 5
-  R[ "string pod eqs primitive string of same value"          ] = -> eq 'helo', new String 'helo'
-  R[ "regex lit's w same pattern, flags are eq"               ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
+  R[ "NaN eqs NaN"                                        ] = -> eq NaN, NaN
+  R[ "finite integer n eqs n"                             ] = -> eq 1234, 1234
+  R[ "emtpy list eqs empty list"                          ] = -> eq [], []
+  R[ "emtpy pod eqs empty pod"                            ] = -> eq {}, {}
+  R[ "number eqs number of same value"                    ] = -> eq 123.45678, 123.45678
+  R[ "number pod eqs primitive number of same value"      ] = -> eq 5, new Number 5
+  R[ "string pod eqs primitive string of same value"      ] = -> eq 'helo', new String 'helo'
+  R[ "regex lit's w same pattern, flags are eq"           ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
+  R[ "pods w same properties are eq"                      ] = -> eq { a:'b', c:'d' }, { a:'b', c:'d' }
+  R[ "pods that only differ wrt prop ord are eq"          ] = -> eq { a:'b', c:'d' }, { c:'d', a:'b' }
 
   #---------------------------------------------------------------------------------------------------------
   ### 1.2. negative ###
 
-  R[ "pod doesn't eq list"                                    ] = -> ne {}, []
-  R[ "pod in a list doesn't eq list in list"                  ] = -> ne [{}], [[]]
-  R[ "integer n doesn't eq rpr n"                             ] = -> ne 1234, '1234'
-  R[ "empty list doesn't eq false"                            ] = -> ne [], false
-  R[ "list w an integer doesn't eq one w rpr n"               ] = -> ne [ 3 ], [ '3' ]
-  R[ "regex lit's w diff. patterns, same flags aren't eq"     ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
-  R[ "regex lit's w same patterns, diff. flags aren't eq"     ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
-  R[ "+0 should ne -0"                                        ] = -> ne +0, -0
+  R[ "pod doesn't eq list"                                ] = -> ne {}, []
+  R[ "pod in a list doesn't eq list in list"              ] = -> ne [{}], [[]]
+  R[ "integer n doesn't eq rpr n"                         ] = -> ne 1234, '1234'
+  R[ "empty list doesn't eq false"                        ] = -> ne [], false
+  R[ "list w an integer doesn't eq one w rpr n"           ] = -> ne [ 3 ], [ '3' ]
+  R[ "regex lit's w diff. patterns, same flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
+  R[ "regex lit's w same patterns, diff. flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
+  R[ "+0 should ne -0"                                    ] = -> ne +0, -0
+  R[ "pods that only differ wrt prop ord aren't eq"       ] = -> ne { a:'b', c:'d' }, { c:'d', a:'b' }
 
   #=========================================================================================================
   ### 2. complex tests ###
