@@ -172,7 +172,7 @@ Table                     = require 'cli-table'
     table_2.push row
   #.........................................................................................................
   log '\n\n' + table_1.toString()
-  help "Figures for imps marked with an `!` (exclamation mark)"
+  help "Figures for implementations marked with an `!` (exclamation mark)"
   help "should be treated with care as their test setup is probably not correct."
   #.........................................................................................................
   log '\n\n' + table_2.toString()

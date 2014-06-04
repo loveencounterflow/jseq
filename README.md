@@ -188,7 +188,7 @@ instances of some sub-types may stand in for some instances of their super-type 
 the same as saying that a nail can often do the work of a screw—in other words, this consideration is about
 *fitness for a purpose* a.k.a. *equivalence*, not about equality as understood here. Also, that a nail can
 often do the work of a screw does crucially not hinge on a screw being conceptualized as 'a nail with a
-screw thread' or a nail as 'a screw with a zero-depth thread'.
+screw thread' or a nail reified as 'a screw with a zero-depth thread'.
 
 
 ## Equality of Numerical Values in Python
@@ -290,9 +290,9 @@ very simple program `def f ( x ): print( type( x ) )` that will behave different
 One of the (*many*) surprises / gotchas / peculiarities that JavaScript has in store for the n00be
 programmer is the existence of *two zeroes*, one positive and one negative. What, i hear you say, and no
 sooner said than done have you typed `+0 === -0`, return, into the NodeJS REPL, to be rewarded with a
-satisfyingly reassuring `true` output. That should do it right, for haven't we all learned that when a `x
-=== y` test returns `true` it 'is True', and only when that fails do we have to do more checking? Sadly,
-this is belief is mistaken, as the below code demonstrates:
+satisfyingly reassuring `true`. That should do it, right?—for haven't we all learned that when a `x === y`
+test returns `true` it 'is True', and only when that fails do we have to do more checking? Sadly, this
+belief is mistaken, as the below code demonstrates:
 
 ```coffeescript
 signed_rpr = ( x ) ->
@@ -323,14 +323,14 @@ test_signed_zero()
 ```
 
 When i first became aware of there being a `+0` and a `-0` in JS, i immediately wrote a test case: `R[ "+0
-should eq -0" ] = -> eq +0, -0`. I then proceeded adding libraries to jsEq and felt satisfied that the work
-that went into delivering pretty detailed test reports was not for naught as more and more small differences
+should eq -0" ] = -> eq +0, -0`. I then proceeded adding libraries to jsEq and felt happy that the work i
+put into delivering pretty detailed test reports was not for naught as more and more small differences
 between the libraries popped up: this library misses that test case, the next passes the other test, and so
 on. I sorted the results, and seeing that `underscore` got the highscore (pun intended), it surprised me to
-find it insisted on claiming `+0` and `-0` should differ. Ultimately, this led me to the discovery of the
-second Axiom, and with that in my hands, it became clear that `underscore` is right and my test case is
-wrong: **Since there are known programs that behave differently with positive and negative zero, these two
-values must not be considered equal**.
+see that it insisted on claiming `+0` and `-0` should differ. Ultimately, this led me to the discovery of
+the second Axiom, and with that in my hands, it became clear that `underscore` got this one right and my
+test case got it wrong: **Since there are known programs that behave differently with positive and negative
+zero, these two values must not be considered equal**.
 
 
 ## Not-A-Number
@@ -371,16 +371,17 @@ that no program using `NaN` values from different sources can make a difference 
 these values or passing them as arguments to the same functions.
 
 
-
-
 ## POD key ordering
+
+
+
 
 ## Bonus And Malus Points
 
 * *+1*: if method allows to configure whether `eq NaN, NaN` should hold.
 * *+1*: if method allows to configure whether object key ordering should be honored.
 * *+1*: if method allows to test arbitrary number of arguments for pairwise equality.
-* *—1*: if (non-assertive) method throws an error on any comparison
+* *–1*: if (non-assertive) method throws an error on any comparison
 
 ## Benchmarks
 
