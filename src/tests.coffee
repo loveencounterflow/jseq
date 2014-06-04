@@ -45,7 +45,6 @@ module.exports = ( eq, ne ) ->
   R[ "regex lit's w diff. patterns, same flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
   R[ "regex lit's w same patterns, diff. flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
   R[ "+0 should ne -0"                                    ] = -> ne +0, -0
-  R[ "pods that only differ wrt prop ord aren't eq"       ] = -> ne { a:'b', c:'d' }, { c:'d', a:'b' }
 
   #=========================================================================================================
   ### 2. complex tests ###

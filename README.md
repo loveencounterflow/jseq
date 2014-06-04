@@ -567,9 +567,9 @@ appear to be little support from the tested libraries for (B) (i.e. most librari
 information). Next, the Specs do not mandate any ordering behavior, so maybe equality tests shouldn't
 require it, either. Then again, there is [a strawman proposal](http://wiki.ecmascript.org/doku.php?id=strawman:enumeration)
 so there's a chance a future version of the language will indeed mandate preservation of object key insertion.
-Plus, our Second Axiom makes it quite clear that, since otherwise identical
+Moreover, our Second Axiom makes it quite clear that, since otherwise identical
 programs can deliver different outputs for different order of key insertion, and people have come to rely on
-consistent ordering for many years, which is infavor of solution (B).
+consistent ordering for many years, there is something to be said in infavor of solution (B).
 
 Personally, i'm undecided at this moment; i guess that a good pragmatic solution would be that if there's
 a straightforward way to implement (B)—objects that differ only on key ordering should test not equal–then
