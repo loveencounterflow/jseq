@@ -279,10 +279,10 @@ discuss and / or to implement **L**. Then, saying that (in CS) `eq x, y` results
 `eq ( type_of x ), ( type_of y )` must also be `true`.
 
 We can capture that by saying that in **M**, all values `x` of **L** are represented by tuples ⟨*t*, *v*⟩
-where *t* is the type of `x` and *v* is its value—'without' its type, which may sound strange but is
-possible, since all unique values that may occur within a real-world program at any given point in time are
-enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number. Since all *n* are of the same
-type, they can be said to be typeless.
+where *t* is the type of `x` and *v* is its 'magnitude', i.e. its 'value without its type'—which does sound
+strange but is technically feasible, since all unique values that may occur within a real-world program at
+any given point in time are enumerable and, hence, reducible to ⟨*t*, *n*⟩, where *n* is a natural number.
+Since all *n* are of the same type, they can be said to be typeless.
 
 When we are comparing two values for equality in **L**, then, we are really comparing the two elements of
 two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values
