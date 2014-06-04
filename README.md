@@ -10,6 +10,7 @@
 	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 	- [Not-A-Number](#not-a-number)
 	- [Object Property Ordering](#object-property-ordering)
+	- [One or Two Methods for Equality Testing?](#one-or-two-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Motivation](#motivation)
@@ -134,7 +135,7 @@ It can be said that JavaScript's `==` 'non-strict equals operator' never tested 
 rather, it tested *value equivalence*. Now we have seen that equivalence is a highly subjective concept that
 is suceptible to the conditions of specific use cases. As such, it is a bad idea to implement it in the
 language proper. The concept that `3 == '3'` (number three is equivalent to a string with the ASCII digit
-three, U+0033) does hold in some common contexts (like `console.log(3)`) and breaks down in some other, also
+three, U+0033) does hold in some common contexts (like `console.log x`) and breaks down in some other, also
 very common contexts (like `x.length`, which is undefined for numbers).
 
 Further, it can be said that JavaScript's `===` 'strict equals operator' never tested *value equality* at
@@ -435,12 +436,39 @@ Personally, i'm undecided at this moment; i guess that a good pragmatic solution
 a straightforward way to implement (B)—objects that differ only on key ordering should test not equal–then
 our implementation should offer this as an opt-in feature.
 
+## One or Two Methods for Equality Testing?
+
+It is a recurrent feature of many assertion libraries that they provide one method for doing shallow
+equality testing and another for deep equality testing. A case in point is NodeJS' `assert` module with no
+less than *six* equality-testing methods: `equal`, `notEqual`, `deepEqual`, `notDeepEqual`, `strictEqual`,
+`notStrictEqual`. Given this state of affairs, it is perhaps not so surprising that
+(issue #7161: assert.deepEqual doing inadequate comparison)[https://github.com/joyent/node/issues/7161]
+prompted the suggestion to add `deepStrictEqual` (and, to keep the tune, `notDeepStrictEqual` as well)
+to the API, which ups the tally to *eight*.
+
+The reader will not have failed to notice that i make do, in the present discussion and the jsEq package,
+with a mere *two* API artifacts, `eq` and `ne`, a mere fourth of NodeJS' API. One gets the impression
+the CommonJS folks who wrote [the unit testing specs](http://wiki.commonjs.org/wiki/Unit_Testing/1.0)
+started out with, like, 'wah equality, that's JS `==`', and then at some point realized 'cool, there's
+JS `===`, let's add it'. A little later someone must have pointed out that JS `[] === []` fails, and those
+folks went, like, 'oh noes, we need `deepEqual`, let's add it already'. It looks like it never came to their
+minds that JS `==` is an utterly useless operator that, overall, serves very little useful purpose at all.
+`===` was added to JavaScript specifically to remedy the pitfalls of `==`; the only reasons it did not
+replace `==` was a perceived concern about backwards compatibility. Likewise, it escaped their attention
+that APIs do not get better just by adding more and more methods to them.
+
+
+
 ## Bonus And Malus Points
 
 * **+1** if method allows to configure whether `eq NaN, NaN` should hold.
 * **+1** if method allows to configure whether object key ordering should be honored.
 * **+1** if method allows to test arbitrary number of arguments for pairwise equality.
 * **–1** if a (non-assertive) method throws an error on any comparison.
+* **–1** if a method for deep equality testing fails on primitive values.
+* **–1** where a method `eq` fails on `eq x, x` for any given `x` (except for `NaN` which is a hairy case).
+* **–1** where a library provides both an `eq` and a `ne` method but `( not eq x, y ) == ( ne x, y )` fails
+  for any given `x` and `y`.
 
 ## Benchmarks
 
