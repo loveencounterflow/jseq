@@ -414,9 +414,19 @@ synthetic test case (they are likewise quite indifferent towards the merits of a
 earnestly expect the general public to accept an algorithm that shows one behavior for short and another
 behavior for long lists, the threshold being set at an arbitrary limit of ten elements).
 
-It may then be asked whether our version of strict equality should or should not treat two objects as equal
-when their only difference lies in the ordering of properties.
+It may then be asked whether our version of strict equality **(A)** should or **(B)** should not treat two
+objects as equal when their only difference lies in the ordering of properties. First off, there would
+appear to be little support from the tested libraries for (B) (i.e. most libraries discard ordering
+information). Next, the Specs do not mandate any ordering behavior, so maybe equality tests shouldn't
+require it, either. Then again, there is [a strawman proposal](http://wiki.ecmascript.org/doku.php?id=strawman:enumeration)
+so there's a chance a future version of the language will indeed mandate preservation of object key insertion.
+Plus, our Second Axiom makes it quite clear that, since otherwise identical
+programs can deliver different outputs for different order of key insertion, and people have come to rely on
+consistent ordering for many years, which is infavor of solution (B).
 
+Personally, i'm undecided at this moment; i guess that a good pragmatic solution would be that if there's
+a straightforward way to implement (B)—objects that differ only on key ordering should test not equal–then
+our implementation should offer this as an opt-in feature.
 
 ## Bonus And Malus Points
 
