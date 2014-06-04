@@ -198,11 +198,11 @@ module.exports =
 The setup is very simple: Each implementation is an object with two members, `eq` to test for 'is equal to'
 and `ne` to test for 'is not equal to'. Each name starts with a one to three-letter (unique) key which is
 used for reference in the report display (see above), followed by a `:` (colon) and the name proper (which
-should be descriptive and unique). The name may be prepended with an `!` (exclamation sign) in case the
-implementation is suspected to be faulty (happened to me with the QUnit framework, which i find weird; i
-will probably make the relevant test results appear in grey and not include them in the grand totals).
-Each function `eq`, `ne` must accept two arguments and return `true` or `false`, indicating success or
-failure.
+should be descriptive and unique). The name may be prepended with an `!` (exclamation sign) in case the way
+it has been adapted is suspected to be faulty (happened to me with the QUnit framework, which has a weird
+API; i will probably make the relevant test results appear in grey and not include them in the grand
+totals). Each function `eq`, `ne` must accept two arguments and return `true` or `false`, indicating success
+or failure.
 
 
 ## Equality, Identity, and Equivalence
