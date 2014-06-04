@@ -389,7 +389,7 @@ subversive code corroborates the notion that what we're dealing with here is ope
 than principled equality.
 
 Since there is, anyways, only a single numerical type in JavaScript, i believe we should stick with the
-unadultered version of Axiom 1 that forbids cross-type equality even for numerical types.
+unadultered version of the First Axiom which forbids cross-type equality even for numerical types.
 
 ## Second Axiom: Equality of Program Behavior
 
