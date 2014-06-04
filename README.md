@@ -582,7 +582,8 @@ it can and should be tested separately.
 The difference that exists in many object-oriented languages between primitive values (i.e. values without
 properties) and objects (i.e. values that are composed of properties) is puzzling to many people. To make it
 clear from the outstart: i believe that wherever and whenever a distinction has been or should have been
-made in a program between, say, `5` plain and simple, and `new Number 5`, then that language is at fault.
+made in a program between, say, `5` plain and simple, and `new Number 5`, then that language is at fault for
+not shielding the programmer from such an abomination.
 
 I do get the feeling that the smart people who came up with JavaScript thought along the same lines, and
 that the fact that you *can* sometimes make a difference between `5` and `new Number 5` is actually an
