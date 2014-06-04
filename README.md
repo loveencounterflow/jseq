@@ -457,12 +457,36 @@ add it already". Of course, since they started out with the broken JS `==` opera
 experience when implementing `deepEqual`, so now their `deepEqual` is as broken as their `equal`. But, hey,
 at least its **consistently broken**, and what's more, we have a standard! Yay!
 
-It looks like it never came to their minds that JS `==` is an utterly useless operator
-that, overall, serves very little useful purpose at all. `===` was added to JavaScript specifically to
-remedy the pitfalls of `==`; the only reasons it did not replace `==` was a perceived concern about
-backwards compatibility. Likewise, it escaped their attention that APIs do not get better just by adding
-more and more methods to them.
+So now we have a widely-deployed standard that seriously claims that `assert.deepEqual [[]], [{}]` and
+`assert.deepEqual [ 3 ], [ '3' ]` should both hold and not throw exceptions like crazy. One wonders what
+the intended use cases for such tests are; i can't think of any.
 
+It looks like it never came to the minds of these folks that JS `==` is, overall, a pretty much useless
+operator. `===` was added to JavaScript specifically to remedy the pitfalls of `==`; the only reason it did
+not replace `==` was a perceived concern about backwards compatibility. Likewise, it escaped their attention
+that APIs do not get better just by adding more and more methods to them.
+
+I believe it can be made unequivocally clear that **separating deep and shallow equality does have no place
+in an orderly API, especially not in an assertion framework**.
+
+The reasoning is simple: when i test for
+equality, i want to test two (or more) values `x`, `y`. If i knew for sure that `x` and `y` are equal,
+i do not need to test them at all. Given that i'm unsure about the value of at least one of `x`, `y`, which
+method—shallow equality for testing primitive values (Booleans, numbers, strings, ...) or deep equality
+for testing 'objects' (lists, dates, ...)—should i take? In the absence of more precise knowledge of my
+values, i cannot choose. So maybe i do some type checking (notoriously hard to get right in JS), or i
+play some `try ... catch` games to find out. It is obvious that if `shallow-equals [], 42`
+should fail because one of the arguments is not a primitive value, i have to take the other method,
+`deep-equals [], 42`. If the first should have failed, the second should fail in the same way, so now i
+know that the two values are not equal according to my library, since i have run out of methods. It is then
+easy enough to come up with a method `equals x, y` that does exactly that: try one way and, should that fail,
+try the other way, catch all the errors and reduce the output to `true` and `false`.
+
+There is no reason why the burden of implementing an all-embracing `equals` method should be put *on the
+user*; rather, it is a failure on part of the library authors to export anything *but* an `equals` method
+(and maybe a `not-equals` method, especially in the case of an assertion library), which is one more reason
+i consider NodeJS' `assert` broken: instead of two methods, it exports six (and maybe eight at some point in
+the future).
 
 
 ## Bonus And Malus Points
