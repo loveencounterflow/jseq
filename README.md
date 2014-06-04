@@ -446,16 +446,22 @@ less than *six* equality-testing methods: `equal`, `notEqual`, `deepEqual`, `not
 prompted the suggestion to add `deepStrictEqual` (and, to keep the tune, `notDeepStrictEqual` as well)
 to the API, which ups the tally to *eight*.
 
-The reader will not have failed to notice that i make do, in the present discussion and the jsEq package,
-with a mere *two* API artifacts, `eq` and `ne`, a mere fourth of NodeJS' API. One gets the impression
-the CommonJS folks who wrote [the unit testing specs](http://wiki.commonjs.org/wiki/Unit_Testing/1.0)
-started out with, like, 'wah equality, that's JS `==`', and then at some point realized 'cool, there's
-JS `===`, let's add it'. A little later someone must have pointed out that JS `[] === []` fails, and those
-folks went, like, 'oh noes, we need `deepEqual`, let's add it already'. It looks like it never came to their
-minds that JS `==` is an utterly useless operator that, overall, serves very little useful purpose at all.
-`===` was added to JavaScript specifically to remedy the pitfalls of `==`; the only reasons it did not
-replace `==` was a perceived concern about backwards compatibility. Likewise, it escaped their attention
-that APIs do not get better just by adding more and more methods to them.
+The reader will not have failed to notice that i make do, in the present discussion and the implementation
+of the jsEq package, with a mere *two* API artifacts, `eq` and `ne`, a mere fourth of NodeJS' API. One gets
+the impression the CommonJS folks who wrote
+[the unit testing specs](http://wiki.commonjs.org/wiki/Unit_Testing/1.0)
+must have started out, like, "wah equality, that's JS
+`==`", and then at some point realized "cool, there's JS `===`, let's add it, too". A little later someone
+pointed out that JS `[] === []` fails, and those folks went, like, "oh noes, we need `deepEqual`, let's
+add it already". Of course, since they started out with the broken JS `==` operator, they recycled that
+experience when implementing `deepEqual`, so now their `deepEqual` is as broken as their `equal`. But, hey,
+at least its **consistently broken**, and what's more, we have a standard! Yay!
+
+It looks like it never came to their minds that JS `==` is an utterly useless operator
+that, overall, serves very little useful purpose at all. `===` was added to JavaScript specifically to
+remedy the pitfalls of `==`; the only reasons it did not replace `==` was a perceived concern about
+backwards compatibility. Likewise, it escaped their attention that APIs do not get better just by adding
+more and more methods to them.
 
 
 
