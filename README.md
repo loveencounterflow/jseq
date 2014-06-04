@@ -475,9 +475,9 @@ Yet another one of that rich collection of JavaScript easter eggs (and, like `+0
 mandated by IEEE 754), is the existence of a `NaN` (read: Not A Number) value. In my opinion, this value
 shouldn't exist at all. JS does consistently the right thing when it throws an exception on `undefined.x`
 (unable to access property of `undefined`) and on `f = 42; f 'helo'` (`f` is not a function), and, as
-consistently, fails silently when you access undefined object properties and do numerical nonsense. In
-the latter case, it resorts to returning sometimes `Infinity`, and sometimes `NaN`, both of which make
-little sense in most cases.
+consistently, fails silently when you access undefined object properties or do numerical nonsense. In the
+latter case, it resorts to returning sometimes `Infinity`, and sometimes `NaN`, both of which make little
+sense in most cases.
 
 Now, 'infinity' *can* be a useful concept in some cases, but there is hardly any use case for `NaN`, except
 of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that one,
@@ -486,13 +486,15 @@ of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that
 NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!
 ```
 
-Worse, while `NaN` is short for *not* a number, `typeof NaN` returns... `'number'`! WAT!! And this is not
-the end to the weirdness: as mandated by the standard, **`NaN` does not equal itself**. Now try and tack
-attributes unto a `NaN`, and it will silently fail to accept any named members. There's no constructor for
-this singleton value, so you can not produce a copy of it. You cannot delete it from the language; it is
-always there, a solitary value with an identity crisis. Throw it into an arithmetic expression and it will
-taint all output. The sheer existence of `NaN` in a language that knows how to throw and catch exceptions is
-an oxymoron, as all expressions that currently return it should really throw an error instead.
+Worse, while `NaN` is short for '*not* a number', `typeof NaN` returns... `'number'`! **WAT!**
+
+This is not the end to the weirdness: as mandated by the standard, **`NaN` does not equal itself**. Now try
+and tack attributes unto a `NaN`, and it will silently fail to accept any named members. There's no
+constructor for this singleton value, so you can not produce a copy of it. You cannot delete it from the
+language; it is always there, a solitary value with an identity crisis. Throw it into an arithmetic
+expression and it will taint all output. The sheer existence of `NaN` in a language that knows how to throw
+and catch exceptions is an oxymoron, as all expressions that currently return it should really throw an
+error instead.
 
 Having read a discussion on StackOverflow about the merits and demerits of `NaN != NaN`, i'm fully convinced
 that whatever i have said about Python's concept of numerical equality (which turned out to be equivalence)
