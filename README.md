@@ -579,19 +579,20 @@ in the order of key insertion shall be regarded equal**.
 ## Primitive Values vs Objects
 
 The difference that exists in many object-oriented languages between primitive values (i.e. values without
-properties) and objects (i.e. values that are composed of properties) is puzzling to many people. I believe
-that wherever and whenever a distinction has been or should have been made in a program between, say, `5`
-plain and simple, and `new Number 5`, then that language is at fault.
+properties) and objects (i.e. values that are composed of properties) is puzzling to many people. To make it
+clear from the outstart: i believe that wherever and whenever a distinction has been or should have been
+made in a program between, say, `5` plain and simple, and `new Number 5`, then that language is at fault.
 
 I do get the feeling that the smart people who came up with JavaScript thought along the same lines, and
 that the fact that you *can* sometimes make a difference between `5` and `new Number 5` is actually an
-oversight where the intention was that programmers should never have to worry about that. Thus, in
+oversight where the intention was that programmers should never have to worry about that detail. Thus, in
 JavaScript, when you access a property of a primitive value, that primitive is (at least conceptually)
 temporarily cast as an object, and suddenly you can access properties on a primitive.
 
 As for our inquiry, we have to ask: should `eq 5, new Number 5` hold or not? In the light of the foregoing
-discussion, we can give a quick answer: those two things should be different. It follows from our Second
-Axiom as it did for `+0` vs `–0`. To motivate this view, let's have a look at a small test setup.
+discussion, we can give a quick answer: **a primitive value and an equivocal object instance must be
+regarded as different.** It follows from our Second Axiom in conjunction with the fact that trying to attach
+a property to a primitive or an object will show a different outcome depending on the receiver.
 
 In JavaScript, there are the primitive types `undefined`, `null`, `boolean`, `string` and `number`;
 `undefined` and `null` are singletons and do not have a constructor, there's only `Boolean`, `Number`
