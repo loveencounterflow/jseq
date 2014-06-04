@@ -476,7 +476,7 @@ method—shallow equality for testing primitive values (Booleans, numbers, strin
 for testing 'objects' (lists, dates, ...)—should i take? In the absence of more precise knowledge of my
 values, i cannot choose. So maybe i do some type checking (notoriously hard to get right in JS), or i
 play some `try ... catch` games to find out. It is clear that if `shallow_equals [], 42`
-should fail because one of the arguments is not a primitive value, i have to try the other method,
+should fail (or return `false`) because one of the arguments is not a primitive value, i have to try the other method,
 `deep_equals [], 42`. Since the first failed, the second should fail in the same way, so now i
 know that the two values are not equal according to my library, since i have run out of methods. It is then
 easy enough to come up with a method `equals x, y` that does exactly that: try one way and, should that fail,
