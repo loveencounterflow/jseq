@@ -162,8 +162,8 @@ type, they can be said to be typeless.
 When we are comparing two values for equality in **L**, then, we are really comparing the two elements of
 two tuples ⟨*t<sub>1</sub>*, *v<sub>1</sub>*⟩, ⟨*t<sub>2</sub>*, *v<sub>2</sub>*⟩ that represent the values
 in **M**, and since we have reduced all values to integers, and since types are values, too, we have reduced
-the problem to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has an obvious solution:
-the result can only be `true` if the two elements of each tuple are pairwise identical.
+the problem of computing `eq x, y` to doing the equivalent of `eq [ 123, 5432, ], [ 887, 81673, ]` which has
+an obvious solution: the result can only be `true` if the two elements of each tuple are pairwise identical.
 
 > The above is not so abstruse as it may sound; in Python, `id( value )` will give you an integer that
 > basically returns a number that represents a memory location, and in JavaScript, types are commonly
@@ -278,7 +278,7 @@ saying 'zero dollars', and you want to avoid missing out on any regression in th
 Thus our second axiom becomes:
 
 **Axiom 2** Even two values `x`, `y` of the same type that can be regarded as equal for most use cases, they
-must not pass the test `eq x, y` in case in can be shown that there is at least one program that has different
+must not pass the test `eq x, y` in case it can be shown that there is at least one program that has different
 outputs when run with `y` instead of with `x`.
 
 The second axiom helps us to see very clearly that Python's concept of equality isn't ours, for there is a
@@ -327,10 +327,10 @@ should eq -0" ] = -> eq +0, -0`. I then proceeded adding libraries to jsEq and f
 put into delivering pretty detailed test reports was not for naught as more and more small differences
 between the libraries popped up: this library misses that test case, the next passes the other test, and so
 on. I sorted the results, and seeing that `underscore` got the highscore (pun intended), it surprised me to
-see that it insisted on claiming `+0` and `-0` should differ. Ultimately, this led me to the discovery of
-the second Axiom, and with that in my hands, it became clear that `underscore` got this one right and my
-test case got it wrong: **Since there are known programs that behave differently with positive and negative
-zero, these two values must not be considered equal**.
+see that it insisted on treating `+0` and `-0` not equal. Ultimately, this led me to the discovery of the
+second Axiom, and with that in my hands, it became clear that `underscore` got this one right and my test
+case got it wrong: **Since there are known programs that behave differently with positive and negative zero,
+these two values must not be considered equal**.
 
 
 ## Not-A-Number
@@ -338,13 +338,13 @@ zero, these two values must not be considered equal**.
 Yet another one of that rich collection of JavaScript easter eggs (and, like `+0` vs `-0`, one that is
 mandated by IEEE 754), is the existence of a `NaN` (read: Not A Number) value. In my opinion, this value
 shouldn't exist at all. JS does consistently the right thing when it throws an exception on `undefined.x`
-(unable to access property of `undefined`) and on `d.f = 42; d.f 'helo'` (not a function), and, as
-consistently fails silently when you access undefined object properties and do numerical nonsense. In
+(unable to access property of `undefined`) and on `d.f = 42; d.f 'helo'` (`d.f` is not a function), and, as
+consistently, fails silently when you access undefined object properties and do numerical nonsense. In
 the latter case, it resorts to returning sometimes `Infinity`, and sometimes `NaN`, both of which make
 little sense in most cases.
 
-Now, 'infinity' can be a useful concept for some use cases, but there is hardly any use case for `NaN`,
-except of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that one,
+Now, 'infinity' *can* be a useful concept in some cases, but there is hardly any use case for `NaN`, except
+of course for `Array( 16 ).join( 'wat' - 1 ) + ' Batman!'` to get, you know that one,
 
 ```
 NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!
