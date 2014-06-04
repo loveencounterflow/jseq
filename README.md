@@ -352,11 +352,11 @@ NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!
 
 Worse, while `NaN` is short for *not* a number, `typeof NaN` returns... `'number'`! WAT!! And this is not
 the end to the weirdness: as mandated by the standard, **`NaN` does not equal itself**. Now try and tack
-attributes unto a `NaN`, and will silently fail to accept any named members. There's no constructor for this
-singleton value, so you can not produce a copy of it. You cannot delete it from the language; it is always
-there, a solitary value with an identity crisis. Throw it into an arithmetic expression and it will taint
-all output. The sheer existence of `NaN` in a language that knows how to throw and catch exceptions is an
-oxymoron, as all expressions that currently return it should relly throw an error instead.
+attributes unto a `NaN`, and it will silently fail to accept any named members. There's no constructor for
+this singleton value, so you can not produce a copy of it. You cannot delete it from the language; it is
+always there, a solitary value with an identity crisis. Throw it into an arithmetic expression and it will
+taint all output. The sheer existence of `NaN` in a language that knows how to throw and catch exceptions is
+an oxymoron, as all expressions that currently return it should relly throw an error instead.
 
 Having read a discussion on StackOverflow about the merits and demerits of `NaN != NaN`, i'm fully convinced
 that whatever i have said about Python's concept of numerical equality (which turned out to be equivalence)
