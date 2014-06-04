@@ -247,7 +247,7 @@ string that concatenates the string with the decimal representation of that numb
 (times) operator, we get a number that is the result of the multiplication of the two arguments, the string
 being interpreted as a decimal number, where possible. This is so confusing and leads to so many surprising
 ramifications that there is, in the community, an expletive to describe such phenomena, and that expletive
-is **WAT!**.
+is **WAT!**
 
 I'm discussing these well-known JS WATs in the present context because JavaScript programmers (much like
 users of PHP, and certainly more than users of Python) are very much inclined to have a rather muddled
@@ -304,7 +304,7 @@ an obvious solution: the result can only be `true` if the two elements of each t
 
 I hope this short discussion will have eliminated almost any remaining doubt whether two values of different
 types can ever be equal. However, there are two questions i assume the astute reader will be inclined
-to ask. These are: what about sub-typed values? and what about numbers?
+to ask. These are: **what about sub-typed values?** and, **what about numbers?**
 
 
 ## Equality of Sub-Types
