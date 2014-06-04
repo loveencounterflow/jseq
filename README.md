@@ -626,7 +626,9 @@ In JavaScript, there are the primitive types `undefined`, `null`, `boolean`, `st
 and `String`. When you try to attach a property to a primitive value, JavaScript will either complain
 loudly (in the case of `undefined` and `null`), or fail silently (in the case of booleans, numbers and
 strings). So one might say that there are really 'primeval primitives' and 'advanced(?) primitives' (rather
-than just primitives) in JavaScript. It gets even a little worse. Consider this:
+than just primitives) in JavaScript.
+
+**It gets even a little worse.** Consider this:
 
 ```coffeescript
 test = ( value, object ) ->
@@ -647,13 +649,15 @@ log test   [], new Array()      #   X   X   O   O
 For readability, i've here rendered `true` as `O` and `false` as `X`. We can readily discern *three*
 patterns of output values, the `OXXO` kind, the `XXXO` kind, and the `XXOO` kind. When i say 'kind', i mean
 'types of types', and it is plausible that longer series of like tests will result in 'fingerprint patterns'
-that will allow us to sort out not only types of types, but also the types themselves. The sobering factoid
-that is provided by the above program is that there are at least *three* kinds of primitives.
+that will allow us to sort out not only types of types, but also the types themselves.
 
-Worse: since `NaN` is a primitive, too, but singularly fails to satisfy JS `x === x`, there are at least
+The sobering factoid that is provided by the above program is that there are at least *three* kinds of
+primitives.
+
+**Worse**: since `NaN` is a primitive, too, but singularly fails to satisfy JS `x === x`, there are at least
 *four* kinds.
 
-Worster still: `undefined` can be re-defined in plain JS, something you can't do with `NaN`, so there
+**Worster still**: `undefined` can be re-defined in plain JS, something you can't do with `NaN`, so there
 at least *five* kinds of primitive values in JavaScript.
 
 I think i'll leave it at that.
