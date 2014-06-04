@@ -498,13 +498,13 @@ expression and it will taint all output, turning everything into `NaN`.
 all expressions that currently return it should really throw an error instead.**
 
 Having read several discussion threads about the merits and demerits of JS `NaN !== NaN`, i'm fully
-convinced by now that whatever i have said about Python's concept of numerical equality (which turned out to
-be equivalence) applies to `NaN !== NaN` as well: it was stipulated because any of a large class of
+convinced by now that what we have seen concerning Python's concept of numerical equality (which turned out
+to be equivalence) applies to `NaN !== NaN` as well: it was stipulated because any of a large class of
 arithmetic expressions could have caused a given occurrence of `NaN`, and claiming that those results are
 'equal' would be tantamount to claiming that `'wat' - 1` equals `Infinity * 0`, which is obviously wrong
-(although it must be said that `Infinity * 0 !== Infinity * 0` is not very intuitive, either). Still,
-`NaN !== NaN` is a purpose-oriented stipulation for defining equivalence, not the result of a principled
-approach to define strict equality in our sense.
+(although it must be said that `Infinity * 0 !== Infinity * 0` is not very intuitive, either). Still, `NaN
+!== NaN` is a purpose-oriented stipulation for defining equivalence, not the result of a principled approach
+to define strict equality in our sense.
 
 **I conclude that according to the First and Second Axioms, `eq NaN, NaN` must hold**, on the grounds
 that no program using `NaN` values from different sources can make a difference on the base of manipulating
