@@ -648,7 +648,7 @@ patterns of output values, the `OXXO` kind, the `XXXO` kind, and the `XXOO` kind
 that will allow us to sort out not only types of types, but also the types themselves. The sobering factoid
 that is provided by the above program is that there are at least *three* kinds of primitives.
 
-Worse: since `NaN` is a primitive, too, but since it fails to satisfy JS `x === x`, there are at least
+Worse: since `NaN` is a primitive, too, but singularly fails to satisfy JS `x === x`, there are at least
 *four* kinds.
 
 Worster still: `undefined` can be re-defined in plain JS, something you can't do with `NaN`, so there
