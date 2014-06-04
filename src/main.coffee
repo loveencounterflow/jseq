@@ -115,7 +115,7 @@ Table                     = require 'cli-table'
   # warn    "and #{fail_count} tests failed."
   pass_count = test_count - fail_count
   whisper '-------------------------------------------------------------'
-  info    "Tested #{imp_count} imps."
+  info    "Tested #{imp_count} implementations."
   info    "Overall, #{test_count} tests were run"
   praise  "of which #{pass_count} tests passed,"
   warn    "and #{fail_count} tests failed."
