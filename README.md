@@ -3,6 +3,7 @@
 - [jsEq](#jseq)
 	- [Language Choice and Motivation](#language-choice-and-motivation)
 	- [Test Module Setup](#test-module-setup)
+	- [Implementations Module Setup](#implementations-module-setup)
 	- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
 	- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
 	- [Equality of Sub-Types](#equality-of-sub-types)
@@ -54,7 +55,7 @@ The present module has been implemented in [CoffeeScript](http://coffeescript.or
 these days. Most of the examples in the present ReadMe are in CoffeeScript, too, so whenever you see
 a construct like `f x, y`, you'll have to
 mentally translate that into `f( x, y )`. What's more, CoffeeScript's `==` operator translates to
-JavaScript's `===`, while JS `==` has (rightly) no equivalent in CS. I agree that this can be somehwat
+JavaScript's `===`, while JS `==` has (rightly) no equivalent in CS. I agree that this can be
 confusing, especially in a text like this where different concepts of equality play a crucial role. I
 strive for clarity in this point by making sure that whenever an isolated `==` or `===` appears, it is
 annotated from which language it has been taken.
@@ -67,8 +68,8 @@ annotated from which language it has been taken.
 > own choice for that one).
 
 Incidentally, i'm writing lots of tests for Arabika, and one day i was struck
-by a false positive test: a result à la `[ 3 ]` passed when compared to `[ '3' ]`.
-Research quickly showed that NodeJS' `assert.deepEqual` to be the culprit, so i chimed in to the
+by a false positive when a parsing result à la `[ 3 ]` passed the comparison to `[ '3' ]`.
+Research quickly showed NodeJS' `assert.deepEqual` to be the culprit, so i chimed in to the
 [discussion on bug #7161](https://github.com/joyent/node/issues/7161). I felt i was not completely alone
 in my quest for sound equality testing in JavaScript, and the subject being too complex to grasp with
 haphazard, isolated ad-hoc tests issued via the NodeJS REPL, i came up with jsEq: it is not a new
@@ -151,6 +152,57 @@ module.exports = ( eq, ne ) ->
   #---------------------------------------------------------------------------------------------------------
   return R
 ```
+
+## Implementations Module Setup
+
+Like the test cases, the `src/implementations.coffee` module is of rather light structure:
+
+```coffeescript
+
+#-----------------------------------------------------------------------------------------------------------
+module.exports =
+
+  # Ex.: how to use JS syntax
+  #.........................................................................................................
+  "==: native ==":
+    #.......................................................................................................
+    eq: ( a, b ) -> `a == b`
+    ne: ( a, b ) -> `a != b`
+
+  # Ex.: how to adapt methods of assertion frameworks
+  #.........................................................................................................
+  "NDE: NodeJS assert.deepEqual":
+    #.......................................................................................................
+    eq: ( a, b ) ->
+      try
+        ASSERT.deepEqual a, b
+      catch error
+        return false
+      return true
+    #.......................................................................................................
+    ne: ( a, b ) ->
+      try
+        ASSERT.notDeepEqual a, b
+      catch error
+        return false
+      return true
+
+  # Ex.: how to adapt other methods
+  #.........................................................................................................
+  "LDS: lodash _.isEqual":
+    #.......................................................................................................
+    eq: ( a, b ) -> LODASH.isEqual a, b
+    ne: ( a, b ) -> not LODASH.isEqual a, b
+```
+
+The setup is very simple: Each implementation is an object with two members, `eq` to test for 'is equal to'
+and `ne` to test for 'is not equal to'. Each name starts with a one to three-letter (unique) key which is
+used for reference in the report display (see above), followed by a `:` (colon) and the name proper (which
+should be descriptive and unique). The name may be prepended with an `!` (exclamation sign) in case the
+implementation is suspected to be faulty (happened to me with the QUnit framework, which i find weird; i
+will probably make the relevant test results appear in grey and not include them in the grand totals).
+Each function `eq`, `ne` must accept two arguments and return `true` or `false`, indicating success or
+failure.
 
 
 ## Equality, Identity, and Equivalence
