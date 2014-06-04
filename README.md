@@ -684,7 +684,7 @@ the intended use cases for such tests are; i can't think of any.
 
 It looks like it never came to the minds of these folks that JS `==` is, overall, a pretty much useless
 operator. `===` was added to JavaScript specifically to remedy the pitfalls of `==`; the only reason it did
-not replace `==` was a perceived concern about backwards compatibility. Likewise, it escaped their attention
+not *replace* `==` was a perceived concern about backwards compatibility. Likewise, it escaped their attention
 that APIs do not get better just by adding more and more methods to them.
 
 I believe it can be made unequivocally clear that **separating deep and shallow equality has no place
