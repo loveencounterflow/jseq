@@ -539,8 +539,8 @@ their order of insertion**. Confusingly, this behavior lingers on when we use `'
 keys, and magically vanishes as soon as we use keys that can not be interpreted as (32-bit) integers.
 
 Now, on the one hand it is evident that the ECMA specs do state that objects are unordered collections
-of keys and values, but on the other hand, the agreement among browsers has, from the beginning, it would
-seem, been that **objects should preserve the order of inserted properties**. As a commenter
+of keys and values, but on the other hand, the agreement among browsers has—from the beginning, it would
+seem—been that **objects should preserve the order of inserted properties**. As a commenter
 [in a relevant thread on esdicuss.org](http://esdiscuss.org/topic/iteration-order-for-object#content-4)
 put it:
 
