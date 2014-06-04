@@ -10,7 +10,7 @@
 	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 	- [Not-A-Number](#not-a-number)
 	- [Object Property Ordering](#object-property-ordering)
-	- [One or Two Methods for Equality Testing?](#one-or-two-methods-for-equality-testing)
+	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Motivation](#motivation)
@@ -436,13 +436,13 @@ Personally, i'm undecided at this moment; i guess that a good pragmatic solution
 a straightforward way to implement (B)—objects that differ only on key ordering should test not equal–then
 our implementation should offer this as an opt-in feature.
 
-## One or Two Methods for Equality Testing?
+## How Many Methods for Equality Testing?
 
 It is a recurrent feature of many assertion libraries that they provide one method for doing shallow
 equality testing and another for deep equality testing. A case in point is NodeJS' `assert` module with no
 less than *six* equality-testing methods: `equal`, `notEqual`, `deepEqual`, `notDeepEqual`, `strictEqual`,
 `notStrictEqual`. Given this state of affairs, it is perhaps not so surprising that
-(issue #7161: assert.deepEqual doing inadequate comparison)[https://github.com/joyent/node/issues/7161]
+[issue #7161: assert.deepEqual doing inadequate comparison](https://github.com/joyent/node/issues/7161)
 prompted the suggestion to add `deepStrictEqual` (and, to keep the tune, `notDeepStrictEqual` as well)
 to the API, which ups the tally to *eight*.
 
