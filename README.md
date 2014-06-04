@@ -723,8 +723,9 @@ exposed to the general public.
 * **–1** if a (non-assertive) method throws an error on any comparison.
 * **–1** if a method for deep equality testing fails on primitive values.
 * **–1** where a method `eq` fails on `eq x, x` for any given `x` (except for `NaN` which is a hairy case).
-* **–1** where a library provides both an `eq` and a `ne` method but `( not eq x, y ) == ( ne x, y )` fails
+* **–1** where a library provides both an `eq` and a `ne` method but `eq ( not eq x, y ), ( ne x, y )` fails
   for any given `x` and `y`.
+* **–1** where a pair `x`, `y` can be found that cause `eq ( eq x, y ), ( eq y, x )` to fail.
 
 ## Benchmarks
 
