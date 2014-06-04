@@ -574,7 +574,8 @@ consistent ordering for many years, there is something to be said in in favor of
 
 I guess that a good pragmatic solution is to go with crowd and use object property ordering
 where supported, but not make that factor count in equality tests: **two objects that only differ
-in the order of key insertion shall be regarded equal**.
+in the order of key insertion shall be regarded equal**. Where object key ordering is an important factor,
+it can and should be tested separately.
 
 ## Primitive Values vs Objects
 
