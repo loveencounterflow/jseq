@@ -485,8 +485,13 @@ try the other way, catch all the errors and reduce the output to `true` and `fal
 There is no reason why the burden of implementing an all-embracing `equals` method should be put *on the
 user*; rather, it is a failure on part of the library authors to export anything *but* an `equals` method
 (and maybe a `not_equals` method, especially in the context of an assertion library), which is one more reason
-i consider NodeJS' `assert` broken: instead of two methods, it exports six (and maybe eight at some point in
-the future).
+**i consider NodeJS' `assert` broken: instead of two methods, it exports six (and maybe eight at some point in
+the future)**. This is also revealed by the jsEq tests: for instance, `assert.deepEqual 1234, 1234`
+and `assert.notDeepEqual` as such work correctly, obviating any need for both `assert.equal` and
+`assert.notEqual` if there ever was one. Their presence is an implementation detail that happened to get
+exposed to the general public.
+
+
 
 
 ## Bonus And Malus Points

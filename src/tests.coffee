@@ -39,6 +39,7 @@ module.exports = ( eq, ne ) ->
   R[ "pod doesn't eq list"                                ] = -> ne {}, []
   R[ "pod in a list doesn't eq list in list"              ] = -> ne [{}], [[]]
   R[ "integer n doesn't eq rpr n"                         ] = -> ne 1234, '1234'
+  R[ "integer n doesn't eq n + 1"                         ] = -> ne 1234, 1235
   R[ "empty list doesn't eq false"                        ] = -> ne [], false
   R[ "list w an integer doesn't eq one w rpr n"           ] = -> ne [ 3 ], [ '3' ]
   R[ "regex lit's w diff. patterns, same flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
