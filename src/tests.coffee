@@ -27,8 +27,6 @@ module.exports = ( eq, ne ) ->
   R[ "emtpy list eqs empty list"                          ] = -> eq [], []
   R[ "emtpy pod eqs empty pod"                            ] = -> eq {}, {}
   R[ "number eqs number of same value"                    ] = -> eq 123.45678, 123.45678
-  R[ "number pod eqs primitive number of same value"      ] = -> eq 5, new Number 5
-  R[ "string pod eqs primitive string of same value"      ] = -> eq 'helo', new String 'helo'
   R[ "regex lit's w same pattern, flags are eq"           ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
   R[ "pods w same properties are eq"                      ] = -> eq { a:'b', c:'d' }, { a:'b', c:'d' }
   R[ "pods that only differ wrt prop ord are eq"          ] = -> eq { a:'b', c:'d' }, { c:'d', a:'b' }
@@ -45,6 +43,8 @@ module.exports = ( eq, ne ) ->
   R[ "regex lit's w diff. patterns, same flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]x/
   R[ "regex lit's w same patterns, diff. flags aren't eq" ] = -> ne /^abc[a-zA-Z]/, /^abc[a-zA-Z]/i
   R[ "+0 should ne -0"                                    ] = -> ne +0, -0
+  R[ "number obj not eqs primitive number of same value"  ] = -> ne 5, new Number 5
+  R[ "string obj not eqs primitive string of same value"  ] = -> ne 'helo', new String 'helo'
 
   #=========================================================================================================
   ### 2. complex tests ###

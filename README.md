@@ -12,6 +12,7 @@
 	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 	- [Not-A-Number](#not-a-number)
 	- [Object Property Ordering](#object-property-ordering)
+	- [Primitive Values vs Objects](#primitive-values-vs-objects)
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -574,6 +575,8 @@ consistent ordering for many years, there is something to be said in infavor of 
 Personally, i'm undecided at this moment; i guess that a good pragmatic solution would be that if there's
 a straightforward way to implement (B)—objects that differ only on key ordering should test not equal–then
 our implementation should offer this as an opt-in feature.
+
+## Primitive Values vs Objects
 
 ## How Many Methods for Equality Testing?
 
