@@ -252,8 +252,8 @@ to comply with our strict version of equality, there would have been little need
 the `==` operator, as the answer to that question can be given without implementing any class-specific
 methods, from an abstract point of view. It is not immediately clear what use could be made of an object
 that satisfies `x != x`, but the fact that Python has no qualms in allowing the programmer such utterly
-subversive code corroborates that what we deal with here is open-minded equivalence rather than principled
-equality.
+subversive code corroborates the notion that what we're dealing with here is open-minded equivalence rather
+than principled equality.
 
 Since there is, anyways, only a single numerical type in JavaScript, i believe we should stick with the
 unadultered version of Axiom 1 that forbids cross-type equality even for numerical types.
@@ -272,14 +272,14 @@ and that it continues to return the expected values even when some part of it ge
 that using some `BigNum` class in place of ordinary numbers *will* likely make the program change behavior,
 for the better or the worse, and in case you're writing an online shopping software, you *want* to catch all
 those changes, which is tantamount to say you do *not* want *any* kind of `eq ( new X 0 ), 0` tests to
-return `true`, even if `0.00` is your naive old and `new X 0.00` is your fool-proof new way of saying
-'zero dollars'.
+return `true`, precisely because `0.00` is your naive old way and `new X 0.00` is your fool-proof new way of
+saying 'zero dollars', and you want to avoid missing out on any regression in this important detail.
 
 Thus our second axiom becomes:
 
 **Axiom 2** Even two values `x`, `y` of the same type that can be regarded as equal for most use cases, they
 must not pass the test `eq x, y` in case in can be shown that there is at least one program that has different
-outputs when run with `y` instead of with `y`.
+outputs when run with `y` instead of with `x`.
 
 The second axiom helps us to see very clearly that Python's concept of equality isn't ours, for there is a
 very simple program `def f ( x ): print( type( x ) )` that will behave differently for each of `1`, `1.0`,
@@ -356,7 +356,7 @@ attributes unto a `NaN`, and it will silently fail to accept any named members. 
 this singleton value, so you can not produce a copy of it. You cannot delete it from the language; it is
 always there, a solitary value with an identity crisis. Throw it into an arithmetic expression and it will
 taint all output. The sheer existence of `NaN` in a language that knows how to throw and catch exceptions is
-an oxymoron, as all expressions that currently return it should relly throw an error instead.
+an oxymoron, as all expressions that currently return it should really throw an error instead.
 
 Having read a discussion on StackOverflow about the merits and demerits of `NaN != NaN`, i'm fully convinced
 that whatever i have said about Python's concept of numerical equality (which turned out to be equivalence)
@@ -369,6 +369,14 @@ equality.
 **I conclude that according to the First and Second Axioms, `eq NaN, NaN` must hold**, on the grounds
 that no program using `NaN` values from different sources can make a difference on the base of manipulating
 these values or passing them as arguments to the same functions.
+
+A collateral result of these considerations is that while JavaScript's `===` so-called strict equality
+operator (which is really an object identity operator) functions quite well in most cases, it fails with
+`NaN`. Specifically, it violates a
+
+**Fundamental Axiom**: object (value) identity implies object (value) equality. Where a given test `f`
+purports to test for equality and fails, as `f x, x`, to yield `true` for any given `x`, then that test
+must be considered broken.
 
 
 ## Object Property Ordering
