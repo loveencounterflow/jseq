@@ -559,7 +559,7 @@ mandate that any ordering of properties be kept, but does that mean it's a good 
 when most people expect it, most JS engines keep it, and it can convincingly shown to be a very useful
 behavior? But this is idle talk as the Chrome folks will only swear by the millisecond gained in some
 synthetic test case. (They are likewise quite indifferent towards the merits of a stable sort and in all
-earnestly expect the general public to accept an algorithm that shows one behavior for short and another
+earnesty expect the general public to accept an algorithm that shows one behavior for short and another
 behavior for long lists, the threshold being set at an arbitrary limit of ten elements.)
 
 It may then be asked whether our version of strict equality **(A)** should or **(B)** should not treat two
