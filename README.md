@@ -383,8 +383,8 @@ print( y == z ) # False
 This example is more evidence in favor of the above assertion. If Python's `==` operator had been intended
 to comply with our strict version of equality, there would have been little need to encourage overloading
 the `==` operator, as the answer to that question can be given without implementing any class-specific
-methods, from an abstract point of view. It is not immediately clear what use could be made of an object
-that satisfies `x != x`, but the fact that Python has no qualms in allowing the programmer such utterly
+methods, from an abstract point of view. It is not immediately clear what use could be made of a value  that
+blatantly violates `x == x`, but the fact that Python has no qualms in allowing the programmer such utterly
 subversive code corroborates the notion that what we're dealing with here is open-minded equivalence rather
 than principled equality.
 
