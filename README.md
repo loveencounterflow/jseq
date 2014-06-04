@@ -573,10 +573,53 @@ programs can deliver different outputs for different order of key insertion, and
 consistent ordering for many years, there is something to be said in infavor of solution (B).
 
 I guess that a good pragmatic solution is to go with crowd and use object property ordering
-where supported, but not make that factor count in equality tests: **(A) two objects that only differ
+where supported, but not make that factor count in equality tests: **two objects that only differ
 in the order of key insertion shall be regarded equal**.
 
 ## Primitive Values vs Objects
+
+The difference that exists in many object-oriented languages between primitive values (i.e. values without
+properties) and objects (i.e. values that are composed of properties) is puzzling to many people. I believe
+that wherever and whenever a distinction has been or should have been made in a program between, say, `5`
+plain and simple, and `new Number 5`, then that language is at fault.
+
+I do get the feeling that the smart people who came up with JavaScript thought along the same lines, and
+that the fact that you *can* sometimes make a difference between `5` and `new Number 5` is actually an
+oversight where the intention was that programmers should never have to worry about that. Thus, in
+JavaScript, when you access a property of a primitive value, that primitive is (at least conceptually)
+temporarily cast as an object, and suddenly you can access properties on a primitive.
+
+As for our inquiry, we have to ask: should `eq 5, new Number 5` hold or not? In the light of the foregoing
+discussion, we can give a quick answer: those two things should be different. It follows from our Second
+Axiom as it did for `+0` vs `–0`. To motivate this view, let's have a look at a small test setup.
+
+In JavaScript, there are the primitive types `undefined`, `null`, `boolean`, `string` and `number`;
+`undefined` and `null` are singletons and do not have a constructor, there's only `Boolean`, `Number`
+and `String`. When you try to attach a property to a primitive value, JavaScript will either complain
+loudly (in the case of `undefined` and `null`), or fail silently (in the case of booleans, numbers and
+strings). So one might say that there are really 'primeval primitives' and 'advanced(?) primitives' (rather
+than just primitives) in JavaScript. It gets even a little worse. Consider this:
+
+```coffeescript
+test = ( value, object ) ->
+  value.foo   = 42
+  object.foo  = 42
+  #         ==                 ===                p                o
+  return [ `value == object`, `value === object`, value.foo is 42, object.foo is 42 ]
+
+                                #   ==  === p   o
+
+log test    5, new Number 5     #   O   X   X   O
+log test  'x', new String 'x'   #   O   X   X   O
+log test true, new Boolean()    #   X   X   X   O
+log test  /x/, new RegExp /x/   #   X   X   O   O
+log test   [], new Array()      #   X   X   O   O
+```
+
+For readability, i've here rendered `true` as `O` and `false` as `X`.
+
+
+[](http://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
 
 ## How Many Methods for Equality Testing?
 
