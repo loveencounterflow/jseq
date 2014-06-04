@@ -275,7 +275,7 @@ An important axiom in computing is that
 when two values are equal, they must be of equal type, too.
 
 More formally, let **L** denote the language under inspection (JS or CS), and be **M** the meta-language to
-discuss and / or to implement **L**. Then, saying that `eq x, y` results in `true` implies that
+discuss and / or to implement **L**. Then, saying that (in CS) `eq x, y` results in `true` implies that
 (in CS) `eq ( type_of x ), ( type_of y )` is also `true`.
 
 We can capture that by saying that in **M**, all values `x` of **L** are represented by tuples ⟨*t*, *v*⟩
