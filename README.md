@@ -637,15 +637,25 @@ test = ( value, object ) ->
 
 log test    5, new Number 5     #   O   X   X   O
 log test  'x', new String 'x'   #   O   X   X   O
-log test true, new Boolean()    #   X   X   X   O
+log test true, new Boolean true #   X   X   X   O
 log test  /x/, new RegExp /x/   #   X   X   O   O
 log test   [], new Array()      #   X   X   O   O
 ```
 
-For readability, i've here rendered `true` as `O` and `false` as `X`.
+For readability, i've here rendered `true` as `O` and `false` as `X`. We can readily discern *three*
+patterns of output values, the `OXXO` kind, the `XXXO` kind, and the `XXOO` kind. When i say 'kind', i mean
+'types of types', and it is plausible that longer series of like tests will result in 'fingerprint patterns'
+that will allow us to sort out not only types of types, but also the types themselves. The sobering factoid
+that is provided by the above program is that there are at least *three* kinds of primitives.
 
+Worse: since `NaN` is a primitive, too, but since it fails to satisfy JS `x === x`, there are at least
+*four* kinds.
 
-[](http://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
+Worster still: `undefined` can be re-defined in plain JS, something you can't do with `NaN`, so there
+at least *five* kinds of primitive values in JavaScript.
+
+I think i'll leave it at that.
+
 
 ## How Many Methods for Equality Testing?
 
