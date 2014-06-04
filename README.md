@@ -207,11 +207,11 @@ or failure.
 
 ## Equality, Identity, and Equivalence
 
-There will be a lot of talk about equality and related topics in this text, so it behooves us to shortly
-not atrictly define, but at least clarify some pertinent terms. Fear not, this formal discussion will be
-short, and save for one more stretch of (rather shallow) theoretical discussion, this ReadMe will remain
-fairly pragmatic; it may even be said that it is a pronouncedly pragmatic text that aims to deliver
-arguments against an ill-conceived standard fraught with artificial rules that serve no practical
+There will be a lot of talk about equality and related topics in this text, so it behooves us to shortly if
+not strictly define, then at least make sufficiently clear some pertinent terms. Fear not, this formal
+discussion will be short, and save for one more stretch of (rather shallow) theoretical discussion, this
+ReadMe will remain fairly pragmatic; it may even be said that it is a pronouncedly pragmatic text that aims
+to deliver arguments against an ill-conceived standard fraught with artificial rules that serve no practical
 purpose (readers who bear with me will not be left in doubt which standard i'm talking about).
 
 Three vocables will have to be used in any discussion of 'what equals what' in programming languages: these
@@ -220,19 +220,50 @@ are **equality**, **identity**, and **equivalence**.
 First off, to me, **equality and identity are extensional, formal qualities, but equivalence is an
 intentional, informal quality**. With 'extensional' i mean 'inherent to the material qualities of a given
 value', while 'intentional' pertains to values only in so far as they are put to some specific use, with a
-certain functionality or result to be achieved. Put simply, the weight of a given nail is an extensional
-quality of that nail; that it is used, in a given case, to hang some framed picture onto the wall is an
-incidental property of it that arises from
+certain functionality or result to be achieved.
+
+Put simply, the physical weight of a given nail is an extensional quality of that nail; that it is used, in
+a given case, to hang some framed picture onto some wall is an incidental property of it that arises from a
+willful decision of some agent who arranged for this configuration. Likewise, the property that, in
+JavaScript, i can say both `console.log( 42 )` and `console.log( '42' )` to achieve a display of a digit `4`
+is an intentional property; it could be different. It surely strikes us as natural, but that is mainly
+because we are so accustomed to write out numbers in the decimal system that we are prone to think of
+'number forty-two' as 'sequence of digit 4, digit 2'. This analogy breaks down quickly as soon as one
+modifies the setup: when i write `console.log( 042 )` (or `console.log( 0o42 )` in more recent editions of
+JS), what i get is a sequence of 'digit 3, digit 4', which is different from the sequence `0`, `4`, `2` as
+used in the source that caused this behavior. While it is acceptable to prefer the decimal system for
+producing human-readable outputs, JavaScript's handling of strings-that-look-like-numbers is plain nutty.
+Consider (using CoffeeScript and `log` for `console.log`):
+
+```coffeescript
+log '42' +  8     # prints 428
+log  42  + '8'    # prints 428
+log  42  * '8'    # prints 336
+log '42' *  8     # prints 336
+```
+
+Here, we see that when we use the `+` (plus operator) to 'add' a string and a number, the output will be a
+string that concatenates the string with the decimal representation of that number. BUT if we use the `*`
+(times) operator, we get a number that is the result of the multiplication of the two arguments, the string
+being interpreted as a decimal number, where possible. This is so confusing and leads to so many surprising
+ramifications that there is, in the community, an expletive to describe such phenomena, and that expletive
+is **WAT!**.
+
+I'm discussing these well-known JS WATs in the present context because JavaScript programmers (much like
+users of PHP, and certainly more than users of Python) are very much inclined to have a rather muddled
+view on data types, and, hence, of equality at large. This is borne out by the refusal of some people
+to acknowledge that a method called `deepEqual` that considers `[ 42 ]` to 'equal' `[ '42' ]` is pretty
+much useless; more on that topic below.
 
 It can be said that JavaScript's `==` 'non-strict equals operator' never tested *value equality* at all,
 rather, it tested *value equivalence*. Now we have seen that equivalence is a highly subjective concept that
 is suceptible to the conditions of specific use cases. As such, it is a bad idea to implement it in the
-language proper. The concept that `3 == '3'` (number three is equivalent to a string with the ASCII digit
-three, U+0033) does hold in some common contexts (like `console.log x`) and breaks down in some other, also
-very common contexts (like `x.length`, which is undefined for numbers).
+language proper. The very concept that `3 == '3'` ('number three is equivalent to a string with the ASCII
+digit three, U+0033') does hold in some common contexts (like `console.log( x )`) breaks down in many other,
+also very common contexts (like `x.length`, which is undefined for numbers).
 
 Further, it can be said that JavaScript's `===` 'strict equals operator' never tested *value equality* at
-all, but rather *object identity*, with the understanding that all the primitive types have one single
+all, but rather *object identity*, with the understanding that all the primitive values have one single
 identity per value (something that e.g. seems to hold in Python for all integers, but not necessarily
 all strings).
 
