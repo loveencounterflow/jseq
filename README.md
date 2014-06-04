@@ -356,10 +356,10 @@ have only a single numerical type, so it may be valid for JavaScript, but certai
 
 A third way, and i believe the right one, is to assert that **what Python does with its `1 == 1.0 == 1 + 0j
 == Decimal( 1 )` comparison is really *not* doing equality, but rather equivalence testing, tailored to the
-specific use-case of comparing numerical values for arithmetic purposes**. And, in fact, it so turns out
-that in Python you can overload the behavior of the `==` operator by defining a special method `__eq__` on
-a class, and if you so want it, you can make Python say yes to `x == y` even though `x.foo == y.foo` does
-*not* hold! It is in fact very simple:
+specific use-case of comparing numerical values for arithmetic purposes**. Indeed, it turns out that Python
+allows you to overload the behavior of the `==` operator by defining a special method `__eq__` on a class,
+and, if you are so inclined, you can make Python say yes to `x == y` even though `x.foo == y.foo` does *not*
+hold! It is in fact very simple:
 
 ```python
 class X:
