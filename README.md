@@ -14,7 +14,7 @@
 	- [Object Property Ordering](#object-property-ordering)
 	- [Primitive Values vs Objects](#primitive-values-vs-objects)
 	- [Undefined Properties](#undefined-properties)
-	- [Functions](#functions)
+	- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -696,7 +696,7 @@ I think i'll leave it at that.
 ## Undefined Properties
 
 Undefined properties are quite a nuisance. One might want to think that an 'undefined' property is just a
-property that doesn't exit, but in the wonderful world of JavaScript, where there is an 'undefined' value
+property that doesn't exit, but in the wonderful world of JavaScript, where there is an `undefined` value
 that is actually used as a stand-in return value for cases like `{}[ 'foo' ]` and `[][ 87 ]` (instead of
 throwing an exception), that is not so clear. To wit:
 
@@ -728,7 +728,7 @@ operation is that it allows to make sparse lists with arbitrarily large indices 
 It may be said without hesitation that `ne { x: undefined }, {}` should hold without further qualification,
 and in fact, there is very broad agreement across implementations about this.
 
-## Functions
+## Functions (and Regular Expressions)
 
 In this section, i want to discuss the tricky question whether two functions `f`, `g` can or cannot be
 considered equal. First off, it should be clear that whenever (JS) `f === g` holds, `f` and `g` are merely
@@ -738,10 +738,52 @@ be counted among the great intellectual achievements of the 20th century. You kn
 [Gödel's incompleteness theorems](http://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems),
 [Turing machines](http://en.wikipedia.org/wiki/Turing_machine),
 [Halting problem](http://en.wikipedia.org/wiki/Halting_problem),
-[Rice's theorem](http://en.wikipedia.org/wiki/Rice%27s_theorem). I will not iterate any details here, but
-what the programmer should understand is that **there is no, and cannot be for logical reasons, *general*
-algorithm that is able to test whether two given programs will behave equally for all inputs**.
+[Rice's theorem](http://en.wikipedia.org/wiki/Rice%27s_theorem).
 
+I will not iterate any details here, but what the programmer should understand is that **there is no, and
+cannot be for logical reasons, *general* algorithm that is able to test whether two given programs will
+behave equally for all inputs**.
+
+The emphasis is on *general*, because, of course, there *are* cases where one *can* say with confidence that
+two given functions behave equally. For example, when i have two `f`, `g` that are explicitly limited to a
+certain finite set of inputs (say, positive integer numbers less than ten), i can repeatedly call both
+functions with each legal input and compare the results. But even that is not strictly true, because it is
+simple to define a function that will *sometimes* deliver a different result (say, based on a random numberr
+generator, or the time of the day). Furthermore, the test will break down when the returned value should be
+function itself, as we are back to square one then and possibly caught in an infinite regress.
+
+By inspecting source code, there are some cases where a decision can be made more confidently. For example,
+if we have
+
+```js
+var f = function( a, b, c ){ return a * b * c; }
+var g = function( a, b, c ){ return a * b * c  }
+```
+
+then we can tell with certainty that f and g will return the same value, as the only difference is in the
+use of the `;` (semicolon) which in JavaScript in this case does not cause any behavioral difference. The
+same goes when i reorder the factors of the product as `c * a * b`.
+
+The question is: how to distinguish these cases? and the answer is: **we shouldn't even try**. The reason is
+simple: A JavaScript program has access to the source code of (most) functions; as such, we can always
+inspect that code and cause behavioral differences:
+
+```coffeescript
+log f.toString().indexOf ';' # 38
+log g.toString().indexOf ';' # -1
+```
+
+We have now reduced our field of candidates for equality to one remaining special case: how about two
+functions for which `eq f.toString(), g.toString()` holds?
+
+I want to suggest that **two functions should be considered equal when their source code as returned by
+`f.toString()` should be considered equal**.
+
+<!-- In theory, we could also deny to try and answer equality for
+functions, i.e. consider all functions that are not the same object as different. However, there is an
+important use case that seems compelling to me, and that is to test
+
+ -->
 
 ## How Many Methods for Equality Testing?
 
