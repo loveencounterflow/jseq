@@ -913,7 +913,7 @@ consumption). This task has been left for a future day to be written.
 
 ## Libraries Tested
 
-* **`== `**: native JavaScript comparison with `==`
+* **`==`&nbsp;**: native JavaScript comparison with `==`
 * **`===`**: native JavaScript comparison with `===`
 * **`OIS`**: native JavaScript comparison `Object.is`
 * **`LDS`**: https://github.com/lodash/lodash
