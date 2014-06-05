@@ -764,9 +764,9 @@ then we can tell with certainty that f and g will return the same value, as the 
 use of the `;` (semicolon) which in JavaScript in this case does not cause any behavioral difference. The
 same goes when i reorder the factors of the product as `c * a * b`.
 
-The question is: how to distinguish these cases? and the answer is: **we shouldn't even try**. The reason is
-simple: A JavaScript program has access to the source code of (most) functions; as such, we can always
-inspect that code and cause behavioral differences:
+The question is: how to decide whether two functions have only minor differences in their sources? and the
+answer is: **we shouldn't even try**. The reason is simple: A JavaScript program has access to the source
+code of (most) functions; as such, we can always inspect that code and cause behavioral differences:
 
 ```coffeescript
 log f.toString().indexOf ';' # 38
