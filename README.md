@@ -749,15 +749,15 @@ consumption). This task has been left for a future day to be written.
 
 ## Libraries Tested
 
-* **LDS**: https://github.com/lodash/lodash
-* **UDS**: https://github.com/jashkenas/underscore
-* **JKR**: https://github.com/jkroso/equals
-* **o23**: https://github.com/othiym23/node-deeper
-* **DEQ**: https://github.com/substack/node-deep-equal
-* **QUN**: http://qunitjs.com
-* **SH1**: https://github.com/shouldjs/should.js#equal
-* **SH2**: https://github.com/shouldjs/should.js#eql
-* **\*JV**: http://stackoverflow.com/a/6713782/256361
+* **`LDS`**: https://github.com/lodash/lodash
+* **`UDS`**: https://github.com/jashkenas/underscore
+* **`JKR`**: https://github.com/jkroso/equals
+* **`o23`**: https://github.com/othiym23/node-deeper
+* **`DEQ`**: https://github.com/substack/node-deep-equal
+* **`QUN`**: http://qunitjs.com
+* **`SH1`**: https://github.com/shouldjs/should.js#equal
+* **`SH2`**: https://github.com/shouldjs/should.js#eql
+* **`\*JV`**: http://stackoverflow.com/a/6713782/256361
 
 ## Caveats
 
