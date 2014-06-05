@@ -741,7 +741,7 @@ be counted among the great intellectual achievements of the 20th century. You kn
 [Rice's theorem](http://en.wikipedia.org/wiki/Rice%27s_theorem).
 
 I will not iterate any details here, but what the programmer should understand is that **there is no, and
-cannot be for logical reasons, *general* algorithm that is able to test whether two given programs will
+cannot be for logical reasons, any *general* algorithm that is able to test whether two given programs will
 behave equally for all inputs**.
 
 The emphasis is on *general*, because, of course, there *are* cases where one *can* say with confidence that
