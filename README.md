@@ -777,13 +777,17 @@ log g.toString().indexOf ';' # -1
 We have now reduced our field of candidates for equality to one remaining special case: how about two
 functions for which `eq f.toString(), g.toString()` holds?
 
-I want to suggest that **two functions should be considered equal when their source code as returned by
-`f.toString()` should be considered equal**. This i believe should be done for pragmatic reasons as,
-sometimes, the objects you want to test will contain functions, and it can be a nuisance to first having
-to remove them and then be left without any way to test for their correctness.
+I want to suggest that **two functions may be considered equal when their source code (as returned by
+their `x.toString()` methods) are equal. However, because of some limitations to this, that should be made
+optional**.
+
+This i believe should be done for pragmatic reasons as, sometimes, the objects you want to test will contain
+functions, and it can be a nuisance to first having to remove them and then be left without any way to test
+whther thy have the expected shapes (i'm not the only one to think so; the generally quite good [`equals`
+method by jkroso](https://github.com/jkroso/equals) does essentially the same).
 
 However, there's a hitch here. As i said, JavaScript can access the source of *most* functions. It cannot
-show the source of all functions, because built-ins are typically not written in JS, but compiled (from C
+show the source of *all* functions, because built-ins are typically not written in JS, but compiled (from C
 or whatever the implementation language of **M** was); therefore, all that you get to see when you
 ask for, say, `[].toString.toString()` will be (at least in NodeJS and Firefox)
 
@@ -792,7 +796,7 @@ function toString() { [native code] }
 ```
 
 and since all objects have that method, it's easy to come up with a litmus test that shows our
-considerations are not quite watertight, viz.:
+considerations are not quite watertight. I use the aformentioned `equals` implementation here:
 
 ```coffeescript
 eq  = require 'equals' # https://github.com/jkroso/equals
@@ -804,19 +808,30 @@ log 'are `f` and `g`equal?             ', eq f, g                         # true
 log 'do they show the same behavior?   ', eq ( f.call 88 ), ( g.call 88 ) # false  #6
 ```
 
-on line #4, we show that our `eq` implementation does make a difference between some functions: `eq f, h`
-returns `false`, but, as made explicit on line #5, `eq f, g` returns `true`. According to our reasoning, `f`
+On line #4, we show that the `eq` implementation chosen does indeed considers some functions to be different
+(`eq f, h` returns `false`) and others as equal (`eq f, g` returns `true`). According to our reasoning, `f`
 and `g` then should show equivalent behaviors for equivalent inputs (in case they are deterministic
 functions that base their behavior solely on their explicit arguments, which they are). However, they return
 different outputs (namely `[object Number]` and `88`) when called with the same argument, `88` (which acts
 as `this` in this case, but that is beside the point).
 
+Actually, i feel a bit stoopid, because, as i'm writing this, another, less contrived, conceptually
+simpler, more transparent and probably more relevant counter example comes to my mind, viz.:
 
-<!-- In theory, we could also deny to try and answer equality for
-functions, i.e. consider all functions that are not the same object as different. However, there is an
-important use case that seems compelling to me, and that is to test
+```coffeescript
+get_function = ( x ) ->
+  return ( n ) -> n * x
 
- -->
+f = get_function 2
+g = get_function 3
+
+log eq f, g                 # true
+log eq ( f 18 ), ( g 18 )   # false
+```
+
+These functions are the *same* in the sense that they always execute the same code; they are different in
+the way that they see different values in their respective closures.
+
 
 ## What If `id()`?
 
