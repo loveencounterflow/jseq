@@ -1,30 +1,30 @@
 
 
 - [jsEq](#jseq)
-	- [Language Choice and Motivation](#language-choice-and-motivation)
-	- [Test Module Setup](#test-module-setup)
-	- [Implementations Module Setup](#implementations-module-setup)
-	- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
-	- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
-	- [Equality of Sub-Types](#equality-of-sub-types)
-	- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
-	- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
-	- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
-	- [Not-A-Number](#not-a-number)
-	- [Object Property Ordering](#object-property-ordering)
-	- [Primitive Values vs Objects](#primitive-values-vs-objects)
-	- [Undefined Properties](#undefined-properties)
-	- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
-	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
-	- [Bonus And Malus Points](#bonus-and-malus-points)
-	- [Benchmarks](#benchmarks)
-	- [Libraries Tested](#libraries-tested)
-	- [Caveats](#caveats)
+- [Language Choice and Motivation](#language-choice-and-motivation)
+- [Test Module Setup](#test-module-setup)
+- [Implementations Module Setup](#implementations-module-setup)
+- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
+- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
+- [Equality of Sub-Types](#equality-of-sub-types)
+- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
+- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
+- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
+- [Not-A-Number](#not-a-number)
+- [Object Property Ordering](#object-property-ordering)
+- [Primitive Values vs Objects](#primitive-values-vs-objects)
+- [Undefined Properties](#undefined-properties)
+- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
+- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
+- [Bonus And Malus Points](#bonus-and-malus-points)
+- [Benchmarks](#benchmarks)
+- [Libraries Tested](#libraries-tested)
+- [Caveats](#caveats)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 
-# jsEq
+### jsEq
 
 There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
 program in JavaScript on a daily base, and those are sane **(deep) equality testing**, sane **deep
@@ -61,7 +61,7 @@ It has to be said that while—as it stands—jsEq will run no less than `12 * 2
 are between primitive values, which explains why bot JS `==` and `===` turn in with around 9 out of 10 tests
 passed.
 
-## Language Choice and Motivation
+### Language Choice and Motivation
 
 The present module has been implemented in [CoffeeScript](http://coffeescript.org), my favorite language
 these days. Most of the examples in the present ReadMe are in CoffeeScript, too, so whenever you see
@@ -88,7 +88,7 @@ haphazard, isolated ad-hoc tests issued via the NodeJS REPL, i came up with jsEq
 implementation of JS (deep) equality, but rather an extensible framework to test available software that
 purports to have an answer to the vexing problem whether two given values are or are not equal.
 
-## Test Module Setup
+### Test Module Setup
 
 Test cases are set up in the `src/implementations.coffee` modules, inside a function that accepts two
 functions `eq`, `ne` and returns an object of test cases. Test case names are short descriptions of what
@@ -165,7 +165,7 @@ module.exports = ( eq, ne ) ->
   return R
 ```
 
-## Implementations Module Setup
+### Implementations Module Setup
 
 Like the test cases, the `src/implementations.coffee` module is of rather light structure:
 
@@ -217,7 +217,7 @@ totals). Each function `eq`, `ne` must accept two arguments and return `true` or
 or failure.
 
 
-## Equality, Identity, and Equivalence
+### Equality, Identity, and Equivalence
 
 There will be a lot of talk about equality and related topics in this text, so it behooves us to shortly if
 not strictly define, then at least make sufficiently clear some pertinent terms. Fear not, this formal
@@ -279,7 +279,7 @@ all, but rather *object identity*, with the understanding that all the primitive
 identity per value (something that e.g. seems to hold in Python for all integers, but not necessarily
 all strings).
 
-## First Axiom: Value Equality Entails Type Equality
+### First Axiom: Value Equality Entails Type Equality
 
 An important axiom in computing is that
 
@@ -320,7 +320,7 @@ types can ever be equal. However, there are two questions i assume the astute re
 to ask. These are: **what about sub-typed values?** and, **what about numbers?**
 
 
-## Equality of Sub-Types
+### Equality of Sub-Types
 
 As for the first question—**what about sub-typed values?**—i think we can safely give it short shrift. A
 type is a type, irregardless of how it is derived. That an instance of a given type shares methods or data
@@ -336,7 +336,7 @@ thread'. In other words, just because, in some languages, both `print 3` and `pr
 appearance of a digit three in the output medium doesn't mean that `3` and `'3'` are 'the same'.
 
 
-## Equality of Numerical Values in Python
+### Equality of Numerical Values in Python
 
 As for the second question—**what about numbers?**—it is in theory somewhat harder than the first, but,
 fortunately, there is an easy solution.
@@ -403,7 +403,7 @@ than principled equality.
 Since there is, anyways, only a single numerical type in JavaScript, i believe we should stick with the
 unadultered version of the First Axiom which forbids cross-type equality even for numerical types.
 
-## Second Axiom: Equality of Program Behavior
+### Second Axiom: Equality of Program Behavior
 
 The above treatment of numerical types has shown that Python prefers to consider `1 == 1.0` true because it
 may be said that for *most* practical cases, there will be no difference between results whatever numerical
@@ -433,7 +433,7 @@ The second axiom helps us to see very clearly that Python's concept of equality 
 very simple program `def f ( x ): print( type( x ) )` that will behave differently for each of `1`, `1.0`,
 `1 + 0j`, `Decimal( 1 )`. As for JavaScript, the next section will discuss a relevant case.
 
-## Infinity, Positive and Negative Zero
+### Infinity, Positive and Negative Zero
 
 One of the (many) surprises / gotchas / peculiarities that JavaScript has in store for the n00be programmer
 is the existence of *two zeroes*, one positive and one negative. What, i hear you say, and no sooner said
@@ -481,7 +481,7 @@ case got it wrong: **Since there are known programs that behave differently with
 these two values must not be considered equal**.
 
 
-## Not-A-Number
+### Not-A-Number
 
 Yet another one of that rich collection of JavaScript easter eggs (and, like `+0` vs `-0`, one that is
 mandated by IEEE 754), is the existence of a `NaN` (read: Not A Number) value. In my opinion, this value
@@ -550,7 +550,7 @@ which, according to MDN,
 the previous sections**.
 
 
-## Object Property Ordering
+### Object Property Ordering
 
 Many people in the JS programming community are aware of the issues around ordering of object properties
 ever since Chrome (and, because of that, NodeJS) broke customary behavior with regard to the ordering
@@ -608,7 +608,7 @@ where supported, but not make that factor count in equality tests: **two objects
 in the order of key insertion shall be regarded equal**. Where object key ordering is an important factor,
 it can and should be tested separately.
 
-## Primitive Values vs Objects
+### Primitive Values vs Objects
 
 The difference that exists in many object-oriented languages between primitive values (i.e. values without
 properties) and objects (i.e. values that are composed of properties) is puzzling to many people. To make it
@@ -693,7 +693,7 @@ at least *five* kinds of primitive values in JavaScript.
 
 I think i'll leave it at that.
 
-## Undefined Properties
+### Undefined Properties
 
 Undefined properties are quite a nuisance. One might want to think that an 'undefined' property is just a
 property that doesn't exit, but in the wonderful world of JavaScript, where there is an `undefined` value
@@ -728,7 +728,7 @@ operation is that it allows to make sparse lists with arbitrarily large indices 
 It may be said without hesitation that `ne { x: undefined }, {}` should hold without further qualification,
 and in fact, there is very broad agreement across implementations about this.
 
-## Functions (and Regular Expressions)
+### Functions (and Regular Expressions)
 
 In this section, i want to discuss the tricky question whether two functions `f`, `g` can or cannot be
 considered equal. First off, it should be clear that whenever (JS) `f === g` holds, `f` and `g` are merely
@@ -836,7 +836,7 @@ or not, which is why i think this feature should be made an opt-in.
 
 
 
-## How Many Methods for Equality Testing?
+### How Many Methods for Equality Testing?
 
 It is a recurrent feature of many assertion libraries that they provide one method for doing shallow
 equality testing and another for deep equality testing. A case in point is NodeJS' `assert` module with no
@@ -894,10 +894,11 @@ exposed to the general public.
 
 
 
-## Bonus And Malus Points
+### Bonus And Malus Points
 
 * **+1** if method allows to configure whether `eq NaN, NaN` should hold.
 * **+1** if method allows to configure whether object key ordering should be honored.
+* **+1** if method allows to configure whether function equality should be tested.
 * **+1** if method allows to test arbitrary number of arguments for pairwise equality.
 * **–1** if a (non-assertive) method throws an error on any comparison.
 * **–1** if a method for deep equality testing fails on primitive values.
@@ -906,12 +907,12 @@ exposed to the general public.
   for any given `x` and `y`.
 * **–1** where a pair `x`, `y` can be found that cause `eq ( eq x, y ), ( eq y, x )` to fail.
 
-## Benchmarks
+### Benchmarks
 
 A through comparison of equality-testing implementations whould also consider performance (and maybe memory
 consumption). This task has been left for a future day to be written.
 
-## Libraries Tested
+### Libraries Tested
 
 * **`==`&nbsp;**: native JavaScript comparison with `==`
 * **`===`**: native JavaScript comparison with `===`
@@ -926,7 +927,7 @@ consumption). This task has been left for a future day to be written.
 * **`SH2`**: https://github.com/shouldjs/should.js#eql
 * **`*JV`**: http://stackoverflow.com/a/6713782/256361
 
-## Caveats
+### Caveats
 
 * Tests from libraries whose name has been marked with an `!` are considered broken; in particular:
 * The QUnit tests (**QUN**) are currently broken and always fail; i seemingly cannot come to grips with
