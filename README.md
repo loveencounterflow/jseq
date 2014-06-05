@@ -755,7 +755,7 @@ a function itself, as we are then back to square one then and possibly caught in
 By inspecting source code, there are some cases where a decision can be made more confidently. For example,
 if we have
 
-```javascript
+``` javascript
 var f = function( a, b, c ){ return a * b * c; }
 var g = function( a, b, c ){ return a * b * c  }
 ```
