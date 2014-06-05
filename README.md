@@ -17,7 +17,7 @@
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
 	- [Libraries Tested](#libraries-tested)
-		- [Caveats](#caveats)
+	- [Caveats](#caveats)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -758,10 +758,13 @@ consumption). This task has been left for a future day to be written.
 * **SH1**: https://github.com/shouldjs/should.js#equal
 * **SH2**: https://github.com/shouldjs/should.js#eql
 
-### Caveats
+## Caveats
 
+* Tests from libraries whose name has been marked with an `!` are considered broken; in particular:
 * The QUnit tests (**QUN**) are currently broken and always fail; i seemingly cannot come to grips with
   the QUnit API.
+* Libraries whose key starts with `*` are 'hobbyists solutions', i.e. functions that have been published
+  in blogs or forum answers. I consider these as running outside of competition.
 * I suspect the **SH1** and **SH2** tests to be broken, too, due to their outstanding failure counts.
 
 
