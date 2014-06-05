@@ -15,7 +15,6 @@
 	- [Primitive Values vs Objects](#primitive-values-vs-objects)
 	- [Undefined Properties](#undefined-properties)
 	- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
-	- [What If `id()`?](#what-if-id)
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -831,10 +830,11 @@ log eq ( f 18 ), ( g 18 )   # false
 ```
 
 These functions are the *same* in the sense that they always execute the same code; they are different in
-the way that they see different values in their respective closures.
+the way that they see different values in their respective closures. I doubt it will make sense to go much
+further than this; to me, the adduced evidence leaves me at 50/50 whether function equivalence makes sense
+or not, which is why this feature should be made an opt-in.
 
 
-## What If `id()`?
 
 ## How Many Methods for Equality Testing?
 
