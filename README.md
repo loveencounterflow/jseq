@@ -15,6 +15,7 @@
 	- [Primitive Values vs Objects](#primitive-values-vs-objects)
 	- [Undefined Properties](#undefined-properties)
 	- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
+	- [What If `id()`?](#what-if-id)
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -777,13 +778,47 @@ We have now reduced our field of candidates for equality to one remaining specia
 functions for which `eq f.toString(), g.toString()` holds?
 
 I want to suggest that **two functions should be considered equal when their source code as returned by
-`f.toString()` should be considered equal**.
+`f.toString()` should be considered equal**. This i believe should be done for pragmatic reasons as,
+sometimes, the objects you want to test will contain functions, and it can be a nuisance to first having
+to remove them and then be left without any way to test for their correctness.
+
+However, there's a hitch here. As i said, JavaScript can access the source of *most* functions. It cannot
+show the source of all functions, because built-ins are typically not written in JS, but compiled (from C
+or whatever the implementation language of **M** was); therefore, all that you get to see when you
+ask for, say, `[].toString.toString()` will be (at least in NodeJS and Firefox)
+
+```javascript
+function toString() { [native code] }
+```
+
+and since all objects have that method, it's easy to come up with a litmus test that shows our
+considerations are not quite watertight, viz.:
+
+```coffeescript
+eq  = require 'equals' # https://github.com/jkroso/equals
+f   = ( [] ).toString
+g   = ( 42 ).toString
+h   = -> 'test method'
+log 'does method distinguish functions?', eq ( eq f, g ), ( eq f, h )     # false  #4
+log 'are `f` and `g`equal?             ', eq f, g                         # true   #5
+log 'do they show the same behavior?   ', eq ( f.call 88 ), ( g.call 88 ) # false  #6
+```
+
+on line #4, we show that our `eq` implementation does make a difference between some functions: `eq f, h`
+returns `false`, but, as made explicit on line #5, `eq f, g` returns `true`. According to our reasoning, `f`
+and `g` then should show equivalent behaviors for equivalent inputs (in case they are deterministic
+functions that base their behavior solely on their explicit arguments, which they are). However, they return
+different outputs (namely `[object Number]` and `88`) when called with the same argument, `88` (which acts
+as `this` in this case, but that is beside the point).
+
 
 <!-- In theory, we could also deny to try and answer equality for
 functions, i.e. consider all functions that are not the same object as different. However, there is an
 important use case that seems compelling to me, and that is to test
 
  -->
+
+## What If `id()`?
 
 ## How Many Methods for Equality Testing?
 
