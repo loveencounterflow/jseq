@@ -782,14 +782,14 @@ their `x.toString()` methods) are equal. However, because of some limitations to
 optional**.
 
 This i believe should be done for pragmatic reasons as, sometimes, the objects you want to test will contain
-functions, and it can be a nuisance to first having to remove them and then be left without any way to test
-whther thy have the expected shapes (i'm not the only one to think so; the generally quite good [`equals`
-method by jkroso](https://github.com/jkroso/equals) does essentially the same).
+functions, and it can be a nuisance to first having to remove them and then be left without *any* way to
+test whether the objects have the expected shapes (i'm not the only one to think so; the generally quite
+good [`equals` method by jkroso](https://github.com/jkroso/equals) does essentially the same).
 
 However, there's a hitch here. As i said, JavaScript can access the source of *most* functions. It cannot
-show the source of *all* functions, because built-ins are typically not written in JS, but compiled (from C
-or whatever the implementation language of **M** was); therefore, all that you get to see when you
-ask for, say, `[].toString.toString()` will be (at least in NodeJS and Firefox)
+show the source of *all* functions, because built-ins are typically not written in JS, but compiled (from
+C). All that you get to see when you ask for, say, `[].toString.toString()` will be (at least in NodeJS and
+Firefox)
 
 ```javascript
 function toString() { [native code] }
@@ -803,17 +803,18 @@ eq  = require 'equals' # https://github.com/jkroso/equals
 f   = ( [] ).toString
 g   = ( 42 ).toString
 h   = -> 'test method'
-log 'does method distinguish functions?', eq ( eq f, g ), ( eq f, h )     # false  #4
-log 'are `f` and `g`equal?             ', eq f, g                         # true   #5
-log 'do they show the same behavior?   ', eq ( f.call 88 ), ( g.call 88 ) # false  #6
+log 'does method distinguish functions?', eq ( eq f, g ), ( eq f, h )     # false  (1)
+log 'are `f` and `g`equal?             ', eq f, g                         # true   (2)
+log 'do they show the same behavior?   ', eq ( f.call 88 ), ( g.call 88 ) # false  (3)
 ```
 
-On line #4, we show that the `eq` implementation chosen does indeed considers some functions to be different
-(`eq f, h` returns `false`) and others as equal (`eq f, g` returns `true`). According to our reasoning, `f`
-and `g` then should show equivalent behaviors for equivalent inputs (in case they are deterministic
-functions that base their behavior solely on their explicit arguments, which they are). However, they return
-different outputs (namely `[object Number]` and `88`) when called with the same argument, `88` (which acts
-as `this` in this case, but that is beside the point).
+On line (1), we demonstrate that the `eq` implementation chosen does indeed considers some functions to be
+different (`eq f, h` returns `false`) and others as equal (`eq f, g` returns `true`, as the result from line
+(2) shows). According to our reasoning, `f` and `g` then should show equivalent behaviors for equivalent
+inputs (in case they are deterministic functions that base their behavior solely on their explicit
+arguments, which they are). However, as evidenced by the output of line (3), they return *different* outputs
+(namely `[object Number]` and `88`) when called with the same argument, `88` (which acts as `this` in this
+case, but that is beside the point).
 
 Actually, i feel a bit stoopid, because, as i'm writing this, another, less contrived, conceptually
 simpler, more transparent and probably more relevant counter example comes to my mind, viz.:
