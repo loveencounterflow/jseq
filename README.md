@@ -529,6 +529,23 @@ operator (which is really an object identity operator) functions quite well in m
 **Fundamental Axiom**: value identity implies value equality. When a given test `f` purports to test for
 equality, but `f x, x` fails to yield `true` for any given `x`, then that test must be considered broken.
 
+**Update**: i just came across
+[`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is),
+which, according to MDN,
+
+> determines whether two values are the same value. Two values are the same if one of the following holds:
+>
+> *  both undefined
+> *  both null
+> *  both true or both false
+> *  both strings of the same length with the same characters
+> *  both the same object
+> *  both numbers and
+>    *  both +0
+>    *  both -0
+>    *  both NaN
+>    *  or both non-zero and both not NaN and both have the same value
+
 
 ## Object Property Ordering
 
@@ -800,6 +817,9 @@ consumption). This task has been left for a future day to be written.
 
 ## Libraries Tested
 
+* **`== `**: native JavaScript comparison with `==`
+* **`===`**: native JavaScript comparison with `===`
+* **`OIS`**: native JavaScript comparison `Object.is`
 * **`LDS`**: https://github.com/lodash/lodash
 * **`UDS`**: https://github.com/jashkenas/underscore
 * **`JKR`**: https://github.com/jkroso/equals
