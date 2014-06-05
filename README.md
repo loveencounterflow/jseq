@@ -755,9 +755,9 @@ a function itself, as we are then back to square one then and possibly caught in
 By inspecting source code, there are some cases where a decision can be made more confidently. For example,
 if we have
 
-``` javascript
-var f = function( a, b, c ){ return a * b * c; }
-var g = function( a, b, c ){ return a * b * c  }
+```javascript
+var f = function( a, b, c ){ return a * b * c; };
+var g = function( a, b, c ){ return a * b * c  };
 ```
 
 then we can tell with certainty that f and g will return the same value, as the only difference is in the
