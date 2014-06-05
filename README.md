@@ -41,7 +41,8 @@ Here is a sample output of jsEq running `node jseq/lib/main.js`:
 > broken jsEq adaption which must be fixed; their merits and demerits thus do not reflect their true
 > potential. Implementations whose key starts with a `*` are 'hobbyists solutions' that i have gleaned
 > from blogs and answers on StackOverflow.com; they're included mainly to show how well one can expect
-> an ad-hoc solution can be expected to work (quite well in some cases, it turns out). See
+> an ad-hoc solution can be expected to work (quite well in some cases, it turns out). See the
+> [list of tested libraries](#libraries-tested) and the [caveats section](#caveats).
 
 The `lodash` and `underscore` results are probably identical because `lodash` strives to be a 'better
 `underscore`'.
