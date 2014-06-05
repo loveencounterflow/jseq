@@ -748,14 +748,14 @@ The emphasis is on *general*, because, of course, there *are* cases where one *c
 two given functions behave equally. For example, when i have two `f`, `g` that are explicitly limited to a
 certain finite set of inputs (say, positive integer numbers less than ten), i can repeatedly call both
 functions with each legal input and compare the results. But even that is not strictly true, because it is
-simple to define a function that will *sometimes* deliver a different result (say, based on a random numberr
+simple to define a function that will *sometimes* deliver a different result (say, based on a random number
 generator, or the time of the day). Furthermore, the test will break down when the returned value should be
-function itself, as we are back to square one then and possibly caught in an infinite regress.
+a function itself, as we are then back to square one then and possibly caught in an infinite regress.
 
 By inspecting source code, there are some cases where a decision can be made more confidently. For example,
 if we have
 
-```js
+```javascript
 var f = function( a, b, c ){ return a * b * c; }
 var g = function( a, b, c ){ return a * b * c  }
 ```
