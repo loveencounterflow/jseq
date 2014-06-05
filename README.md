@@ -13,6 +13,8 @@
 	- [Not-A-Number](#not-a-number)
 	- [Object Property Ordering](#object-property-ordering)
 	- [Primitive Values vs Objects](#primitive-values-vs-objects)
+	- [Undefined Properties](#undefined-properties)
+	- [Functions](#functions)
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
@@ -670,6 +672,55 @@ primitives.
 at least *five* kinds of primitive values in JavaScript.
 
 I think i'll leave it at that.
+
+## Undefined Properties
+
+Undefined properties are quite a nuisance. One might want to think that an 'undefined' property is just a
+property that doesn't exit, but in the wonderful world of JavaScript, where there is an 'undefined' value
+that is actually used as a stand-in return value for cases like `{}[ 'foo' ]` and `[][ 87 ]` (instead of
+throwing an exception), that is not so clear. To wit:
+
+```coffeescript
+d = { x: undefined }
+
+log Object.keys d                     # [ 'x' ]
+
+d = [ 'a', 'b', 'c' ]
+delete d[ 2 ]
+
+log d.length, Object.keys d           # 3 [ '0', '1' ]
+
+d[ 3 ] = undefined
+
+log d.length, Object.keys d           # 4 [ '0', '1', '3' ]
+```
+
+What this experiment shows is that according whether you base your judgement on (CS) `d[ 'x' ] != undefined`
+or on (CS) `( ( Object.keys d ).indexOf 'x' ) != 1`, `d` has or has not a key `x`. Sometimes the one test
+makes sense, sometimes the other; generally, it's probably best to avoid properties whose value has been set
+to `undefined`.
+
+The experiment further shows that `delete` just 'pokes a hole' into a list (instead of making all subsequent
+entries move forward one position, as done in Python), but doesn't adjust the `length` property, therefore
+causing the same trouble as with other objects (the one thing that can be said in favor of this mode of
+operation is that it allows to make sparse lists with arbitrarily large indices on elements).
+
+It may be said without hesitation that `ne { x: undefined }, {}` should hold without further qualification,
+and in fact, there is very broad agreement across implementations about this.
+
+## Functions
+
+In this section, i want to discuss the tricky question whether two functions `f`, `g` can or cannot be
+considered equal. First off, it should be clear that whenever (JS) `f === g` holds, `f` and `g` are merely
+two names for the same object, so they are trivially equal in our sense. The troubles start when `f` and `g`
+are two distinct callables, and this has to do with a couple of topics whose discovery and treatmeant must
+be counted among the great intellectual achievements of the 20th century. You know all of these names:
+[Gödel's incompleteness theorems](http://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems),
+[Turing machines](http://en.wikipedia.org/wiki/Turing_machine),
+[Halting problem](http://en.wikipedia.org/wiki/Halting_problem),
+[Rice's theorem](http://en.wikipedia.org/wiki/Rice%27s_theorem). I will not iterate any details here, but
+what the programmer should understand is that **there is no, and cannot be for logical reasons, *general*
+algorithm that is able to test whether two given programs will behave equally for all inputs**.
 
 
 ## How Many Methods for Equality Testing?
