@@ -546,6 +546,9 @@ which, according to MDN,
 >    *  both NaN
 >    *  or both non-zero and both not NaN and both have the same value
 
+**Evidently, the 'both NaN' and 'both +0' / 'both –0' clauses corroborates our findings in the present and
+the previous sections**.
+
 
 ## Object Property Ordering
 
