@@ -757,6 +757,7 @@ consumption). This task has been left for a future day to be written.
 * **QUN**: http://qunitjs.com
 * **SH1**: https://github.com/shouldjs/should.js#equal
 * **SH2**: https://github.com/shouldjs/should.js#eql
+* **\*JV**: http://stackoverflow.com/a/6713782/256361
 
 ## Caveats
 
