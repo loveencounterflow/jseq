@@ -16,6 +16,8 @@
 	- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
 	- [Bonus And Malus Points](#bonus-and-malus-points)
 	- [Benchmarks](#benchmarks)
+	- [Libraries Tested](#libraries-tested)
+		- [Caveats](#caveats)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -34,6 +36,12 @@ seriously, those are currently broken due to the (to me at least) strange API of
 Here is a sample output of jsEq running `node jseq/lib/main.js`:
 
 ![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-04%20at%2000.31.24.png)
+
+> Observe that implementations whose entry in the name column starts with a `!` are considered to have a
+> broken jsEq adaption which must be fixed; their merits and demerits thus do not reflect their true
+> potential. Implementations whose key starts with a `*` are 'hobbyists solutions' that i have gleaned
+> from blogs and answers on StackOverflow.com; they're included mainly to show how well one can expect
+> an ad-hoc solution can be expected to work (quite well in some cases, it turns out). See
 
 The `lodash` and `underscore` results are probably identical because `lodash` strives to be a 'better
 `underscore`'.
@@ -737,4 +745,25 @@ exposed to the general public.
 
 A through comparison of equality-testing implementations whould also consider performance (and maybe memory
 consumption). This task has been left for a future day to be written.
+
+## Libraries Tested
+
+* **LDS**: https://github.com/lodash/lodash
+* **UDS**: https://github.com/jashkenas/underscore
+* **JKR**: https://github.com/jkroso/equals
+* **o23**: https://github.com/othiym23/node-deeper
+* **DEQ**: https://github.com/substack/node-deep-equal
+* **QUN**: http://qunitjs.com
+* **SH1**: https://github.com/shouldjs/should.js#equal
+* **SH2**: https://github.com/shouldjs/should.js#eql
+
+### Caveats
+
+* The QUnit tests (**QUN**) are currently broken and always fail; i seemingly cannot come to grips with
+  the QUnit API.
+* I suspect the **SH1** and **SH2** tests to be broken, too, due to their outstanding failure counts.
+
+
+
+
 

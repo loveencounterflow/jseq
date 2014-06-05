@@ -26,7 +26,7 @@ QUNITJS                   = require 'qunitjs'
 othiym23_deepEqual        = require 'deeper'
 should                    = require 'should'
 substack_deep_equal       = require 'deep-equal'
-
+jv_equals                 = require '../3rd-party/JV-jeanvincent.js'
 
 #-----------------------------------------------------------------------------------------------------------
 module.exports =
@@ -76,6 +76,22 @@ module.exports =
     #.......................................................................................................
     eq: ( a, b ) -> othiym23_deepEqual a, b
     ne: ( a, b ) -> not othiym23_deepEqual a, b
+  #.........................................................................................................
+  "*JV: http://stackoverflow.com/a/6713782/256361":
+    eq: ( a, b ) ->
+      try
+        R = jv_equals a, b
+      catch error
+        whisper error
+        return false
+      return R
+    ne: ( a, b ) ->
+      try
+        R = not jv_equals a, b
+      catch error
+        whisper error
+        return false
+      return R
   #.........................................................................................................
   "DEQ: https://github.com/substack/node-deep-equal":
     #.......................................................................................................
