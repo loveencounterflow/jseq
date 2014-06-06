@@ -971,12 +971,12 @@ being indicative of some massive object-pileup as is prone to happen with faulty
 Investigation of the output first pointed to the package i use to print result tables and seemed to be due
 to some diagnostic printout of mine. i removed that printout only to realize that even with that, a very
 basic test case (`eq { a:'b', c:'d' }, { a:'b', c:'d' }`) was the cause—not a recursion, to wit, but still
-an endless loop of some sort.
+an endless loop of some sort (or so i thought).
 
 I suspected a global namespace pollution of sorts, inserted a few sentinels, and, sure enough, quickly found
-the culprit: it was that dreaded QUnit thingie which i had not managed to adapt for testing, which was
-nowhere called within jsEq, only `required` in the `implementations` module. Turns out **QUnit injects no
-less than 28 words (!) into the global namespace**:
+the culprit (or so i thought): it was that dreaded QUnit thingie which i had not managed to adapt for
+testing, which was at that point nowhere called within jsEq, only `required` in the `implementations`
+module. Turns out **QUnit injects no less than 28 words (!) into the global namespace**:
 
 ```
 asyncTest begin deepEqual done equal equals expect log module moduleDone moduleStart
