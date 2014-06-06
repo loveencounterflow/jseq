@@ -946,6 +946,9 @@ consumption). This task has been left for a future day to be written.
 * **`SH1`**: https://github.com/shouldjs/should.js#equal
 * **`SH2`**: https://github.com/shouldjs/should.js#eql
 * **`*JV`**: http://stackoverflow.com/a/6713782/256361
+* **`EQ`&nbsp;**: jsEq's improved version of lodash's `isEqual` (LDS)
+* **`*EQ`**: customized version of EQ for testing configurability
+* **`CND`**: https://github.com/loveencounterflow/coffeenode-bitsnpieces
 
 ### Caveats
 

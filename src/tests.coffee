@@ -48,6 +48,8 @@ module.exports = ( eq, ne ) ->
   R[ "+0 should ne -0"                                    ] = -> ne +0, -0
   R[ "number obj not eqs primitive number of same value"  ] = -> ne 5, new Number 5
   R[ "string obj not eqs primitive string of same value"  ] = -> ne 'helo', new String 'helo'
+  R[ "(1) bool obj not eqs primitive bool of same value"  ] = -> ne false, new Boolean false
+  R[ "(2) bool obj not eqs primitive bool of same value"  ] = -> ne true,  new Boolean true
 
   #=========================================================================================================
   ### 2. complex tests ###
@@ -107,6 +109,13 @@ module.exports = ( eq, ne ) ->
   R[ "date does not eq other date pointing to other time" ] = ->
     d = new Date "1995-12-17T03:24:00"
     e = new Date "1995-12-17T03:24:01"
+    return ne d, e
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "str obj w props doesn't eq same str, other props" ] = ->
+    c = [ 'a list', ]; c.push c
+    d = new String "helo test"; d[ 'abc' ] = c
+    e = new String "helo test"; e[ 'abc' ] = c
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------

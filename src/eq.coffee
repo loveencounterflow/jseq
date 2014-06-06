@@ -22,18 +22,19 @@ LODASH                    = require 'lodash'
 
 #-----------------------------------------------------------------------------------------------------------
 options =
-  'signed-zeroes':      no
-  'functions':          yes
-  'NaN':                yes
-  'array-attributes':   yes
+  'signed-zeroes':        no
+  'functions':            yes
+  'NaN':                  yes
+  'properties':           yes
+  'primitive-and-object': yes
 
 #-----------------------------------------------------------------------------------------------------------
-js_type_of = ( x ) -> Object::toString.call x
-
+type_of   = ( x           ) -> Object::toString.call x
+types_of  = ( x, y, probe ) -> probe == ( type_of x ) == ( type_of y )
 
 #-----------------------------------------------------------------------------------------------------------
 new_ = ( options_or_handler, self ) ->
-  if ( js_type_of options_or_handler ) is '[object Function]'
+  if ( type_of options_or_handler ) is '[object Function]'
     handler   = options_or_handler
     settings  = options
   else
@@ -55,26 +56,27 @@ new_ = ( options_or_handler, self ) ->
       for idx in [ 1 ... P.length ]
         #...................................................................................................
         R = R and LODASH.isEqual P[ 0 ], P[ idx ], ( a, b ) ->
-          return handler a, b if handler?
+          if handler? then return handler a, b
           #.................................................................................................
           if a == 0 and b == 0 and settings[ 'signed-zeroes' ]
             ### taken verbatim from lodash: ###
             return not `a !== 0 || (1 / a == 1 / b )`
           #.................................................................................................
           if settings[ 'functions' ]
-            if ( '[object Function]' == js_type_of a ) and ( '[object Function]' == js_type_of b )
-              return false if a.toString() isnt b.toString()
-              return properties_are_equal a, b, true
+            if types_of a, b, '[object Function]'
+              if a.toString() isnt b.toString() then return false
+              if settings[ 'properties' ]       then return properties_are_equal a, b, true
           #.................................................................................................
           if not settings[ 'NaN' ]
             ### isNaN is broken as per MDN, so we don't use it ###
-            return false if ( a != a ) and ( b != b )
-          #.................................................................................................
-          if settings[ 'array-attributes' ]
-            if ( '[object Array]' == js_type_of a ) and ( '[object Array]' == js_type_of b )
-              return false unless a.length is b.length
-              return false unless properties_are_equal a, b, false
-              return LODASH.isEqual a, b
+            if ( a != a ) and ( b != b ) then return false
+          # #.................................................................................................
+          # if settings[ 'properties' ]
+          #   if ( types_of a, b, '[object Array]' ) or types_of a, b, '[object String]'
+          #     ### do a cheap test to avoid costly unnessary property checks: ###
+          #     if not a.length is b.length             then return false
+          #     if not properties_are_equal a, b, false then return false
+          #     return LODASH.isEqual a, b
           #.................................................................................................
           return undefined
         #...................................................................................................
