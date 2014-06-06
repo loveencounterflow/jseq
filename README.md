@@ -955,8 +955,8 @@ consumption). This task has been left for a future day to be written.
 * Tests from libraries whose name has been marked with an `!` are considered broken; in particular:
 * The QUnit tests (**QUN**) are currently broken and always fail; i seemingly cannot come to grips with
   the QUnit API.
-* Libraries whose key starts with `*` are 'hobbyists solutions', i.e. functions that have been published
-  in blogs or forum answers. I consider these as running outside of competition.
+* Libraries whose key starts with `*` are either 'hobbyists solutions' or are inlcuded for comparison
+  and testing other features (such as configurability).
 * I suspect the **SH1** and **SH2** tests to be broken, too, due to their outstanding failure counts.
 
 
