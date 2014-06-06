@@ -1,4 +1,5 @@
-module.exports = equals = function( x, y ) {
+var equals = function( x, y ) {
+  var p;
   if ( x === y ) return true;
     // if both x and y are null or undefined and exactly the same
 
@@ -9,7 +10,7 @@ module.exports = equals = function( x, y ) {
     // they must have the exact same prototype chain, the closest we can do is
     // test there constructor.
 
-  for ( var p in x ) {
+  for ( p in x ) {
     if ( ! x.hasOwnProperty( p ) ) continue;
       // other properties were tested using x.constructor === y.constructor
 
@@ -32,3 +33,6 @@ module.exports = equals = function( x, y ) {
   }
   return true;
 }
+
+module.exports = equals
+

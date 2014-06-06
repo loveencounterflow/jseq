@@ -20,7 +20,7 @@
 - [Plus and Minus Points](#plus-and-minus-points)
 - [Benchmarks](#benchmarks)
 - [Libraries Tested](#libraries-tested)
-- [Caveats](#caveats)
+- [Caveats and Rants](#caveats-and-rants)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -709,7 +709,7 @@ primitives.
 *four* kinds.
 
 **Worster still**: `undefined` can be re-defined in plain JS, something you can't do with `NaN`, so there
-at least *five* kinds of primitive values in JavaScript.
+are at least *five* kinds of primitive values in JavaScript.
 
 I think i'll leave it at that.
 
@@ -925,6 +925,9 @@ exposed to the general public.
 * **–1** where a library provides both an `eq` and a `ne` method but `eq ( not eq x, y ), ( ne x, y )` fails
   for any given `x` and `y`.
 * **–1** where a pair `x`, `y` can be found that cause `eq ( eq x, y ), ( eq y, x )` to fail.
+* **-1000** where anyone dares to pollute the global namespace.
+* **-1000** where anyone dares to monkey-patch built-ins like `String.prototype` *except* for doing a
+  well-documented, well-motivated (by existing future standards), well-tested polyfill.
 
 ### Benchmarks
 
@@ -950,7 +953,9 @@ consumption). This task has been left for a future day to be written.
 * **`*EQ`**: customized version of EQ for testing configurability
 * **`CND`**: https://github.com/loveencounterflow/coffeenode-bitsnpieces
 
-### Caveats
+### Caveats and Rants
+
+**Caveats**
 
 * Tests from libraries whose name has been marked with an `!` are considered broken; in particular:
 * The QUnit tests (**QUN**) are currently broken and always fail; i seemingly cannot come to grips with
@@ -958,6 +963,60 @@ consumption). This task has been left for a future day to be written.
 * Libraries whose key starts with `*` are either 'hobbyists solutions' or are inlcuded for comparison
   and testing other features (such as configurability).
 * I suspect the **SH1** and **SH2** tests to be broken, too, due to their outstanding failure counts.
+
+**Rants (1)**
+
+Some sunny morning i ran into a strange bug that flooded my screen and braught testing to a gritty halt. I
+had just done some tricky circular object testing and so, naturally, thought it must be my fault, the output
+being indicative of some massive object-pileup as is prone to happen with faulty recursions.
+
+Investigation of the output first pointed to the package i use to print result tables and seemed to be due
+to some diagnostic printout of mine. i removed that printout only to realize that even with that, a very
+basic test case (`eq { a:'b', c:'d' }, { a:'b', c:'d' }`) was the cause—not a recursion, to wit, but still
+an endless loop of some sort.
+
+I suspected a global namespace pollution of sorts, inserted a few sentinels, and, sure enough, quickly found
+the culprit: it was that dreaded QUnit thingie which i had not managed to adapt for testing, which was
+nowhere called within jsEq, only `required` in the `implementations` module. Turns out **QUnit injects no
+less than 28 words (!) into the global namespace**:
+
+```
+asyncTest begin deepEqual done equal equals expect log module moduleDone moduleStart
+notDeepEqual notEqual notPropEqual notStrictEqual ok onerror propEqual QUnit raises
+same start stop strictEqual test testDone testStart throws
+```
+
+We all know that putting names in the global namespace is a no-no, even if there's sometimes (e.g. in the
+browser) hardly any way around it. Anyone who has been using the (great and justifiedly famous) jQuery
+framework knows that its authors go to great lengths to avoid conflicts with the one name they do export
+(`$`, or, should you choose so, only `jQuery`). To my amazement, the QUnit docs proudly state that
+
+> QUnit was originally developed by John Resig as part of jQuery. [...] QUnit's assertion methods follow the
+> CommonJS Unit Testing specification, which was to some degree influenced by QUnit.
+
+I can't believe this—J.R. should be both responsible for both this flagrant violation of basic rules *and*
+that bunch of half-baked misconceptions that are the CommonJS Unit Testing specs?—The docs also mention
+a complete re-write of QUnit, so maybe it wasn't him. Anyways, i hardly need testing another `equals`
+implementation that adheres to CommonJS. Time to move on.
+
+**Rants (2)**
+
+I had hoped that at this point, i could go back to testing my tests, so, having all references to QUnit
+removed, i gave it another try only to... discover the problem had persisted! Back to the drawing table.
+With more sentinels in the code, i was able to nail down a second piece of problematic software. My first
+hunch had actually been correct: **the `colors` package that `cli-table` relies on extends the prototype
+of `String` with its own names**, and since those are not made non-enumerable, they surely enough only wait
+to spill into the output (especially in a testing situation where sometimes prototypes are being picked
+apart, too). This means i'll have to look for another solution to printing out tabular data on the console.
+
+
+
+
+
+
+
+
+
 
 
 

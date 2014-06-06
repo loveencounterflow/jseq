@@ -22,7 +22,6 @@ ASSERT                    = require 'assert'
 LODASH                    = require 'lodash'
 UNDERSCORE                = require 'underscore'
 jkroso_equals             = require 'equals'
-QUNITJS                   = require 'qunitjs'
 othiym23_deepEqual        = require 'deeper'
 should                    = require 'should'
 substack_deep_equal       = require 'deep-equal'
@@ -103,11 +102,6 @@ module.exports =
   #       return false
   #     return true
   #.........................................................................................................
-  "JKR: jkroso equals":
-    #.......................................................................................................
-    eq: ( a, b ) -> jkroso_equals a, b
-    ne: ( a, b ) -> not jkroso_equals a, b
-  #.........................................................................................................
   "CJS: https://github.com/chaijs/deep-eql":
     #.......................................................................................................
     eq: ( a, b ) -> cjs_deep_eql a, b
@@ -125,25 +119,6 @@ module.exports =
   "DEQ: https://github.com/substack/node-deep-equal":
     eq: get_errorproof_comparator substack_deep_equal
     ne: get_errorproof_comparator ( a, b ) -> not substack_deep_equal a, b
-  #.........................................................................................................
-  "QUN: ! qunitjs":
-    #.......................................................................................................
-    eq: ( a, b ) -> return false
-      # try
-      #   QUNITJS.test 'message', ->
-      #     R = QUNITJS.deepEqual a, b, 'message'
-      # catch error
-      #   whisper error[ 'message' ]
-      #   return false
-      # return R
-    ne: ( a, b ) -> return false
-      # try
-      #   QUNITJS.test 'message', ->
-      #     R = QUNITJS.notDeepEqual a, b, 'message'
-      # catch error
-      #   whisper error[ 'message' ]
-      #   return false
-      # return R
   #.........................................................................................................
   "SH1: https://github.com/shouldjs/should.js#equal":
     #.......................................................................................................
@@ -192,13 +167,18 @@ module.exports =
   #.........................................................................................................
   "EQ: jsEq.eq":
     #.......................................................................................................
-    eq: ( a, b ) -> jseq a, b
-    ne: ( a, b ) -> not jseq a, b
+    eq: get_errorproof_comparator jseq
+    ne: get_errorproof_comparator ( a, b ) -> not jseq a, b
   #.........................................................................................................
   "*EQ: custom version of jsEq.eq":
     #.......................................................................................................
-    eq: ( a, b ) -> custom_jseq a, b
-    ne: ( a, b ) -> not custom_jseq a, b
+    eq: get_errorproof_comparator custom_jseq
+    ne: get_errorproof_comparator ( a, b ) -> not custom_jseq a, b
+  #.........................................................................................................
+  "JKR: jkroso equals":
+    #.......................................................................................................
+    eq: ( a, b ) -> jkroso_equals a, b
+    ne: ( a, b ) -> not jkroso_equals a, b
 
 
 

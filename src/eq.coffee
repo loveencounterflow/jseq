@@ -22,6 +22,7 @@ LODASH                    = require 'lodash'
 
 #-----------------------------------------------------------------------------------------------------------
 options =
+  'ordering':             no
   'signed-zeroes':        no
   'functions':            yes
   'NaN':                  yes
@@ -30,7 +31,16 @@ options =
 
 #-----------------------------------------------------------------------------------------------------------
 type_of   = ( x           ) -> Object::toString.call x
-types_of  = ( x, y, probe ) -> probe == ( type_of x ) == ( type_of y )
+types_eq  = ( x, y, probe ) -> probe == ( type_of x ) == ( type_of y )
+
+#-----------------------------------------------------------------------------------------------------------
+have_same_object_type = ( a, b ) ->
+  return true if ( a instanceof String ) and ( b instanceof String )
+  return true if ( a instanceof Number ) and ( b instanceof Number )
+  return true if ( a instanceof Boolean ) and ( b instanceof Boolean )
+  return true if ( a instanceof Array ) and ( b instanceof Array )
+  return true if ( a instanceof RegExp ) and ( b instanceof RegExp )
+  return false
 
 #-----------------------------------------------------------------------------------------------------------
 new_ = ( options_or_handler, self ) ->
@@ -45,7 +55,8 @@ new_ = ( options_or_handler, self ) ->
     ### TAINT should we check for property descriptors? ###
     pa = {}; pa[ name ] = value for name, value of a when all or not ( 0 <= name < a.length )
     pb = {}; pb[ name ] = value for name, value of b when all or not ( 0 <= name < b.length )
-    whisper pa, pb
+    # whisper a instanceof String
+    # whisper pa, pb
     return eq pa, pb
   #---------------------------------------------------------------------------------------------------------
   return eq = ( P... ) ->
@@ -63,20 +74,17 @@ new_ = ( options_or_handler, self ) ->
             return not `a !== 0 || (1 / a == 1 / b )`
           #.................................................................................................
           if settings[ 'functions' ]
-            if types_of a, b, '[object Function]'
+            if types_eq a, b, '[object Function]'
               if a.toString() isnt b.toString() then return false
               if settings[ 'properties' ]       then return properties_are_equal a, b, true
           #.................................................................................................
           if not settings[ 'NaN' ]
             ### isNaN is broken as per MDN, so we don't use it ###
             if ( a != a ) and ( b != b ) then return false
-          # #.................................................................................................
-          # if settings[ 'properties' ]
-          #   if ( types_of a, b, '[object Array]' ) or types_of a, b, '[object String]'
-          #     ### do a cheap test to avoid costly unnessary property checks: ###
-          #     if not a.length is b.length             then return false
-          #     if not properties_are_equal a, b, false then return false
-          #     return LODASH.isEqual a, b
+          #.................................................................................................
+          if settings[ 'properties' ] and have_same_object_type a, b
+            all = not ( type_of a, '[object Array]' ) or ( type_of a, '[object String]' )
+            if not properties_are_equal a, b, all then return false
           #.................................................................................................
           return undefined
         #...................................................................................................

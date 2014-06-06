@@ -112,20 +112,39 @@ module.exports = ( eq, ne ) ->
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "str obj w props doesn't eq same str, other props" ] = ->
+  R[ "str obj w props eq same str, same props" ] = ->
+    d = new String "helo test"; d[ 'abc' ] = 42
+    e = new String "helo test"; e[ 'abc' ] = 42
+    return ne d, e
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "str obj w props not eq same str, other props" ] = ->
+    d = new String "helo test"; d[ 'abc' ] = 42
+    e = new String "helo test"; e[ 'def' ] = 42
+    return ne d, e
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "str obj w props eq same str, same props (circ)" ] = ->
     c = [ 'a list', ]; c.push c
     d = new String "helo test"; d[ 'abc' ] = c
     e = new String "helo test"; e[ 'abc' ] = c
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "circular arrays w same layout and same values are eq (1)" ] = ->
+  R[ "str obj w props not eq same str, other props (circ)" ] = ->
+    c = [ 'a list', ]; c.push c
+    d = new String "helo test"; d[ 'abc' ] = c
+    e = new String "helo test"; e[ 'def' ] = c
+    return ne d, e
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "(1) circ arrays w same layout, same values are eq" ] = ->
     d = [ 1, 2, 3, ]; d.push d
     e = [ 1, 2, 3, ]; e.push d
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "circular arrays w same layout and same values are eq (2)" ] = ->
+  R[ "(2) circ arrays w same layout, same values are eq" ] = ->
     d = [ 1, 2, 3, ]; d.push d
     e = [ 1, 2, 3, ]; e.push e
     return eq d, e

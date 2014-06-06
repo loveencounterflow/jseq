@@ -2,6 +2,7 @@
 
 
 
+
 ############################################################################################################
 TRM                       = require 'coffeenode-trm'
 rpr                       = TRM.rpr.bind TRM
@@ -23,8 +24,6 @@ BNP                       = require 'coffeenode-bitsnpieces'
 TEXT                      = require 'coffeenode-text'
 ### TAINT should use customized fork ###
 TYPES                     = require 'coffeenode-types'
-Table                     = require 'cli-table'
-
 
 #-----------------------------------------------------------------------------------------------------------
 @new_counter = ( key, name ) ->
@@ -134,6 +133,7 @@ Table                     = require 'cli-table'
     return +1 if a[ 'fails' ] > b[ 'fails' ]
     return -1 if a[ 'fails' ] < b[ 'fails' ]
     return  0
+  Table                     = require 'cli-table'
   #.........................................................................................................
   options =
     head: [ 'rank', 'key', 'implementation name', 'tests', 'passes', '%', 'fails', '%' ]
