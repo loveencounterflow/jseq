@@ -40,9 +40,7 @@ Here is a sample output of jsEq running `node jseq/lib/main.js`:
 
 ![Output of `node jseq/lib/main.js`](https://github.com/loveencounterflow/jseq/raw/master/._art/Screen%20Shot%202014-06-04%20at%2000.31.24.png)
 
-> Observe that implementations whose entry in the name column starts with a `!` are considered to have a
-> broken jsEq adaption which must be fixed; their merits and demerits thus do not reflect their true
-> potential. Implementations whose key starts with a `*` are 'hobbyists solutions' that i have gleaned
+> Implementations whose key starts with a `*` are 'hobbyists solutions' that i have gleaned
 > from blogs and answers on StackOverflow.com; they're included mainly to show how well one can expect
 > an ad-hoc solution can be expected to work (quite well in some cases, it turns out). See the
 > [list of tested libraries](#libraries-tested) and the [caveats section](#caveats).
@@ -959,7 +957,7 @@ consumption). This task has been left for a future day to be written.
 
 * Tests from libraries whose name has been marked with an `!` are considered broken; in particular:
 * <strike>The QUnit tests (**QUN**) are currently broken and always fail; i seemingly cannot come to grips with
-  the QUnit API.</strike>
+  the QUnit API.</strike> (see Rants, below)
 * Libraries whose key starts with `*` are either 'hobbyists solutions' or are inlcuded for comparison
   and testing other features (such as configurability).
 * I suspect the **SH1** and **SH2** tests to be broken, too, due to their outstanding failure counts.
