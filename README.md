@@ -923,8 +923,8 @@ exposed to the general public.
 * **–1** where a library provides both an `eq` and a `ne` method but `eq ( not eq x, y ), ( ne x, y )` fails
   for any given `x` and `y`.
 * **–1** where a pair `x`, `y` can be found that cause `eq ( eq x, y ), ( eq y, x )` to fail.
-* **-1000** where anyone dares to pollute the global namespace.
-* **-1000** where anyone dares to monkey-patch built-ins like `String.prototype` *except* for doing a
+* **–1000** where anyone dares to pollute the global namespace.
+* **–1000** where anyone dares to monkey-patch built-ins like `String.prototype` *except* for doing a
   well-documented, well-motivated (by existing future standards), well-tested polyfill.
 
 ### Benchmarks
