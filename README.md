@@ -12,11 +12,12 @@
 - [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
 - [Not-A-Number](#not-a-number)
 - [Object Property Ordering](#object-property-ordering)
+- [Properties on 'Non-Objects'](#properties-on-'non-objects')
 - [Primitive Values vs Objects](#primitive-values-vs-objects)
 - [Undefined Properties](#undefined-properties)
 - [Functions (and Regular Expressions)](#functions-and-regular-expressions)
 - [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
-- [Bonus And Malus Points](#bonus-and-malus-points)
+- [Plus and Minus Points](#plus-and-minus-points)
 - [Benchmarks](#benchmarks)
 - [Libraries Tested](#libraries-tested)
 - [Caveats](#caveats)
@@ -275,9 +276,10 @@ digit three, U+0033') does hold in some common contexts (like `console.log( x )`
 many other, also very common contexts (like `x.length`, which is undefined for numbers).
 
 Further, it can be said that JavaScript's `===` 'strict equals operator' never tested *value equality* at
-all, but rather *object identity*, with the understanding that all the primitive values have one single
-identity per value (something that e.g. seems to hold in Python for all integers, but not necessarily
-all strings).
+all, but rather *object identity* (alas, with a few lacunae, as we shall see), with the understanding that
+all the primitive values have one single identity per value (something that e.g. seems to hold in Python for
+all integers, but not necessarily all strings).
+
 
 ### First Axiom: Value Equality Entails Type Equality
 
@@ -549,6 +551,18 @@ which, according to MDN,
 **Evidently, the 'both NaN' and 'both +0' / 'both –0' clauses corroborates our findings in the present and
 the previous sections**.
 
+Incidentally, this also shows that regulation 7.1 of
+[the CommonJS Unit Testing specs](http://wiki.commonjs.org/wiki/Unit_Testing/1.0) is ever so slightly off
+the mark when they say:
+
+> All identical values are equivalent, as determined by ===.
+
+(OBS that their use of 'equivalent' doesn't match my definition; the point is that the JS community has
+already taken steps to provide for a more precise value identity metric than `===` can deliver).
+
+Aside: **don't use the global function `isNaN` in your code unless you know what you're doing, as
+[`isNaN` is broken](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN#Description).
+Instead, do (JS) `x !== x` (`x != x`in CS).
 
 ### Object Property Ordering
 
@@ -607,6 +621,12 @@ I guess that a good pragmatic solution is to go with crowd and use object proper
 where supported, but not make that factor count in equality tests: **two objects that only differ
 in the order of key insertion shall be regarded equal**. Where object key ordering is an important factor,
 it can and should be tested separately.
+
+### Properties on 'Non-Objects'
+
+should be tested, also on functions and arrays
+
+should we consider property descriptors? guess that's an opt-in
 
 ### Primitive Values vs Objects
 
@@ -835,7 +855,6 @@ further than this; to me, the adduced evidence leaves me at 50/50 whether functi
 or not, which is why i think this feature should be made an opt-in.
 
 
-
 ### How Many Methods for Equality Testing?
 
 It is a recurrent feature of many assertion libraries that they provide one method for doing shallow
@@ -894,7 +913,7 @@ exposed to the general public.
 
 
 
-### Bonus And Malus Points
+### Plus and Minus Points
 
 * **+1** if method allows to configure whether `eq NaN, NaN` should hold.
 * **+1** if method allows to configure whether object key ordering should be honored.
@@ -921,6 +940,7 @@ consumption). This task has been left for a future day to be written.
 * **`UDS`**: https://github.com/jashkenas/underscore
 * **`JKR`**: https://github.com/jkroso/equals
 * **`o23`**: https://github.com/othiym23/node-deeper
+* **`CJS`**: https://github.com/chaijs/deep-eql
 * **`DEQ`**: https://github.com/substack/node-deep-equal
 * **`QUN`**: http://qunitjs.com
 * **`SH1`**: https://github.com/shouldjs/should.js#equal

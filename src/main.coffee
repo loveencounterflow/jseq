@@ -42,6 +42,7 @@ Table                     = require 'cli-table'
   fail_count            = 0
   counters              = {}
   results_by_test_name  = {}
+  minus_points          = []
   #.........................................................................................................
   for imp_name, imp of @imps
     imp_count += 1
@@ -65,7 +66,12 @@ Table                     = require 'cli-table'
       results_entry             = results_by_test_name[ test_name ]?= {}
       results_entry[ imp_key ]  = true
       title                     = "#{imp_name} / #{test_name}"
-      result                    = test.call @test
+      try
+        result                    = test.call @test
+      catch error
+        throw error unless error[ 'code' ] is 'jsEq'
+        minus_points.push [ imp_key, test_name, error[ 'message' ] ]
+        result = false
       #.....................................................................................................
       switch result_type = TYPES.type_of result
         #...................................................................................................
@@ -176,6 +182,19 @@ Table                     = require 'cli-table'
   help "should be treated with care as their test setup is probably not correct."
   #.........................................................................................................
   log '\n\n' + table_2.toString()
+  #.........................................................................................................
+  if minus_points.length > 0
+    options =
+      head: [ 'key', 'test', 'reason' ]
+      chars: 'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''
+    table_3 = new Table options
+    for [ imp_key, test_name, message, ] in minus_points
+      table_3.push [
+        TRM.gold imp_key
+        test_name
+        TRM.red message
+        ]
+    log '\n' + ( TRM.blue 'Minus Points:\n' ) + table_3.toString()
   #.........................................................................................................
   return null
 

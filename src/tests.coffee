@@ -28,7 +28,7 @@ module.exports = ( eq, ne ) ->
   R[ "NaN eqs NaN"                                        ] = -> eq NaN, NaN
   R[ "finite integer n eqs n"                             ] = -> eq 1234, 1234
   R[ "emtpy list eqs empty list"                          ] = -> eq [], []
-  R[ "emtpy pod eqs empty pod"                            ] = -> eq {}, {}
+  R[ "emtpy obj eqs empty obj"                            ] = -> eq {}, {}
   R[ "number eqs number of same value"                    ] = -> eq 123.45678, 123.45678
   R[ "regex lit's w same pattern, flags are eq"           ] = -> eq /^abc[a-zA-Z]/, /^abc[a-zA-Z]/
   R[ "pods w same properties are eq"                      ] = -> eq { a:'b', c:'d' }, { a:'b', c:'d' }
@@ -37,8 +37,8 @@ module.exports = ( eq, ne ) ->
   #---------------------------------------------------------------------------------------------------------
   ### 1.2. negative ###
 
-  R[ "pod doesn't eq list"                                ] = -> ne {}, []
-  R[ "pod in a list doesn't eq list in list"              ] = -> ne [{}], [[]]
+  R[ "obj doesn't eq list"                                ] = -> ne {}, []
+  R[ "obj in a list doesn't eq list in list"              ] = -> ne [{}], [[]]
   R[ "integer n doesn't eq rpr n"                         ] = -> ne 1234, '1234'
   R[ "integer n doesn't eq n + 1"                         ] = -> ne 1234, 1235
   R[ "empty list doesn't eq false"                        ] = -> ne [], false
@@ -58,22 +58,32 @@ module.exports = ( eq, ne ) ->
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "fn1" ] = ->
+  R[ "fn1: functions w same source are eq" ] = ->
     d = `function( a, b, c ){ return a * b * c; }`
     e = `function( a, b, c ){ return a * b * c; }`
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "fn2" ] = ->
+  R[ "fn2: functions w diff source aren't eq" ] = ->
     d = `function( a, b, c ){ return a * b * c; }`
     e = `function( a, b, c ){ return a  *  b  *  c; }`
+    return ne d, e
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "fn3: equal functions w equal props are eq" ] = ->
+    d = -> null
+    d.foo = some: 'meaningless', properties: 'here'
+    e = -> null
+    e.foo = some: 'meaningless', properties: 'here'
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "fn3" ] = ->
-    d = `function( a, b, c ){ return a * b * c; }`
-    e = `function( a, b, c ){ return b * a * c; }`
-    return eq d, e
+  R[ "fn4: equal functions w unequal props aren't eq" ] = ->
+    d = -> null
+    d.foo = some: 'meaningless', properties: 'here'
+    e = -> null
+    e.foo = some: 'meaningless', properties: 'here!!!'
+    return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
   R[ "list w named member eqs other list w same member" ] = ->
