@@ -28,7 +28,7 @@
 ### jsEq
 
 There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
-program in JavaScript on a daily base, and those are sane **(deep) equality testing**, sane **deep
+program in JavaScript on a daily basis, and those are sane **(deep) equality testing**, sane **deep
 copying**, and sane **type checking**.
 
 jsEq attempts to answer the first of these questions—how to do sane testing for deep equality in JavaScript
@@ -78,7 +78,7 @@ annotated from which language it has been taken.
 > with my particular choice for the equals operator, you can instantiate your own grammar with your
 > own choice for that one).
 
-Incidentally, i'm writing lots of tests for Arabika, and one day i was struck
+Incidentally, I'm writing lots of tests for Arabika, and one day I was struck
 by a false positive when a parsing result à la `[ 3 ]` passed the comparison to `[ '3' ]`.
 Research quickly showed NodeJS' `assert.deepEqual` to be the culprit, so i chimed in to the
 [discussion on bug #7161](https://github.com/joyent/node/issues/7161). I felt i was not completely alone
