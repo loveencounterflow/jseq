@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/loveencounterflow/jseq",
   "dependencies": {
+    "angular": "^1.2.16",
+    "assert-paranoid-equal": "^1.0.2",
     "cli-table": "^0.3.0",
     "coffee-script": "^1.7.1",
     "coffeenode-bitsnpieces": "0.0.23",
@@ -31,6 +33,7 @@
     "deep-equal": "^0.2.1",
     "deeper": "^1.0.2",
     "equals": "^0.3.6",
+    "is-equal": "^0.1.0",
     "lodash": "^2.4.1",
     "qunitjs": "^1.14.0",
     "should": "^4.0.0",

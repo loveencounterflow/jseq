@@ -63,6 +63,13 @@ new_ = ( options_or_handler, self ) ->
     if ( arity = P.length ) < 2
       throw new Error "need at least 2 arguments, got #{arity}"
     else
+      # stackA = []
+      # stackB = []
+      # eq_ =
+      # length = stackA.length;
+      # while ( length -= 1 ) >= 0
+      #   if stackA[ length ] is a
+      #     return stackB[ length ] is b
       R = true
       for idx in [ 1 ... P.length ]
         #...................................................................................................

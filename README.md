@@ -28,7 +28,7 @@
 ### jsEq
 
 There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
-program in JavaScript on a daily base, and those are sane **(deep) equality testing**, sane **deep
+program in JavaScript on a daily basis, and those are sane **(deep) equality testing**, sane **deep
 copying**, and sane **type checking**.
 
 jsEq attempts to answer the first of these questions—how to do sane testing for deep equality in JavaScript
@@ -922,7 +922,7 @@ exposed to the general public.
 * **–1** where a method `eq` fails on `eq x, x` for any given `x` (except for `NaN` which is a hairy case).
 * **–1** where a library provides both an `eq` and a `ne` method but `eq ( not eq x, y ), ( ne x, y )` fails
   for any given `x` and `y`.
-* **–1** where a pair `x`, `y` can be found that cause `eq ( eq x, y ), ( eq y, x )` to fail.
+* **–1** where a pair `x`, `y` can be found that causes `eq ( eq x, y ), ( eq y, x )` to fail.
 * **–1000** where anyone dares to pollute the global namespace.
 * **–1000** where anyone dares to monkey-patch built-ins like `String.prototype` *except* for doing a
   well-documented, well-motivated (by existing future standards), well-tested polyfill.
@@ -944,10 +944,15 @@ consumption). This task has been left for a future day to be written.
 * **`CJS`**: https://github.com/chaijs/deep-eql
 * **`DEQ`**: https://github.com/substack/node-deep-equal
 * **`QUN`**: http://qunitjs.com
+* **`JDQ`**: https://github.com/JayceTDE/deepequal
+* **`APE`**: https://github.com/dervus/assert-paranoid-equal
+* **`ISE`**: https://github.com/ljharb/is-equal
+* **`ANG`**: https://github.com/bclinkinbeard/angular
 * **`SH1`**: https://github.com/shouldjs/should.js#equal
 * **`SH2`**: https://github.com/shouldjs/should.js#eql
 * **`*JV`**: http://stackoverflow.com/a/6713782/256361
-* **`EQ`&nbsp;**: jsEq's improved version of lodash's `isEqual` (LDS)
+* **`EQ`&nbsp;**: experiment to see whether we can deliver a 'better equals'. Currently fails on some
+  tests including circular data structures.
 * **`*EQ`**: customized version of EQ for testing configurability
 * **`CND`**: https://github.com/loveencounterflow/coffeenode-bitsnpieces
 

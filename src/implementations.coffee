@@ -28,6 +28,11 @@ substack_deep_equal       = require 'deep-equal'
 jv_equals                 = require '../3rd-party/JV-jeanvincent.js'
 cjs_deep_eql              = require 'deep-eql'
 jseq                      = require './eq'
+jdq_deepequal             = require 'deepequal'
+assert_paranoid_equal     = require 'assert-paranoid-equal'
+is_equal                  = require 'is-equal'
+angular                   = require 'angular'
+
 
 #-----------------------------------------------------------------------------------------------------------
 custom_jseq_options =
@@ -102,7 +107,7 @@ module.exports =
   #       return false
   #     return true
   #.........................................................................................................
-  "CJS: https://github.com/chaijs/deep-eql":
+  "CHA: https://github.com/chaijs/deep-eql":
     #.......................................................................................................
     eq: ( a, b ) -> cjs_deep_eql a, b
     ne: ( a, b ) -> not cjs_deep_eql a, b
@@ -150,6 +155,27 @@ module.exports =
         return false
       return true
   #.........................................................................................................
+  "JDQ: https://github.com/JayceTDE/deepequal":
+    #.......................................................................................................
+    eq: get_errorproof_comparator jdq_deepequal
+    ne: get_errorproof_comparator ( a, b ) -> not jdq_deepequal a, b
+  #.........................................................................................................
+  "APE: https://github.com/dervus/assert-paranoid-equal":
+    #.......................................................................................................
+    eq: ( a, b ) ->
+      try
+        assert_paranoid_equal.paranoidEqual a, b
+      catch error
+        return false
+      return true
+    #.......................................................................................................
+    ne: ( a, b ) ->
+      try
+        assert_paranoid_equal.notParanoidEqual a, b
+      catch error
+        return false
+      return true
+  #.........................................................................................................
   "CND: CoffeeNode Bits'N'Pieces":
     #.......................................................................................................
     eq: ( a, b ) -> BNP.equals a, b
@@ -164,6 +190,16 @@ module.exports =
     #.......................................................................................................
     eq: ( a, b ) -> LODASH.isEqual a, b
     ne: ( a, b ) -> not LODASH.isEqual a, b
+  #.........................................................................................................
+  "ISE: https://github.com/ljharb/is-equal":
+    #.......................................................................................................
+    eq: get_errorproof_comparator is_equal
+    ne: get_errorproof_comparator ( a, b ) -> not is_equal a, b
+  #.........................................................................................................
+  "ANG: https://github.com/bclinkinbeard/angular":
+    #.......................................................................................................
+    eq: get_errorproof_comparator angular.equals
+    ne: get_errorproof_comparator ( a, b ) -> not angular.equals a, b
   #.........................................................................................................
   "EQ: jsEq.eq":
     #.......................................................................................................
