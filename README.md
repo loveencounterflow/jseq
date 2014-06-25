@@ -61,7 +61,7 @@ you might want to divide both sides by four, which gives you
 
 ```
                   x       y * 4
-x = y * 4   =>   ---  == -------   =>   x / 4 == y
+x = y * 4   =>   ———  == ———————   =>   x / 4 == y
                   4         4
 ```
 
