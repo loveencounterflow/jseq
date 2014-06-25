@@ -70,9 +70,9 @@ assuming `foo == bar`. Then we perform the same operation on the left and the ri
 
 
 ```
-                  | foo[ 0 ][ 0 ] += 1
+                  | foo[ 1 ][ 0 ] += 1
 foo == bar   =>   |                      =>   ?
-                  | bar[ 0 ][ 0 ] += 1
+                  | bar[ 1 ][ 0 ] += 1
 ```
 
 Does equality still hold or has it been violated? Indeed, the latter is the case: when we say `foo[ 1 ][ 0 ]
@@ -88,7 +88,7 @@ case, `bar[ 0 ]` remains unaffected—meaning when we print out `foo` and `bar`,
 [ [ 1, 2, 3, ], [ 2, 2, 3, ], ]     # bar
 ```
 
-which does obviously not depict two deeply equal objects.
+which, obviously, does not describe two deeply equal objects.
 
 
 ### jsEq
