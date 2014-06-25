@@ -138,10 +138,10 @@ module.exports = ( eq, ne ) ->
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "(1) circ arrays w same layout, same values are eq" ] = ->
+  R[ "(1) circ arrays w similar layout, same values aren't eq" ] = ->
     d = [ 1, 2, 3, ]; d.push d
     e = [ 1, 2, 3, ]; e.push d
-    return eq d, e
+    return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
   R[ "(2) circ arrays w same layout, same values are eq" ] = ->
