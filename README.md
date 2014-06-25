@@ -1,5 +1,6 @@
 
 
+- [Breaking News](#breaking-news)
 - [jsEq](#jseq)
 - [Language Choice and Motivation](#language-choice-and-motivation)
 - [Test Module Setup](#test-module-setup)
@@ -23,6 +24,54 @@
 - [Caveats and Rants](#caveats-and-rants)
 
 > **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+
+### Breaking News
+
+GitHub user fkling has recently published [deep-equal-ident](https://github.com/fkling/deep-equal-ident),
+where he wants to "track[...] the identity of nested objects". That may sound a bit cryptic at first, but
+should become clear when considering two example test cases:
+
+```coffee
+#                             #1
+a   = [ 1, 2, 3, ]
+b   = [ 1, 2, 3, ]
+foo = [ a, a, ]
+bar = [ b, b, ]
+
+deepEqualIdent foo, bar       # true
+
+#                             #2
+a   = [ 1, 2, 3, ]
+b   = [ 1, 2, 3, ]
+foo = [ a, a, ]
+bar = [ a, b, ]
+
+deepEqualIdent foo, bar       # false
+```
+
+The gist of the comparison policy of `deep-equal-ident` is this: for two objects `foo`, `bar` to be deeply
+equal, we should expect that they contain deeply equal values at the same indices. now, if we inspect `foo`
+and `bar`, we find that both objects in both cases do have `x[ 0 ][ 0 ] == 1`, `x[ 0 ][ 1 ] == 2`, `x[ 1 ][
+0 ] == 1`, and so on, so at a glance, `foo` and `bar` should be considered deeply equal.
+
+However, we've all learned in school that when you have an equation like `x == y * 4`, that equation must
+still hold when transformed in a way that does the same to the left and the right hand term; for example,
+you might want to divide both sides by four, which gives you
+
+```
+                  x       y * 4
+x = y * 4   =>   ---  == -------   =>   x / 4 == y
+                  4         4
+```
+
+So far so good. Now consider what happens in test case #2 when we manipulate `a` or `b`. We start out with
+assuming `foo == bar`. Then we perform the same operation on the left and the right hand side, say
+
+
+```               | foo[ 0 ][ 0 ] += 1
+foo == bar   =>   |                      =>   ?
+```               | bar[ 0 ][ 0 ] += 1
 
 
 ### jsEq
