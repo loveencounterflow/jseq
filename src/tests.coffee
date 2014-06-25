@@ -150,6 +150,22 @@ module.exports = ( eq, ne ) ->
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
+  R[ "(fkling1) arrays w eq subarrays are eq" ] = ->
+    a   = [ 1, 2, 3, ]
+    b   = [ 1, 2, 3, ]
+    foo = [ a, a, ]
+    bar = [ b, b, ]
+    return eq foo, bar
+
+  #---------------------------------------------------------------------------------------------------------
+  R[ "(fkling2) arrays w eq subarrays but diff distribution aren't eq" ] = ->
+    a   = [ 1, 2, 3, ]
+    b   = [ 1, 2, 3, ]
+    foo = [ a, a, ]
+    bar = [ a, b, ]
+    return ne foo, bar
+
+  #---------------------------------------------------------------------------------------------------------
   ### joshwilsdon's test (https://github.com/joyent/node/issues/7161) ###
   R[ "joshwilsdon" ] = ->
     d1 = [ NaN, undefined, null, true, false, Infinity, 0, 1, "a", "b", {a: 1}, {a: "a"},

@@ -32,6 +32,7 @@ jdq_deepequal             = require 'deepequal'
 assert_paranoid_equal     = require 'assert-paranoid-equal'
 is_equal                  = require 'is-equal'
 angular                   = require 'angular'
+deep_equal_ident          = require 'deep-equal-ident'
 
 
 #-----------------------------------------------------------------------------------------------------------
@@ -190,6 +191,11 @@ module.exports =
     #.......................................................................................................
     eq: ( a, b ) -> LODASH.isEqual a, b
     ne: ( a, b ) -> not LODASH.isEqual a, b
+  #.........................................................................................................
+  "DQI: https://github.com/fkling/deep-equal-ident":
+    #.......................................................................................................
+    eq: get_errorproof_comparator deep_equal_ident
+    ne: get_errorproof_comparator ( a, b ) -> not deep_equal_ident a, b
   #.........................................................................................................
   "ISE: https://github.com/ljharb/is-equal":
     #.......................................................................................................
