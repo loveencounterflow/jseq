@@ -75,6 +75,22 @@ foo == bar   =>   |                      =>   ?
                   | bar[ 0 ][ 0 ] += 1
 ```
 
+Does equality still hold or has it been violated? Indeed, the latter is the case: when we say `foo[ 1 ][ 0 ]
++= 1`, we're really doing `a[ 0 ] += 1`, since `foo[ 1 ] is a` (`foo[ 1 ]` is identical to `a`). But `a` is
+also referenced as the first element of `foo`, so `foo[ 0 ]` changes along with `foo[ 1 ]`, which means
+`foo` is now `[ [ 2, 2, 3, ], [ 2, 2, 3, ], ]`.
+
+OK great, what with `bar`? Doing `bar[ 1 ][ 0 ] += 1` gives `[ 2, 2, 3, ]` alright, but in *this*
+case, `bar[ 0 ]` remains unaffected—meaning when we print out `foo` and `bar`, what we see is
+
+```
+[ [ 2, 2, 3, ], [ 2, 2, 3, ], ]     # foo
+[ [ 1, 2, 3, ], [ 2, 2, 3, ], ]     # bar
+```
+
+which does obviously not depict deeply equal objects.
+
+> **\*** because we're referring to the same `a` as in the previous operation.
 ### jsEq
 
 There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
