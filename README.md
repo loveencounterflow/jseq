@@ -69,10 +69,11 @@ So far so good. Now consider what happens in test case #2 when we manipulate `a`
 assuming `foo == bar`. Then we perform the same operation on the left and the right hand side, say
 
 
-```               | foo[ 0 ][ 0 ] += 1
+```
+                  | foo[ 0 ][ 0 ] += 1
 foo == bar   =>   |                      =>   ?
-```               | bar[ 0 ][ 0 ] += 1
-
+                  | bar[ 0 ][ 0 ] += 1
+```
 
 ### jsEq
 
