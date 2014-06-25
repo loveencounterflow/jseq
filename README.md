@@ -88,9 +88,9 @@ case, `bar[ 0 ]` remains unaffected—meaning when we print out `foo` and `bar`,
 [ [ 1, 2, 3, ], [ 2, 2, 3, ], ]     # bar
 ```
 
-which does obviously not depict deeply equal objects.
+which does obviously not depict two deeply equal objects.
 
-> **\*** because we're referring to the same `a` as in the previous operation.
+
 ### jsEq
 
 There are a couple of related, recurrent and, well, relatively 'deep' problems that vex many people who
