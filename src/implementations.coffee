@@ -136,7 +136,7 @@ module.exports =
       return true
     ne: ( a, b ) ->
       try
-        not ( should a ).equal b
+        ( should a ).not.equal b
       catch error
         return false
       return true
@@ -151,10 +151,70 @@ module.exports =
       return true
     ne: ( a, b ) ->
       try
-        not ( should a ).eql b
+        ( should a ).not.eql b
       catch error
         return false
       return true
+  #.........................................................................................................
+  "SH3: https://github.com/shouldjs/should.js#equal":
+    #.......................................................................................................
+    eq: ( a, b ) ->
+      try
+        ( should a ).equal b
+      catch error
+        return false
+      return true
+    ne: ( a, b ) ->
+      try
+        ( should a ).notEqual b
+      catch error
+        return false
+      return true
+  #.........................................................................................................
+  "SH4: https://github.com/shouldjs/should.js#eql":
+    #.......................................................................................................
+    eq: ( a, b ) ->
+      try
+        ( should a ).eql b
+      catch error
+        return false
+      return true
+    ne: ( a, b ) ->
+      try
+        ( should a ).notEql b
+      catch error
+        return false
+      return true
+  #.........................................................................................................
+  "SH5: https://github.com/shouldjs/should.js#equal":
+    #.......................................................................................................
+    eq: ( a, b ) ->
+      try
+        ( should a ).equal b
+      catch error
+        return false
+      return true
+    ne: ( a, b ) ->
+      try
+        ( should a ).equal b
+      catch error
+        return true
+      return false
+  #.........................................................................................................
+  "SH6: https://github.com/shouldjs/should.js#eql":
+    #.......................................................................................................
+    eq: ( a, b ) ->
+      try
+        ( should a ).eql b
+      catch error
+        return false
+      return true
+    ne: ( a, b ) ->
+      try
+        ( should a ).eql b
+      catch error
+        return true
+      return false
   #.........................................................................................................
   "JDQ: https://github.com/JayceTDE/deepequal":
     #.......................................................................................................
