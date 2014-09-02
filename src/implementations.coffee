@@ -156,36 +156,6 @@ module.exports =
         return false
       return true
   #.........................................................................................................
-  "SH3: https://github.com/shouldjs/should.js#equal":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ( should a ).equal b
-      catch error
-        return false
-      return true
-    ne: ( a, b ) ->
-      try
-        ( should a ).notEqual b
-      catch error
-        return false
-      return true
-  #.........................................................................................................
-  "SH4: https://github.com/shouldjs/should.js#eql":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ( should a ).eql b
-      catch error
-        return false
-      return true
-    ne: ( a, b ) ->
-      try
-        ( should a ).notEql b
-      catch error
-        return false
-      return true
-  #.........................................................................................................
   "SH5: https://github.com/shouldjs/should.js#equal":
     #.......................................................................................................
     eq: ( a, b ) ->
