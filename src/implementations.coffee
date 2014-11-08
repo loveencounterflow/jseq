@@ -24,6 +24,7 @@ UNDERSCORE                = require 'underscore'
 jkroso_equals             = require 'equals'
 othiym23_deepEqual        = require 'deeper'
 should                    = require 'should'
+should_equal              = require 'should-equal'
 substack_deep_equal       = require 'deep-equal'
 jv_equals                 = require '../3rd-party/JV-jeanvincent.js'
 cjs_deep_eql              = require 'deep-eql'
@@ -206,6 +207,11 @@ module.exports =
       catch error
         return false
       return true
+  #.........................................................................................................
+  "SEQ: https://github.com/shouldjs/equal":
+    #.......................................................................................................
+    eq: ( a, b ) -> should_equal a, b
+    ne: ( a, b ) -> not should_equal a, b
   #.........................................................................................................
   "CND: CoffeeNode Bits'N'Pieces":
     #.......................................................................................................

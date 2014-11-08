@@ -38,6 +38,7 @@
     "lodash": "^2.4.1",
     "qunitjs": "^1.14.0",
     "should": "^4.0.0",
+    "should-equal": "0.0.2",
     "underscore": "^1.6.0"
   }
 }
