@@ -169,66 +169,66 @@ module.exports =
   "DEQ: https://github.com/substack/node-deep-equal":
     eq: get_errorproof_comparator substack_deep_equal
     ne: get_errorproof_comparator ( a, b ) -> not substack_deep_equal a, b
-  #.........................................................................................................
-  "SH1: https://github.com/shouldjs/should.js#equal":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ( should a ).equal b
-      catch error
-        return false
-      return true
-    ne: ( a, b ) ->
-      try
-        ( should a ).not.equal b
-      catch error
-        return false
-      return true
-  #.........................................................................................................
-  "SH2: https://github.com/shouldjs/should.js#eql":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ( should a ).eql b
-      catch error
-        return false
-      return true
-    ne: ( a, b ) ->
-      try
-        ( should a ).not.eql b
-      catch error
-        return false
-      return true
-  #.........................................................................................................
-  "SH5: https://github.com/shouldjs/should.js#equal":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ( should a ).equal b
-      catch error
-        return false
-      return true
-    ne: ( a, b ) ->
-      try
-        ( should a ).equal b
-      catch error
-        return true
-      return false
-  #.........................................................................................................
-  "SH6: https://github.com/shouldjs/should.js#eql":
-    #.......................................................................................................
-    eq: ( a, b ) ->
-      try
-        ( should a ).eql b
-      catch error
-        return false
-      return true
-    ne: ( a, b ) ->
-      try
-        ( should a ).eql b
-      catch error
-        return true
-      return false
+  # #.........................................................................................................
+  # "SH1: https://github.com/shouldjs/should.js#equal":
+  #   #.......................................................................................................
+  #   eq: ( a, b ) ->
+  #     try
+  #       ( should a ).equal b
+  #     catch error
+  #       return false
+  #     return true
+  #   ne: ( a, b ) ->
+  #     try
+  #       ( should a ).not.equal b
+  #     catch error
+  #       return false
+  #     return true
+  # #.........................................................................................................
+  # "SH2: https://github.com/shouldjs/should.js#eql":
+  #   #.......................................................................................................
+  #   eq: ( a, b ) ->
+  #     try
+  #       ( should a ).eql b
+  #     catch error
+  #       return false
+  #     return true
+  #   ne: ( a, b ) ->
+  #     try
+  #       ( should a ).not.eql b
+  #     catch error
+  #       return false
+  #     return true
+  # #.........................................................................................................
+  # "SH5: https://github.com/shouldjs/should.js#equal":
+  #   #.......................................................................................................
+  #   eq: ( a, b ) ->
+  #     try
+  #       ( should a ).equal b
+  #     catch error
+  #       return false
+  #     return true
+  #   ne: ( a, b ) ->
+  #     try
+  #       ( should a ).equal b
+  #     catch error
+  #       return true
+  #     return false
+  # #.........................................................................................................
+  # "SH6: https://github.com/shouldjs/should.js#eql":
+  #   #.......................................................................................................
+  #   eq: ( a, b ) ->
+  #     try
+  #       ( should a ).eql b
+  #     catch error
+  #       return false
+  #     return true
+  #   ne: ( a, b ) ->
+  #     try
+  #       ( should a ).eql b
+  #     catch error
+  #       return true
+  #     return false
   #.........................................................................................................
   "JDQ: https://github.com/JayceTDE/deepequal":
     #.......................................................................................................
@@ -250,11 +250,11 @@ module.exports =
       catch error
         return false
       return true
-  #.........................................................................................................
-  "SEQ: https://github.com/shouldjs/equal":
-    #.......................................................................................................
-    eq: ( a, b ) -> should_equal a, b
-    ne: ( a, b ) -> not should_equal a, b
+  # #.........................................................................................................
+  # "SEQ: https://github.com/shouldjs/equal":
+  #   #.......................................................................................................
+  #   eq: ( a, b ) -> should_equal a, b
+  #   ne: ( a, b ) -> not should_equal a, b
   #.........................................................................................................
   "UDS: underscore _.isEqual":
     #.......................................................................................................
