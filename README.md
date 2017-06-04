@@ -173,7 +173,7 @@ annotated from which language it has been taken.
 > with my particular choice for the equals operator, you can instantiate your own grammar with your
 > own choice for that one).
 
-Incidentally, i'm writing lots of tests for Arabika, and one day i was struck
+Incidentally, I'm writing lots of tests for Arabika, and one day I was struck
 by a false positive when a parsing result à la `[ 3 ]` passed the comparison to `[ '3' ]`.
 Research quickly showed NodeJS' `assert.deepEqual` to be the culprit, so i chimed in to the
 [discussion on bug #7161](https://github.com/joyent/node/issues/7161). I felt i was not completely alone
