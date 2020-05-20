@@ -11,6 +11,8 @@
 
 - [Breaking News](#breaking-news)
   - [Should Key Ordering Matter in Objects?](#should-key-ordering-matter-in-objects)
+  - [ECMAScript6 Classes and Type Checking](#ecmascript6-classes-and-type-checking)
+    - [Segue on The Miller Device](#segue-on-the-miller-device)
   - [Deep Equality acc to `deep-equal-ident`](#deep-equality-acc-to-deep-equal-ident)
   - [jsEq](#jseq)
   - [Language Choice and Motivation](#language-choice-and-motivation)
@@ -77,6 +79,95 @@ coffee> Symbol
 [Function: Symbol] { x_orderedkeys: Symbol(x_orderedkeys) }
 ```
  -->
+
+### ECMAScript6 Classes and Type Checking
+
+Whenever one thinks one has tamed the utter madness that is JavaScript's type system, one can be reasonably
+sure another one of the Hydra's ugly heads is waiting right behind the corner. This happens with ECMAScript6
+Classes.
+
+Let us go on a Journey in Five Parts where I'd like to define a class that extends JS `Array`; I then
+instantiate it and poke at it with all the sonic screwdrivers I have. This looks good until I use either
+`typeof` or the old trusty (but, by now, a bit rusty) [Miller Device]() to ascertain the class name of that
+thing
+
+```coffee
+# Preface. Packing for the Journey.
+# ---------------------------------
+
+types = new ( require 'intertype' ).Intertype() # https://github.com/loveencounterflow/intertype
+class Myclass extends Array
+
+# Chapter I. Embarking on the Boat.
+# ---------------------------------
+
+d = new Myclass()             # in REPL, correctly echoes `Myclass(0) []`, `0` being array length
+
+# Chapter II. No Problems (So Far.)
+# ---------------------------------
+
+Array.isArray d               # `true`, no problem
+d instanceof Array            # `true`, no problem
+d instanceof Myclass          # `true`, no problem
+types.isa.list d              # `true`, no problem
+
+# Chapter III. OMG It's the Titanic
+# ---------------------------------
+
+typeof                  d     # 'object'; NB that `( typeof [] ) == 'object'`
+types.type_of           d     # 'list' (our name for JS `Array` instances)
+Object::toString.call   d     # 'Miller Device', gives '[object Array]'
+
+# Chapter IV. One Single Raft Left.
+# ---------------------------------
+
+d.constructor.name            # 'Myclass'! Yay!
+```
+
+Turns out only `d.constructor.name` does the trick—let's call it the [Dominic
+Denicola](https://stackoverflow.com/users/3191/domenic) Device since [he wrote the top-rated
+answer][https://stackoverflow.com/a/30560581] to this pressing question back in 2015. In fact, let's
+try and see what the DDDevice can do for us.
+
+In essence, we just need to set up a function `ddd = ( x ) -> x.constructor.name`; the only problem with
+that is of course that checking attributes on `null` and `undefined` will fail loudly (as if JS ever cared
+but whatever), so we have to safeguard against that; these two definitions are equivalent:
+
+```coffee
+ddd = ( x ) -> if x? then x.constructor.name else ( if x is null then 'null' else 'undefined' )
+ddd = ( x ) -> x?.constructor.name ? ( if x is null then 'null' else 'undefined' )
+```
+
+Our `ddd()` method does give reasonable answers (for a JS type detecting method):
+
+```
+ddd {}                  # 'Object'
+ddd []                  # 'Array'
+ddd null                # 'null'
+ddd true                # 'Boolean'
+ddd 42                  # 'Number'
+ddd NaN                 # 'Number'
+ddd Infinity            # 'Number'
+ddd ( new Myclass() )   # 'Myclass'
+```
+
+#### Segue on The Miller Device
+
+A code comment from 2010 ([CND Types module]()):
+
+> It is outright incredible, some would think frightening, how much manpower has gone into reliable
+> JavaScript type checking. Here is the latest and greatest for a language that can claim to be second
+> to none when it comes to things that should be easy but aren’t: the ‘Miller Device’ by Mark Miller of
+> Google (http://www.caplet.com), popularized by James Crockford of Yahoo!.*
+>
+> As per https://groups.google.com/d/msg/nodejs/P_RzSyPkjkI/NvP28SXvf24J, now also called the 'Flanagan
+> Device'
+>
+> * http://ajaxian.com/archives/isarray-why-is-it-so-bloody-hard-to-get-right
+> * http://blog.360.yahoo.com/blog-TBPekxc1dLNy5DOloPfzVvFIVOWMB0li?p=916 # page gone
+> * http://zaa.ch/past/2009/1/31/the_miller_device_on_null_and_other_lowly_unvalues/ # moved to:
+> * http://zaa.ch/post/918977126/the-miller-device-on-null-and-other-lowly-unvalues
+
 
 ### Deep Equality acc to `deep-equal-ident`
 
