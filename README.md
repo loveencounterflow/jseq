@@ -2,64 +2,78 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Breaking News](#breaking-news)
-- [jsEq](#jseq)
-- [Language Choice and Motivation](#language-choice-and-motivation)
-- [Test Module Setup](#test-module-setup)
-- [Implementations Module Setup](#implementations-module-setup)
-- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
-- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
-- [Equality of Sub-Types](#equality-of-sub-types)
-- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
-- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
-- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
-- [Not-A-Number](#not-a-number)
-- [Object Property Ordering](#object-property-ordering)
-- [Properties on 'Non-Objects'](#properties-on-non-objects)
-- [Primitive Values vs Objects](#primitive-values-vs-objects)
-- [Undefined Properties](#undefined-properties)
-- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
-- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
-- [Plus and Minus Points](#plus-and-minus-points)
-- [Benchmarks](#benchmarks)
-- [Libraries Tested](#libraries-tested)
-- [Caveats and Rants](#caveats-and-rants)
+- [On Equality (in JavaScript)](#on-equality-in-javascript)
+  - [Breaking News](#breaking-news)
+    - [Should Key Ordering Matter in Objects?](#should-key-ordering-matter-in-objects)
+    - [Deep Equality acc to `deep-equal-ident`](#deep-equality-acc-to-deep-equal-ident)
+    - [jsEq](#jseq)
+    - [Language Choice and Motivation](#language-choice-and-motivation)
+    - [Test Module Setup](#test-module-setup)
+    - [Implementations Module Setup](#implementations-module-setup)
+    - [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
+    - [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
+    - [Equality of Sub-Types](#equality-of-sub-types)
+    - [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
+    - [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
+    - [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
+    - [Not-A-Number](#not-a-number)
+    - [Object Property Ordering](#object-property-ordering)
+    - [Properties on 'Non-Objects'](#properties-on-non-objects)
+    - [Primitive Values vs Objects](#primitive-values-vs-objects)
+    - [Undefined Properties](#undefined-properties)
+    - [Functions (and Regular Expressions)](#functions-and-regular-expressions)
+    - [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
+    - [Plus and Minus Points](#plus-and-minus-points)
+    - [Benchmarks](#benchmarks)
+    - [Libraries Tested](#libraries-tested)
+    - [Caveats and Rants](#caveats-and-rants)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
+# On Equality (in JavaScript)
 
-- [Breaking News](#breaking-news)
-- [jsEq](#jseq)
-- [Language Choice and Motivation](#language-choice-and-motivation)
-- [Test Module Setup](#test-module-setup)
-- [Implementations Module Setup](#implementations-module-setup)
-- [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
-- [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
-- [Equality of Sub-Types](#equality-of-sub-types)
-- [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
-- [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
-- [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
-- [Not-A-Number](#not-a-number)
-- [Object Property Ordering](#object-property-ordering)
-- [Properties on 'Non-Objects'](#properties-on-'non-objects')
-- [Primitive Values vs Objects](#primitive-values-vs-objects)
-- [Undefined Properties](#undefined-properties)
-- [Functions (and Regular Expressions)](#functions-and-regular-expressions)
-- [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
-- [Plus and Minus Points](#plus-and-minus-points)
-- [Benchmarks](#benchmarks)
-- [Libraries Tested](#libraries-tested)
-- [Caveats and Rants](#caveats-and-rants)
+## Breaking News
 
-> **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+### Should Key Ordering Matter in Objects?
 
 
-### Breaking News
+* key ordering used to be an accidental property of JS objects
+* constance of key ordering (key ordering by definition order) always used to be silently implemented by
+  most popular engines because reasons
+* now it's in ES XXX so it's official
+* question is, should `x = { a: 1, b: 1, }`, `y = { b: 1, a: 1, }` be equal or not equal?
+* conventionally key ordering is considered irrelevant for equality, so **x eq y** should *hold*
+* but *sometimes* key ordering is used, so **x eq y** should *fail*
+* propose to agree upon setting a symbol (`Symbol. x_orderedkeys`) and/or deriving from specific class
+  (`class OrderedKeysObject extends Object`) to signal objects that should be keeping key ordering
+* what to do if `x` has that property but `y` lacks it?
+* should be possible to configure test whether to check for this
 
-GitHub user fkling has recently published [deep-equal-ident](https://github.com/fkling/deep-equal-ident),
-where he wants to "track[...] the identity of nested objects". That may sound a bit cryptic at first, but
-should become clear when considering two example test cases:
+
+<!--
+```
+coffee> Symbol.iterator
+Symbol(Symbol.iterator)
+coffee> Symbol.x
+undefined
+coffee> Symbol[ 'iterator' ]
+Symbol(Symbol.iterator)
+coffee> Symbol[ Symbol.for 'iterator' ]
+undefined
+coffee> Symbol.x_orderedkeys ?= Symbol 'x_orderedkeys'
+Symbol(x_orderedkeys)
+coffee> Symbol
+[Function: Symbol] { x_orderedkeys: Symbol(x_orderedkeys) }
+```
+ -->
+
+### Deep Equality acc to `deep-equal-ident`
+
+GitHub user [`fkling`](https://github.com/fkling) has recently published
+[deep-equal-ident](https://github.com/fkling/deep-equal-ident), where he wants to "track[...] the identity
+of nested objects". That may sound a bit cryptic at first, but should become clear when considering two
+example test cases:
 
 ```coffee
 #                             #1
