@@ -89,7 +89,7 @@ Classes.
 Let us go on a Journey in Five Parts where I'd like to define a class that extends JS `Array`; I then
 instantiate it and poke at it with all the sonic screwdrivers I have. This looks good until I use either
 `typeof` or the old trusty (but, by now, a bit rusty) [Miller Device]() to ascertain the class name of that
-thing
+thing:
 
 ```coffee
 # Preface. Packing for the Journey.
@@ -124,10 +124,11 @@ Object::toString.call   d     # 'Miller Device', gives '[object Array]'
 d.constructor.name            # 'Myclass'! Yay!
 ```
 
-Turns out only `d.constructor.name` does the trick—let's call it the [Dominic
-Denicola](https://stackoverflow.com/users/3191/domenic) Device since [he wrote the top-rated
-answer][https://stackoverflow.com/a/30560581] to this pressing question back in 2015. In fact, let's
-try and see what the DDDevice can do for us.
+Turns out only `d.constructor.name` does the trick—let's call it the [Dominic Denicola
+Device](https://stackoverflow.com/users/3191/domenic) since [he wrote the top-rated SO
+answer](https://stackoverflow.com/a/30560581) to this pressing question back in 2015.
+
+So let's try and see what the DDDevice can do for us.
 
 In essence, we just need to set up a function `ddd = ( x ) -> x.constructor.name`; the only problem with
 that is of course that checking attributes on `null` and `undefined` will fail loudly (as if JS ever cared
