@@ -1,37 +1,41 @@
+
+
+
+# On Equality (in JavaScript)
+
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [On Equality (in JavaScript)](#on-equality-in-javascript)
-  - [Breaking News](#breaking-news)
-    - [Should Key Ordering Matter in Objects?](#should-key-ordering-matter-in-objects)
-    - [Deep Equality acc to `deep-equal-ident`](#deep-equality-acc-to-deep-equal-ident)
-    - [jsEq](#jseq)
-    - [Language Choice and Motivation](#language-choice-and-motivation)
-    - [Test Module Setup](#test-module-setup)
-    - [Implementations Module Setup](#implementations-module-setup)
-    - [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
-    - [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
-    - [Equality of Sub-Types](#equality-of-sub-types)
-    - [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
-    - [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
-    - [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
-    - [Not-A-Number](#not-a-number)
-    - [Object Property Ordering](#object-property-ordering)
-    - [Properties on 'Non-Objects'](#properties-on-non-objects)
-    - [Primitive Values vs Objects](#primitive-values-vs-objects)
-    - [Undefined Properties](#undefined-properties)
-    - [Functions (and Regular Expressions)](#functions-and-regular-expressions)
-    - [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
-    - [Plus and Minus Points](#plus-and-minus-points)
-    - [Benchmarks](#benchmarks)
-    - [Libraries Tested](#libraries-tested)
-    - [Caveats and Rants](#caveats-and-rants)
+- [Breaking News](#breaking-news)
+  - [Should Key Ordering Matter in Objects?](#should-key-ordering-matter-in-objects)
+  - [Deep Equality acc to `deep-equal-ident`](#deep-equality-acc-to-deep-equal-ident)
+  - [jsEq](#jseq)
+  - [Language Choice and Motivation](#language-choice-and-motivation)
+  - [Test Module Setup](#test-module-setup)
+  - [Implementations Module Setup](#implementations-module-setup)
+  - [Equality, Identity, and Equivalence](#equality-identity-and-equivalence)
+  - [First Axiom: Value Equality Entails Type Equality](#first-axiom-value-equality-entails-type-equality)
+  - [Equality of Sub-Types](#equality-of-sub-types)
+  - [Equality of Numerical Values in Python](#equality-of-numerical-values-in-python)
+  - [Second Axiom: Equality of Program Behavior](#second-axiom-equality-of-program-behavior)
+  - [Infinity, Positive and Negative Zero](#infinity-positive-and-negative-zero)
+  - [Not-A-Number](#not-a-number)
+  - [Object Property Ordering](#object-property-ordering)
+  - [Properties on 'Non-Objects'](#properties-on-non-objects)
+  - [Primitive Values vs Objects](#primitive-values-vs-objects)
+  - [Undefined Properties](#undefined-properties)
+  - [Functions (and Regular Expressions)](#functions-and-regular-expressions)
+  - [How Many Methods for Equality Testing?](#how-many-methods-for-equality-testing)
+  - [Plus and Minus Points](#plus-and-minus-points)
+  - [Benchmarks](#benchmarks)
+  - [Libraries Tested](#libraries-tested)
+  - [Caveats and Rants](#caveats-and-rants)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
-# On Equality (in JavaScript)
 
 ## Breaking News
 
