@@ -82,6 +82,9 @@ coffee> Symbol
 
 ### ECMAScript6 Classes and Type Checking
 
+> **UPDATE** this topic is dealt with in more detail in
+> [InterType](https://github.com/loveencounterflow/intertype#ecmascript6-classes-and-type-checking).
+
 Whenever one thinks one has tamed the utter madness that is JavaScript's type system, one can be reasonably
 sure another one of the Hydra's ugly heads is waiting right behind the corner. This happens with ECMAScript6
 Classes.
