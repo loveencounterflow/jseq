@@ -49,10 +49,16 @@
 * question is, should `x = { a: 1, b: 1, }`, `y = { b: 1, a: 1, }` be equal or not equal?
 * conventionally key ordering is considered irrelevant for equality, so **x eq y** should *hold*
 * but *sometimes* key ordering is used, so **x eq y** should *fail*
-* propose to agree upon setting a symbol (`Symbol. x_orderedkeys`) and/or deriving from specific class
-  (`class OrderedKeysObject extends Object`) to signal objects that should be keeping key ordering
+* propose to agree upon setting a symbol (`Symbol.x_orderedkeys`) to signal objects that should be keeping
+  key ordering (tested as `x[Symbol.x_orderedkeys]?`)
+* deriving from specific class (`class OrderedKeysObject extends Object`) possible but better not done as it
+  would conflict with other more important uses of custom classes
 * what to do if `x` has that property but `y` lacks it?
-* should be possible to configure test whether to check for this
+  * always reject equality because '`x` has something that `y` is lacking', or else
+  * assume that `x_orderedkeys` is 'contagious' but not 'dominant', i.e. presence in any one value mandates
+    checking for ordered keys
+* should also be possible to configure test whether to check for this, or use special method
+  (`eq_with_ordered_keys()`)
 
 
 <!--
