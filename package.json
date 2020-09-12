@@ -37,7 +37,7 @@
     "equals": "^1.0.1",
     "is-equal": "^1.5.1",
     "lodash": "^4.11.2",
-    "qunitjs": "^1.14.0",
+    "qunit": "^2.11.2",
     "should": "^8.3.1",
     "should-equal": "^0.7.2",
     "underscore": "^1.6.0"
