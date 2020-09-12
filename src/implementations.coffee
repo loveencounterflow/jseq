@@ -20,6 +20,7 @@ echo                      = TRM.echo.bind TRM
 BNP                       = require 'coffeenode-bitsnpieces'
 ASSERT                    = require 'assert'
 LODASH                    = require 'lodash'
+QUNIT                     = require 'qunit'
 UNDERSCORE                = require 'underscore'
 jkroso_equals             = require 'equals'
 othiym23_deepEqual        = require 'deeper'
@@ -265,6 +266,11 @@ module.exports =
     #.......................................................................................................
     eq: ( a, b ) -> LODASH.isEqual a, b
     ne: ( a, b ) -> not LODASH.isEqual a, b
+  #.........................................................................................................
+  "QUN: QUnit assert.deepEqual":
+    #.......................................................................................................
+    eq: ( a, b ) -> QUNIT.equiv a, b
+    ne: ( a, b ) -> not QUNIT.equiv a, b
   #.........................................................................................................
   "DQI: https://github.com/fkling/deep-equal-ident":
     #.......................................................................................................
