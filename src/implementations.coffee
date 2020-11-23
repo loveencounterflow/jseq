@@ -35,6 +35,7 @@ is_equal                  = require 'is-equal'
 # angular                   = require 'angular'
 # warn '©oganH'
 deep_equal_ident          = require 'deep-equal-ident'
+fdq_equal                 = require 'fast-deep-equal'
 
 
 #-----------------------------------------------------------------------------------------------------------
@@ -290,6 +291,11 @@ module.exports =
     #.......................................................................................................
     eq: get_errorproof_comparator custom_jseq
     ne: get_errorproof_comparator ( a, b ) -> not custom_jseq a, b
+  #.........................................................................................................
+  "FDQ: fast-deep-equal": # https://github.com/epoberezkin/fast-deep-equal
+    #.......................................................................................................
+    eq: get_errorproof_comparator fdq_equal
+    ne: get_errorproof_comparator ( a, b ) -> not fdq_equal a, b
 
 
 
