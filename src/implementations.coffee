@@ -36,6 +36,7 @@ is_equal                  = require 'is-equal'
 # warn '©oganH'
 deep_equal_ident          = require 'deep-equal-ident'
 fdq_equal                 = require 'fast-deep-equal'
+fde_equal                 = require 'fast-deep-equal/es6/index.js'
 
 
 #-----------------------------------------------------------------------------------------------------------
@@ -296,6 +297,11 @@ module.exports =
     #.......................................................................................................
     eq: get_errorproof_comparator fdq_equal
     ne: get_errorproof_comparator ( a, b ) -> not fdq_equal a, b
+  #.........................................................................................................
+  "FDE: fast-deep-equal (ES6)": # https://github.com/epoberezkin/fast-deep-equal
+    #.......................................................................................................
+    eq: get_errorproof_comparator fde_equal
+    ne: get_errorproof_comparator ( a, b ) -> not fde_equal a, b
 
 
 
