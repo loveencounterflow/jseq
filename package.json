@@ -42,6 +42,6 @@
     "qunitjs": "^2.4.1",
     "should": "^13.2.3",
     "should-equal": "^2.0.0",
-    "underscore": "1.13.6"
+    "underscore": "1.12.1"
   }
 }
