@@ -66,26 +66,10 @@ module.exports = ( eq, ne ) ->
     return eq d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "fn2: functions w diff source aren't eq" ] = ->
+  R[ "fn1: functions are eq to themselves" ] = ->
     d = `function( a, b, c ){ return a * b * c; }`
-    e = `function( a, b, c ){ return a  *  b  *  c; }`
-    return ne d, e
-
-  #---------------------------------------------------------------------------------------------------------
-  R[ "fn3: equal functions w equal props are eq" ] = ->
-    d = -> null
-    d.foo = some: 'meaningless', properties: 'here'
-    e = -> null
-    e.foo = some: 'meaningless', properties: 'here'
+    e = d
     return eq d, e
-
-  #---------------------------------------------------------------------------------------------------------
-  R[ "fn4: equal functions w unequal props aren't eq" ] = ->
-    d = -> null
-    d.foo = some: 'meaningless', properties: 'here'
-    e = -> null
-    e.foo = some: 'meaningless', properties: 'here!!!'
-    return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
   R[ "list w named member eqs other list w same member" ] = ->
