@@ -1250,14 +1250,31 @@ apart, too). This means i'll have to look for another solution to printing out t
     * *two objects whose prototypes are not identical are always unequal*; leading to
     * we never have to dive into the prototype chain; `return false unless a:: is b::` (JS: `if
       ( !a.prototype.is( b.prototype ) ) { return false; }`) is sufficient and can be done up front
-    * this is because as with [multiply referred objects]() and [circular objects](), changes to a prototype
-      will be detectable on those objects that derive from it, but not on others; therefore, if all of `a::
-      is A`, `b:: is B`, `A isnt B` holds, then even if all properties on `a` equal all properties on `b`,
-      still when I go and add a property to `A`, then `a` isn't equal to `b` anymore, although neither `a`
-      nor `b` got modified.
+    * this is because as with [Multiple References](#multiple-references) and [Circularity](#circularity),
+      changes to a prototype will be detectable on those objects that derive from it, but not on others;
+      therefore, if all of `a:: is A`, `b:: is B`, `A isnt B` holds, then even if all properties on `a`
+      equal all properties on `b`, still when I go and add a property to `A`, then `a` isn't equal to `b`
+      anymore, although neither `a` nor `b` got modified.
+      * in the following setup
 
+        ```coffee
+        a = [ 1, 2, 3, ]
+        b = [ 1, 2, 3, ]
+        equals a, b # true
+        #................................
+        d_1 = [ a, a ]
+        #        ^^^
+        e_1 = [ a, a ]
+        equals d_1, e_1 # true
+        #................................
+        d_2 = [ a, b ]
+        #        ^^^
+        e_2 = [ a, a ]
+        equals d_2, e_2 # true  # solution 1
+        equals d_2, e_2 # false # solution 2
+        ```
 
-
+      which of the two solutions (in the closing lines) should hold?
 
 
 
