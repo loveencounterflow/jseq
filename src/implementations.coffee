@@ -18,7 +18,7 @@ echo                      = TRM.echo.bind TRM
 #...........................................................................................................
 ### implementations of deep equality tests: ###
 BNP                       = require 'coffeenode-bitsnpieces'
-ASSERT                    = require 'assert'
+ASSERT                    = require 'node:assert'
 LODASH                    = require 'lodash'
 UNDERSCORE                = require 'underscore'
 jkroso_equals             = require 'equals'
