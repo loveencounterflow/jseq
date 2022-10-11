@@ -60,7 +60,7 @@ module.exports = ( eq, ne ) ->
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
-  R[ "fn1: functions w same source are eq" ] = ->
+  R[ "fn1: two functions are always ne" ] = ->
     d = `function( a, b, c ){ return a * b * c; }`
     e = `function( a, b, c ){ return a * b * c; }`
     return eq d, e
