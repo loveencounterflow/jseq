@@ -35,6 +35,7 @@
 - [Benchmarks](#benchmarks)
 - [Libraries Tested](#libraries-tested)
 - [Caveats and Rants](#caveats-and-rants)
+- [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -1227,8 +1228,15 @@ to spill into the output (especially in a testing situation where sometimes prot
 apart, too). This means i'll have to look for another solution to printing out tabular data on the console.
 
 
+## To Do
 
-
+* Think again about the following corner cases:
+  * An (possibly empty) plain object's prototype may be `Object` or `null` (when created with `Object.create
+    null`); in neither case are there any *enumerable properties*, yet the former has a number of properties
+    like `a.toString` that `b` is lacking. Are they equal or not? `node:util.isDeepStrictEqual()` says
+    they're *not* equal (and is probably right in this)
+    * A subcase of this: Are two objects equal when they're equal except their prototypes are equal but not
+      identical?
 
 
 
