@@ -122,6 +122,12 @@ module.exports = ( eq, ne ) ->
     return ne d, e
 
   #---------------------------------------------------------------------------------------------------------
+  R[ "empty objs ne when diff prototypes" ] = ->
+    d = {}
+    e = Object.create null
+    return ne d, e
+
+  #---------------------------------------------------------------------------------------------------------
   R[ "(1) circ arrays w similar layout, same values aren't eq" ] = ->
     d = [ 1, 2, 3, ]; d.push d
     e = [ 1, 2, 3, ]; e.push d
