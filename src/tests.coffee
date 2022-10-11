@@ -148,6 +148,15 @@ module.exports = ( eq, ne ) ->
     return eq foo, bar
 
   #---------------------------------------------------------------------------------------------------------
+  R[ "№ 36a: (fkling1a) arrays w eq subarrays are eq" ] = ->
+    a   = [ 1, 2, 3, ]
+    b   = [ 1, 2, 3, ]
+    c   = [ 1, 2, 3, ]
+    foo = [ a, b, ]
+    bar = [ c, c, ]
+    return ne foo, bar
+
+  #---------------------------------------------------------------------------------------------------------
   R[ "№ 37: (fkling2) arrays w eq subarrays but diff distribution aren't eq" ] = ->
     a   = [ 1, 2, 3, ]
     b   = [ 1, 2, 3, ]
