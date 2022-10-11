@@ -35,6 +35,9 @@
 - [Benchmarks](#benchmarks)
 - [Libraries Tested](#libraries-tested)
 - [Caveats and Rants](#caveats-and-rants)
+- [Multiple References and Circularity](#multiple-references-and-circularity)
+  - [Multiple References](#multiple-references)
+  - [Circularity](#circularity)
 - [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -1227,6 +1230,12 @@ of `String` with its own names**, and since those are not made non-enumerable, t
 to spill into the output (especially in a testing situation where sometimes prototypes are being picked
 apart, too). This means i'll have to look for another solution to printing out tabular data on the console.
 
+## Multiple References and Circularity
+
+### Multiple References
+
+### Circularity
+
 
 ## To Do
 
@@ -1241,7 +1250,11 @@ apart, too). This means i'll have to look for another solution to printing out t
     * *two objects whose prototypes are not identical are always unequal*; leading to
     * we never have to dive into the prototype chain; `return false unless a:: is b::` (JS: `if
       ( !a.prototype.is( b.prototype ) ) { return false; }`) is sufficient and can be done up front
-
+    * this is because as with [multiply referred objects]() and [circular objects](), changes to a prototype
+      will be detectable on those objects that derive from it, but not on others; therefore, if all of `a::
+      is A`, `b:: is B`, `A isnt B` holds, then even if all properties on `a` equal all properties on `b`,
+      still when I go and add a property to `A`, then `a` isn't equal to `b` anymore, although neither `a`
+      nor `b` got modified.
 
 
 
