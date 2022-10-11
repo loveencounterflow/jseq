@@ -19,6 +19,8 @@ echo                      = TRM.echo.bind TRM
 ### implementations of deep equality tests: ###
 BNP                       = require 'coffeenode-bitsnpieces'
 ASSERT                    = require 'node:assert'
+{ isDeepStrictEqual: util_isDeepStrictEqual \
+                        } = require 'node:util'
 LODASH                    = require 'lodash'
 UNDERSCORE                = require 'underscore'
 jkroso_equals             = require 'equals'
@@ -37,7 +39,8 @@ is_equal                  = require 'is-equal'
 deep_equal_ident          = require 'deep-equal-ident'
 fdq_equal                 = require 'fast-deep-equal'
 fde_equal                 = require 'fast-deep-equal/es6/index.js'
-
+{ circularDeepEqual: fast_equals_deepEquals \
+                        } = require 'fast-equals/dist/fast-equals.cjs.js' ### https://github.com/planttheidea/fast-equals ###
 
 #-----------------------------------------------------------------------------------------------------------
 custom_jseq_options =
@@ -69,6 +72,11 @@ module.exports =
     #.......................................................................................................
     eq: ( a, b ) -> jkroso_equals a, b
     ne: ( a, b ) -> not jkroso_equals a, b
+  #.........................................................................................................
+  "NUI: NodeJS util.isDeepStrictEqual":
+    #.......................................................................................................
+    eq: ( a, b ) ->     util_isDeepStrictEqual a, b
+    ne: ( a, b ) -> not util_isDeepStrictEqual a, b
   #.........................................................................................................
   "ADE: NodeJS assert.deepEqual":
     #.......................................................................................................
@@ -302,6 +310,11 @@ module.exports =
     #.......................................................................................................
     eq: get_errorproof_comparator fde_equal
     ne: get_errorproof_comparator ( a, b ) -> not fde_equal a, b
+  #.........................................................................................................
+  "FEQ: fast-equals": # https://github.com/planttheidea/fast-equals
+    #.......................................................................................................
+    eq: fast_equals_deepEquals
+    ne: ( a, b ) -> not fast_equals_deepEquals a, b
 
 
 
