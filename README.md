@@ -1237,7 +1237,10 @@ apart, too). This means i'll have to look for another solution to printing out t
     they're *not* equal (and is probably right in this)
     * A subcase of this: Are two objects equal when they're equal except their prototypes are equal but not
       identical?
-
+  * two objects that are of different types are always unequal; likewise,
+    * *two objects whose prototypes are not identical are always unequal*; leading to
+    * we never have to dive into the prototype chain; `return false unless a:: is b::` (JS: `if
+      ( !a.prototype.is( b.prototype ) ) { return false; }`) is sufficient and can be done up front
 
 
 
