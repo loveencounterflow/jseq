@@ -1246,8 +1246,8 @@ apart, too). This means i'll have to look for another solution to printing out t
     they're *not* equal (and is probably right in this)
     * A subcase of this: Are two objects equal when they're equal except their prototypes are equal but not
       identical?
-  * two objects that are of different types are always unequal; likewise,
-    * *two objects whose prototypes are not identical are always unequal*; leading to
+  * **Identical Prototypes Proposition**: two objects that are of different types are always unequal;
+    likewise, *two objects whose prototypes are not identical are always unequal*; leading to
     * we never have to dive into the prototype chain; `return false unless a:: is b::` (JS: `if
       ( !a.prototype.is( b.prototype ) ) { return false; }`) is sufficient and can be done up front
     * this is because as with [Multiple References](#multiple-references) and [Circularity](#circularity),
@@ -1255,27 +1255,29 @@ apart, too). This means i'll have to look for another solution to printing out t
       therefore, if all of `a:: is A`, `b:: is B`, `A isnt B` holds, then even if all properties on `a`
       equal all properties on `b`, still when I go and add a property to `A`, then `a` isn't equal to `b`
       anymore, although neither `a` nor `b` got modified.
-      * in the following setup
+    * Considering the following setup:
 
-        ```coffee
-        a = [ 1, 2, 3, ]
-        b = [ 1, 2, 3, ]
-        equals a, b # true
-        #................................
-        d_1 = [ a, a ]
-        #        ^^^
-        e_1 = [ a, a ]
-        equals d_1, e_1 # true
-        #................................
-        d_2 = [ a, b ]
-        #        ^^^
-        e_2 = [ a, a ]
-        equals d_2, e_2 # true  # solution 1
-        equals d_2, e_2 # false # solution 2
-        ```
+      ```coffee
+      a = [ 1, 2, 3, ]
+      b = [ 1, 2, 3, ]
+      equals a, b # true
+      #................................
+      d_1 = [ a, a ]
+      #        ^^^
+      e_1 = [ a, a ]
+      equals d_1, e_1 # true
+      #................................
+      d_2 = [ a, b ]
+      #        ^^^
+      e_2 = [ a, a ]
+      equals d_2, e_2 # true  # solution 1
+      equals d_2, e_2 # false # solution 2
+      ```
 
-      which of the two solutions (in the closing lines) should hold?
-
+    which of the two solutions (in the closing lines) should hold? I argue that solution 2 should hold
+    which asserts that *where a property of a compound value appears more than once in the property tree,
+    the pairwise identites with the corresponding properties of the compared value must all hold*. This is
+    a weaker version of the Identical Prototypes Proposition
 
 
 
