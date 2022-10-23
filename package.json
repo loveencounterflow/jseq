@@ -1,6 +1,6 @@
 {
   "name": "jseq",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "test suite for testing shallow & deep, strict equality as provided by various libraries",
   "main": "lib/main.js",
   "scripts": {
@@ -21,25 +21,27 @@
   },
   "homepage": "https://github.com/loveencounterflow/jseq",
   "dependencies": {
-    "angular": "^1.2.16",
+    "angular": "1.8.3",
     "assert-paranoid-equal": "^1.0.2",
-    "cli-table": "^0.3.0",
+    "cli-table": "0.3.11",
     "coffee-script": "^1.7.1",
-    "coffeenode-bitsnpieces": "0.0.23",
+    "coffeenode-bitsnpieces": "^0.1.6",
     "coffeenode-text": "^0.1.5",
     "coffeenode-trm": "^0.1.15",
     "coffeenode-types": "^0.1.1",
-    "deep-eql": "^0.1.3",
-    "deep-equal": "^1.0.1",
+    "deep-eql": "4.1.1",
+    "deep-equal": "2.0.5",
     "deep-equal-ident": "^1.1.1",
     "deepequal": "0.0.1",
     "deeper": "^2.1.0",
     "equals": "^1.0.1",
-    "is-equal": "^1.5.1",
-    "lodash": "^4.11.2",
+    "fast-deep-equal": "^3.1.3",
+    "fast-equals": "^4.0.3",
+    "is-equal": "1.6.4",
+    "lodash": "4.17.21",
     "qunit": "^2.11.2",
-    "should": "^8.3.1",
-    "should-equal": "^0.7.2",
-    "underscore": "^1.6.0"
+    "should": "^13.2.3",
+    "should-equal": "^2.0.0",
+    "underscore": "1.13.6"
   }
 }

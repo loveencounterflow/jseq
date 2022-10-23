@@ -18,7 +18,9 @@ echo                      = TRM.echo.bind TRM
 #...........................................................................................................
 ### implementations of deep equality tests: ###
 BNP                       = require 'coffeenode-bitsnpieces'
-ASSERT                    = require 'assert'
+ASSERT                    = require 'node:assert'
+{ isDeepStrictEqual: util_isDeepStrictEqual \
+                        } = require 'node:util'
 LODASH                    = require 'lodash'
 QUNIT                     = require 'qunit'
 UNDERSCORE                = require 'underscore'
@@ -36,7 +38,10 @@ is_equal                  = require 'is-equal'
 # angular                   = require 'angular'
 # warn '©oganH'
 deep_equal_ident          = require 'deep-equal-ident'
-
+fdq_equal                 = require 'fast-deep-equal'
+fde_equal                 = require 'fast-deep-equal/es6/index.js'
+{ circularDeepEqual: fast_equals_deepEquals \
+                        } = require 'fast-equals/dist/fast-equals.cjs.js' ### https://github.com/planttheidea/fast-equals ###
 
 #-----------------------------------------------------------------------------------------------------------
 custom_jseq_options =
@@ -68,6 +73,11 @@ module.exports =
     #.......................................................................................................
     eq: ( a, b ) -> jkroso_equals a, b
     ne: ( a, b ) -> not jkroso_equals a, b
+  #.........................................................................................................
+  "NUI: NodeJS util.isDeepStrictEqual":
+    #.......................................................................................................
+    eq: ( a, b ) ->     util_isDeepStrictEqual a, b
+    ne: ( a, b ) -> not util_isDeepStrictEqual a, b
   #.........................................................................................................
   "ADE: NodeJS assert.deepEqual":
     #.......................................................................................................
@@ -296,6 +306,21 @@ module.exports =
     #.......................................................................................................
     eq: get_errorproof_comparator custom_jseq
     ne: get_errorproof_comparator ( a, b ) -> not custom_jseq a, b
+  #.........................................................................................................
+  "FDQ: fast-deep-equal": # https://github.com/epoberezkin/fast-deep-equal
+    #.......................................................................................................
+    eq: get_errorproof_comparator fdq_equal
+    ne: get_errorproof_comparator ( a, b ) -> not fdq_equal a, b
+  #.........................................................................................................
+  "FDE: fast-deep-equal (ES6)": # https://github.com/epoberezkin/fast-deep-equal
+    #.......................................................................................................
+    eq: get_errorproof_comparator fde_equal
+    ne: get_errorproof_comparator ( a, b ) -> not fde_equal a, b
+  #.........................................................................................................
+  "FEQ: fast-equals": # https://github.com/planttheidea/fast-equals
+    #.......................................................................................................
+    eq: fast_equals_deepEquals
+    ne: ( a, b ) -> not fast_equals_deepEquals a, b
 
 
 

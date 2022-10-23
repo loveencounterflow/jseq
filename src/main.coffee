@@ -142,8 +142,8 @@ TYPES                     = require 'coffeenode-types'
   for counter, idx in counters
     { key, name, tests, fails } = counter
     passes                      = tests - fails
-    passes_percentage           = "#{( passes / tests * 100 ).toFixed 1} %"
-    fails_percentage            = "#{(  fails / tests * 100 ).toFixed 1} %"
+    passes_percentage           = "#{( passes / tests * 100 ).toFixed 2} %"
+    fails_percentage            = "#{(  fails / tests * 100 ).toFixed 2} %"
     table_1.push [
       TRM.grey  idx + 1
       TRM.gold  key
