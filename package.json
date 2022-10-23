@@ -39,7 +39,7 @@
     "fast-equals": "^4.0.3",
     "is-equal": "1.6.4",
     "lodash": "4.17.21",
-    "qunitjs": "^2.4.1",
+    "qunit": "^2.11.2",
     "should": "^13.2.3",
     "should-equal": "^2.0.0",
     "underscore": "1.13.6"
